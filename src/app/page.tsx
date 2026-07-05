@@ -4,480 +4,458 @@ import { Button } from "@/components/ui/button";
 import { 
   User, Building2, Briefcase, PiggyBank, 
   ChevronDown, ChevronUp, Star, MapPin, 
-  Share2, ArrowRight
+  Share2, ArrowRight, CheckCircle2, Play
 } from "lucide-react";
 
 export default function Home() {
   return (
-    <main className="flex flex-col min-h-screen bg-white font-sans w-full">
+    <main className="flex flex-col min-h-screen bg-white font-sans w-full selection:bg-blue-100">
       {/* 1. Hero / Intro Section */}
-      <section className="w-full bg-white pb-12">
+      <section className="w-full pb-16 relative">
+        {/* Background decorative elements */}
+        <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-blue-50/50 to-white z-0 pointer-events-none"></div>
+        
         {/* Slider Mockup */}
-        <div className="w-full overflow-hidden flex bg-[#2a2a2a] text-white">
-          <div className="flex w-full">
+        <div className="w-full flex h-[250px] md:h-[400px] relative z-10">
+          <div className="flex w-full overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {/* Slide 1 */}
-            <div className="w-1/4 relative group cursor-pointer border-r border-gray-700">
-              <div className="h-48 md:h-64 bg-gray-200 relative overflow-hidden flex items-center justify-center">
-                {/* Mock Image */}
-                <div className="w-32 h-32 bg-white flex items-center justify-center text-gray-500 shadow-md relative z-10 rounded">
-                  <span className="text-xs text-center font-medium px-2">Chamomile Tea</span>
+            <div className="w-[85vw] sm:w-[50vw] md:w-1/4 flex-shrink-0 snap-center relative group cursor-pointer overflow-hidden border-r border-white/10">
+              <div className="absolute inset-0 bg-yellow-900/40 transition-transform duration-700 group-hover:scale-110"></div>
+              {/* Blur bg effect */}
+              <div className="absolute inset-0 bg-yellow-600/20 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
+                 <div className="w-24 h-24 md:w-40 md:h-40 rounded-full border-4 border-white/20 flex items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-white/50 transition-colors duration-500">
+                    <span className="text-white/80 font-medium text-sm z-10">Chamomile</span>
+                    <div className="absolute inset-0 bg-white/10 backdrop-blur-md"></div>
+                 </div>
+              </div>
+              
+              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                <h3 className="font-bold text-white text-lg tracking-wide">Chamomile Tea</h3>
+                <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                  <Button className="bg-white text-black hover:bg-gray-100 text-xs h-9 px-6 rounded-full font-semibold shadow-lg">Get Quote</Button>
                 </div>
-                {/* Blur bg */}
-                <div className="absolute inset-0 bg-yellow-100/30 blur-md"></div>
-              </div>
-              <div className="absolute bottom-0 inset-x-0 bg-black/70 p-3 text-center">
-                <h3 className="font-medium text-sm">Chamomile Tea</h3>
-              </div>
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-20">
-                <Button className="bg-blue-500 hover:bg-blue-600 text-white text-xs h-8 px-4 rounded-sm">Get Best Quote</Button>
               </div>
             </div>
+            
             {/* Slide 2 */}
-            <div className="w-1/4 relative group cursor-pointer border-r border-gray-700">
-               <div className="h-48 md:h-64 bg-gray-200 relative overflow-hidden flex items-center justify-center">
-                <div className="w-32 h-32 bg-white flex items-center justify-center text-gray-500 shadow-md relative z-10 rounded">
-                  <span className="text-xs font-medium">black tea</span>
-                </div>
-                <div className="absolute inset-0 bg-amber-900/30 blur-md"></div>
+            <div className="w-[85vw] sm:w-[50vw] md:w-1/4 flex-shrink-0 snap-center relative group cursor-pointer overflow-hidden border-r border-white/10">
+              <div className="absolute inset-0 bg-amber-950/60 transition-transform duration-700 group-hover:scale-110"></div>
+              <div className="absolute inset-0 bg-amber-800/30 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
+                 <div className="w-24 h-24 md:w-40 md:h-40 rounded-full border-4 border-white/20 flex items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-white/50 transition-colors duration-500">
+                    <span className="text-white/80 font-medium text-sm z-10">Black Tea</span>
+                    <div className="absolute inset-0 bg-white/10 backdrop-blur-md"></div>
+                 </div>
               </div>
-              <div className="absolute bottom-0 inset-x-0 bg-black/90 p-3 text-center">
-                <h3 className="font-medium text-sm">black tea</h3>
+              
+              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-6 text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                <h3 className="font-bold text-white text-lg tracking-wide">Premium Black Tea</h3>
+                <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                  <Button className="bg-white text-black hover:bg-gray-100 text-xs h-9 px-6 rounded-full font-semibold shadow-lg">Get Quote</Button>
+                </div>
               </div>
             </div>
+            
             {/* Slide 3 */}
-            <div className="w-1/4 relative group cursor-pointer border-r border-gray-700">
-               <div className="h-48 md:h-64 bg-gray-200 relative overflow-hidden flex items-center justify-center">
-                <div className="w-32 h-32 bg-white flex items-center justify-center text-gray-500 shadow-md relative z-10 rounded">
-                  <span className="text-xs font-medium px-2 text-center">Ashwagandha Tea</span>
-                </div>
-                <div className="absolute inset-0 bg-green-900/30 blur-md"></div>
+            <div className="w-[85vw] sm:w-[50vw] md:w-1/4 flex-shrink-0 snap-center relative group cursor-pointer overflow-hidden border-r border-white/10">
+              <div className="absolute inset-0 bg-green-950/60 transition-transform duration-700 group-hover:scale-110"></div>
+              <div className="absolute inset-0 bg-green-800/30 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
+                 <div className="w-24 h-24 md:w-40 md:h-40 rounded-full border-4 border-white/20 flex items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-white/50 transition-colors duration-500">
+                    <span className="text-white/80 font-medium text-sm z-10 text-center px-2">Ashwagandha</span>
+                    <div className="absolute inset-0 bg-white/10 backdrop-blur-md"></div>
+                 </div>
               </div>
-              <div className="absolute bottom-0 inset-x-0 bg-black/80 p-3 text-center">
-                <h3 className="font-medium text-sm">Ashwagandha Tea</h3>
+              
+              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-6 text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                <h3 className="font-bold text-white text-lg tracking-wide">Ashwagandha Tea</h3>
+                <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                  <Button className="bg-white text-black hover:bg-gray-100 text-xs h-9 px-6 rounded-full font-semibold shadow-lg">Get Quote</Button>
+                </div>
               </div>
             </div>
+            
             {/* Slide 4 */}
-            <div className="w-1/4 relative group cursor-pointer">
-               <div className="h-48 md:h-64 bg-gray-200 relative overflow-hidden flex items-center justify-center">
-                <div className="w-32 h-32 bg-white flex items-center justify-center text-gray-500 shadow-md relative z-10 rounded">
-                  <span className="text-xs font-medium">CTC Tea</span>
-                </div>
-                <div className="absolute inset-0 bg-orange-900/30 blur-md"></div>
+            <div className="w-[85vw] sm:w-[50vw] md:w-1/4 flex-shrink-0 snap-center relative group cursor-pointer overflow-hidden">
+              <div className="absolute inset-0 bg-orange-950/60 transition-transform duration-700 group-hover:scale-110"></div>
+              <div className="absolute inset-0 bg-orange-800/30 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
+                 <div className="w-24 h-24 md:w-40 md:h-40 rounded-full border-4 border-white/20 flex items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-white/50 transition-colors duration-500">
+                    <span className="text-white/80 font-medium text-sm z-10">CTC Tea</span>
+                    <div className="absolute inset-0 bg-white/10 backdrop-blur-md"></div>
+                 </div>
               </div>
-              <div className="absolute bottom-0 inset-x-0 bg-black/90 p-3 text-center">
-                <h3 className="font-medium text-sm">CTC Tea</h3>
+              
+              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-6 text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                <h3 className="font-bold text-white text-lg tracking-wide">CTC Assam Tea</h3>
+                <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                  <Button className="bg-white text-black hover:bg-gray-100 text-xs h-9 px-6 rounded-full font-semibold shadow-lg">Get Quote</Button>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="container mx-auto px-4 text-center mt-12 max-w-5xl">
-          <h1 className="text-xl md:text-[22px] font-medium text-[#2d58a7] mb-6">
-            Welcome to Shahinur Global Exporter (Opc) Private Limited
+        <div className="container mx-auto px-4 text-center mt-16 max-w-4xl relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-semibold uppercase tracking-wider mb-6 shadow-sm">
+            <Star className="w-3.5 h-3.5 fill-current" /> Premium Quality Exporter
+          </div>
+          <h1 className="text-2xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 mb-6 leading-tight">
+            Welcome to Shahinur Global Exporter
           </h1>
-          <p className="text-[13px] md:text-sm text-gray-600 leading-relaxed mb-1 px-4">
-            Established in the year 2023, we Manufacturer, Exporter, Supplier & Trader of Ashwagandha Tea, Black Tea, Chamomile Tea, CTC Tea, Darjeeling Tea, Green Tea, Loose Tea, Jasmine Tea, Oolong Tea, Orthodox Tea etc. Under the supervision of..
+          <p className="text-[15px] md:text-base text-gray-600 leading-relaxed mb-6 px-4 md:px-12 font-medium">
+            Established in 2023, we are a leading Manufacturer, Exporter, Supplier & Trader of Ashwagandha Tea, Black Tea, Chamomile Tea, CTC Tea, Darjeeling Tea, Green Tea, Loose Tea, Jasmine Tea, Oolong Tea, Orthodox Tea and more.
           </p>
-          <button className="text-blue-500 text-[13px] hover:underline mb-8">Read More</button>
+          <Button variant="link" className="text-blue-600 font-semibold group h-auto p-0 text-sm">
+            Discover Our Story <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+          </Button>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-            {/* Cards */}
-            <div className="bg-white border border-gray-200 rounded-md p-6 shadow-sm flex flex-col items-center">
-              <div className="w-12 h-12 rounded-full border-2 border-gray-300 flex items-center justify-center mb-3">
-                <User className="text-gray-500 w-6 h-6" />
+          {/* Stat Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
+            <div className="bg-white/80 backdrop-blur-xl border border-gray-100 rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center group relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-4 text-blue-600 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
+                <User className="w-7 h-7" />
               </div>
-              <p className="text-gray-400 text-xs mb-1">Founder</p>
-              <p className="font-medium text-gray-800 text-[13px]">Mr. Shahinur Islam</p>
+              <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-1.5 relative z-10">Founder</p>
+              <p className="font-bold text-gray-800 text-sm relative z-10">Mr. Shahinur Islam</p>
             </div>
-            <div className="bg-white border border-gray-200 rounded-md p-6 shadow-sm flex flex-col items-center">
-              <div className="w-12 h-12 rounded-full border-2 border-gray-300 flex items-center justify-center mb-3">
-                <Building2 className="text-gray-500 w-6 h-6" />
+            
+            <div className="bg-white/80 backdrop-blur-xl border border-gray-100 rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center group relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-4 text-emerald-600 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
+                <Building2 className="w-7 h-7" />
               </div>
-              <p className="text-gray-400 text-xs mb-1">Year of Establishment</p>
-              <p className="font-medium text-gray-800 text-[13px]">2023</p>
+              <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-1.5 relative z-10">Established</p>
+              <p className="font-bold text-gray-800 text-sm relative z-10">2023</p>
             </div>
-            <div className="bg-white border border-gray-200 rounded-md p-6 shadow-sm flex flex-col items-center">
-              <div className="w-12 h-12 rounded-full border-2 border-gray-300 flex items-center justify-center mb-3">
-                <Briefcase className="text-gray-500 w-6 h-6" />
+
+            <div className="bg-white/80 backdrop-blur-xl border border-gray-100 rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center group relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="w-14 h-14 rounded-2xl bg-purple-50 flex items-center justify-center mb-4 text-purple-600 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
+                <Briefcase className="w-7 h-7" />
               </div>
-              <p className="text-gray-400 text-xs mb-1">Primary Business</p>
-              <p className="font-medium text-gray-800 text-[13px]">Manufacturer</p>
+              <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-1.5 relative z-10">Business Type</p>
+              <p className="font-bold text-gray-800 text-sm relative z-10">Manufacturer</p>
             </div>
-            <div className="bg-white border border-gray-200 rounded-md p-6 shadow-sm flex flex-col items-center">
-              <div className="w-12 h-12 rounded-full border-2 border-gray-300 flex items-center justify-center mb-3">
-                <PiggyBank className="text-gray-500 w-6 h-6" />
+
+            <div className="bg-white/80 backdrop-blur-xl border border-gray-100 rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center group relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="w-14 h-14 rounded-2xl bg-orange-50 flex items-center justify-center mb-4 text-orange-600 group-hover:scale-110 group-hover:bg-orange-600 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
+                <PiggyBank className="w-7 h-7" />
               </div>
-              <p className="text-gray-400 text-xs mb-1">Annual Turnover</p>
-              <p className="font-medium text-gray-800 text-[13px]">Below Rs. 0.5 Crore Approx.</p>
+              <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-1.5 relative z-10">Annual Turnover</p>
+              <p className="font-bold text-gray-800 text-sm relative z-10">Below Rs. 0.5 Crore</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* 2. Product Range */}
-      <section className="w-full bg-gray-50 py-12 border-t border-gray-200">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <h2 className="text-xl md:text-2xl font-medium text-[#2d58a7] text-center mb-8">Our Product Range</h2>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 border border-gray-200 bg-white">
-            {/* Product Item 1 */}
-            <div className="border-r border-b border-gray-200 p-6 flex flex-col items-center text-center group">
-              <div className="h-32 mb-4 flex items-center justify-center">
-                 <div className="w-24 h-24 bg-gray-100 rounded-md relative overflow-hidden flex items-center justify-center"><span className="text-xs text-gray-400">Image</span></div>
-              </div>
-              <h3 className="text-[#2d58a7] font-semibold text-[15px] mb-2 cursor-pointer hover:underline">Jute Bag</h3>
-              <ul className="text-[13px] text-gray-600 space-y-1">
-                <li className="cursor-pointer hover:text-blue-600">Jute Shopping Bag</li>
-                <li className="cursor-pointer hover:text-blue-600">Plain Jute Tote Bag</li>
-                <li className="cursor-pointer hover:text-blue-600">Plain Jute Pouch Bag</li>
-                <li className="cursor-pointer hover:text-blue-600">Jute Cosmetic Bag</li>
-              </ul>
-              <button className="text-[#2d58a7] text-xs font-semibold mt-3 flex items-center hover:underline">View All <ArrowRight className="w-3 h-3 ml-1" /></button>
-            </div>
-            {/* Product Item 2 */}
-            <div className="border-r border-b border-gray-200 p-6 flex flex-col items-center text-center group">
-              <div className="h-32 mb-4 flex items-center justify-center">
-                 <div className="w-24 h-24 bg-gray-100 rounded-md relative overflow-hidden flex items-center justify-center"><span className="text-xs text-gray-400">Image</span></div>
-              </div>
-              <h3 className="text-[#2d58a7] font-semibold text-[15px] mb-2 cursor-pointer hover:underline">Black Tea</h3>
-              <ul className="text-[13px] text-gray-600 space-y-1">
-                <li className="cursor-pointer hover:text-blue-600">Pure Assam Tea</li>
-                <li className="cursor-pointer hover:text-blue-600">Premium BOP Tea</li>
-                <li className="cursor-pointer hover:text-blue-600">Loose Tea</li>
-                <li className="cursor-pointer hover:text-blue-600">CTC Tea</li>
-              </ul>
-              <button className="text-[#2d58a7] text-xs font-semibold mt-3 flex items-center hover:underline">View All <ArrowRight className="w-3 h-3 ml-1" /></button>
-            </div>
-            {/* Product Item 3 */}
-            <div className="border-r border-b lg:border-r border-gray-200 p-6 flex flex-col items-center text-center group">
-              <div className="h-32 mb-4 flex items-center justify-center">
-                 <div className="w-24 h-24 rounded-full border border-gray-100 bg-gray-50 flex items-center justify-center"><span className="text-xs text-gray-400">Image</span></div>
-              </div>
-              <h3 className="text-[#2d58a7] font-semibold text-[15px] mb-2 cursor-pointer hover:underline">Herbal Tea</h3>
-              <ul className="text-[13px] text-gray-600 space-y-1">
-                <li className="cursor-pointer hover:text-blue-600">Oolong Tea</li>
-                <li className="cursor-pointer hover:text-blue-600">Peppermint Tea</li>
-              </ul>
-            </div>
-            {/* Product Item 4 */}
-            <div className="border-b lg:border-r-0 border-gray-200 p-6 flex flex-col items-center text-center group">
-              <div className="h-32 mb-4 flex items-center justify-center">
-                 <div className="w-20 h-24 bg-gray-100 rounded-md flex items-center justify-center"><span className="text-xs text-gray-400">Image</span></div>
-              </div>
-              <h3 className="text-[#2d58a7] font-semibold text-[15px] mb-2 cursor-pointer hover:underline">Jute Carry Bags</h3>
-              <ul className="text-[13px] text-gray-600 space-y-1">
-                <li className="cursor-pointer hover:text-blue-600">Plain Jute Carry Bag</li>
-                <li className="cursor-pointer hover:text-blue-600">Printed Jute Carry Bag</li>
-              </ul>
-            </div>
-             {/* Product Item 5 */}
-            <div className="border-r lg:border-b-0 border-gray-200 p-6 flex flex-col items-center text-center group">
-              <div className="h-32 mb-4 flex items-center justify-center">
-                 <div className="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center"><span className="text-xs text-gray-400">Image</span></div>
-              </div>
-              <h3 className="text-[#2d58a7] font-semibold text-[15px] mb-2 cursor-pointer hover:underline">Flower Tea</h3>
-              <ul className="text-[13px] text-gray-600 space-y-1">
-                <li className="cursor-pointer hover:text-blue-600">Jasmine Tea</li>
-              </ul>
-            </div>
-            {/* Product Item 6 */}
-            <div className="border-r lg:border-b-0 border-gray-200 p-6 flex flex-col items-center text-center group">
-              <div className="h-32 mb-4 flex items-center justify-center">
-                 <div className="w-24 h-24 bg-gray-100 rounded-md flex items-center justify-center"><span className="text-xs text-gray-400">Image</span></div>
-              </div>
-              <h3 className="text-[#2d58a7] font-semibold text-[15px] mb-2 cursor-pointer hover:underline">Tea</h3>
-              <ul className="text-[13px] text-gray-600 space-y-1">
-                <li className="cursor-pointer hover:text-blue-600">White Tea</li>
-              </ul>
-            </div>
-            {/* Product Item 7 */}
-            <div className="border-r sm:border-b-0 border-gray-200 p-6 flex flex-col items-center text-center group">
-              <div className="h-32 mb-4 flex items-center justify-center">
-                 <div className="w-24 h-24 bg-gray-100 rounded-md flex items-center justify-center"><span className="text-xs text-gray-400">Image</span></div>
-              </div>
-              <h3 className="text-[#2d58a7] font-semibold text-[15px] mb-2 cursor-pointer hover:underline">Darjeeling Tea</h3>
-              <ul className="text-[13px] text-gray-600 space-y-1">
-                <li className="cursor-pointer hover:text-blue-600">Darjeeling Tea</li>
-              </ul>
-            </div>
-            {/* Product Item 8 */}
-            <div className="p-6 flex flex-col items-center text-center group">
-              <div className="h-32 mb-4 flex items-center justify-center">
-                 <div className="w-24 h-24 bg-gray-100 rounded-md flex items-center justify-center"><span className="text-xs text-gray-400">Image</span></div>
-              </div>
-              <h3 className="text-[#2d58a7] font-semibold text-[15px] mb-2 cursor-pointer hover:underline">Tea Leaves</h3>
-              <ul className="text-[13px] text-gray-600 space-y-1">
-                <li className="cursor-pointer hover:text-blue-600">Ashwagandha Tea</li>
-              </ul>
-            </div>
+      <section className="w-full bg-[#f8f9fa] py-20 relative">
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4 tracking-tight">Our Premium Product Range</h2>
+            <p className="text-gray-500 max-w-2xl mx-auto">Explore our wide variety of meticulously sourced and processed teas and eco-friendly jute products.</p>
           </div>
           
-          <div className="flex justify-center mt-8">
-            <Button variant="outline" className="text-[#d65f1a] border-[#d65f1a] hover:bg-orange-50 rounded-sm px-6 h-9 text-xs uppercase tracking-wide font-medium bg-transparent">
-              view all categories &gt;&gt;
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {[
+              { name: "Jute Bag", subs: ["Jute Shopping Bag", "Plain Tote Bag", "Cosmetic Bag", "Pouch Bag"], color: "from-amber-50 to-orange-50/50" },
+              { name: "Black Tea", subs: ["Pure Assam Tea", "Premium BOP Tea", "Loose Tea", "CTC Tea"], color: "from-slate-100 to-gray-50/50" },
+              { name: "Herbal Tea", subs: ["Oolong Tea", "Peppermint Tea", "Chamomile Tea", "Lemongrass Tea"], color: "from-emerald-50 to-green-50/50" },
+              { name: "Jute Carry Bags", subs: ["Plain Carry Bag", "Printed Carry Bag", "Custom Size Bag", "Handle Bag"], color: "from-amber-50 to-orange-50/50" },
+              { name: "Flower Tea", subs: ["Jasmine Tea", "Rose Tea", "Hibiscus Tea", "Lotus Tea"], color: "from-pink-50 to-rose-50/50" },
+              { name: "White Tea", subs: ["Silver Needle", "White Peony", "Long Life Eyebrow", "Tribute Eyebrow"], color: "from-blue-50 to-indigo-50/50" },
+              { name: "Darjeeling Tea", subs: ["First Flush", "Second Flush", "Autumn Flush", "Monsoon Flush"], color: "from-teal-50 to-emerald-50/50" },
+              { name: "Tea Leaves", subs: ["Ashwagandha Tea", "Green Tea", "Matcha Powder", "Loose Leaf"], color: "from-green-50 to-lime-50/50" },
+            ].map((cat, idx) => (
+              <div key={idx} className="bg-white rounded-2xl p-1 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">
+                <div className={`h-40 rounded-xl bg-gradient-to-br ${cat.color} flex items-center justify-center relative overflow-hidden mb-1`}>
+                  <div className="w-24 h-24 bg-white/60 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-500">
+                    <span className="text-xs text-gray-400 font-medium">Image</span>
+                  </div>
+                </div>
+                <div className="p-5 text-center flex flex-col items-center h-[200px]">
+                  <h3 className="font-bold text-gray-800 text-base mb-3 group-hover:text-blue-600 transition-colors">{cat.name}</h3>
+                  <ul className="text-sm text-gray-500 space-y-1.5 mb-auto">
+                    {cat.subs.map((sub, i) => (
+                      <li key={i} className="hover:text-gray-900 cursor-pointer transition-colors line-clamp-1">{sub}</li>
+                    ))}
+                  </ul>
+                  <Button variant="ghost" className="text-blue-600 text-xs font-semibold h-8 mt-4 group/btn hover:bg-blue-50 rounded-full w-full">
+                    View All <ArrowRight className="w-3 h-3 ml-1.5 group-hover/btn:translate-x-1 transition-transform" />
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="flex justify-center mt-12">
+            <Button className="bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white rounded-full px-8 h-12 text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+              Explore All Categories
             </Button>
           </div>
         </div>
       </section>
 
       {/* 3. Ratings & Reviews */}
-      <section className="w-full bg-gray-50 py-12 border-t border-gray-200">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <div className="text-center mb-10">
-             <h2 className="text-xl font-medium text-gray-800 inline-block border-b-[3px] border-blue-500 pb-1.5 px-2">
-               Ratings & Reviews
-             </h2>
+      <section className="w-full bg-white py-20 relative">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <div className="text-center mb-14">
+             <h2 className="text-3xl font-bold text-gray-900 mb-4">Customer Trust & Reviews</h2>
+             <p className="text-gray-500">See what our global clients say about our products and services.</p>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-sm shadow-sm flex flex-col md:flex-row mb-6">
-             <div className="md:w-1/3 p-6 border-b md:border-b-0 md:border-r border-gray-200">
-                <div className="flex items-center gap-2 mb-4 text-[#1a68bc] font-semibold text-[13px]">
-                  <div className="w-3.5 h-3.5 rounded-full border-2 border-[#1a68bc]"></div> Overall Rating
+          <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 flex flex-col md:flex-row overflow-hidden mb-8">
+             {/* Overall Rating */}
+             <div className="md:w-1/3 p-8 border-b md:border-b-0 md:border-r border-gray-100 bg-gray-50/30">
+                <div className="flex items-center justify-center gap-2 mb-6 text-blue-600 font-semibold text-sm uppercase tracking-wider">
+                  <Star className="w-4 h-4 fill-current" /> Overall Rating
                 </div>
-                <div className="flex flex-col items-center justify-center py-4">
-                   <div className="text-[40px] font-bold text-gray-900 mb-1 flex items-baseline">5.0<span className="text-2xl text-gray-400 font-normal">/5</span></div>
-                   <div className="flex text-yellow-400 mb-3">
-                     <Star className="w-4 h-4 fill-current mx-0.5" />
-                     <Star className="w-4 h-4 fill-current mx-0.5" />
-                     <Star className="w-4 h-4 fill-current mx-0.5" />
-                     <Star className="w-4 h-4 fill-current mx-0.5" />
-                     <Star className="w-4 h-4 fill-current mx-0.5" />
+                <div className="flex flex-col items-center justify-center">
+                   <div className="text-6xl font-black text-gray-900 mb-2 tracking-tighter">5.0<span className="text-3xl text-gray-300 font-medium tracking-normal">/5</span></div>
+                   <div className="flex gap-1 mb-4">
+                     {[1,2,3,4,5].map(i => <Star key={i} className="w-6 h-6 text-yellow-400 fill-current drop-shadow-sm" />)}
                    </div>
-                   <p className="text-xs text-gray-500 mb-4">Reviewed by 1 Users</p>
-                   <Button variant="outline" className="border-blue-300 text-blue-500 rounded-full h-[30px] px-5 text-xs font-medium hover:bg-blue-50">Write a Review</Button>
+                   <p className="text-sm text-gray-500 mb-6 font-medium">Based on verified reviews</p>
+                   <Button variant="outline" className="border-gray-200 text-gray-700 rounded-full h-10 px-6 font-semibold hover:bg-gray-50 hover:text-blue-600 shadow-sm">Write a Review</Button>
                 </div>
              </div>
              
-             <div className="md:w-1/3 p-6 border-b md:border-b-0 md:border-r border-gray-200">
-                <div className="flex items-center gap-2 mb-6 text-emerald-500 font-semibold text-[13px]">
-                  <div className="w-3.5 h-3.5 rounded-full border-2 border-emerald-500"></div> Rating Breakdown
-                </div>
-                <div className="space-y-2.5 px-2">
+             {/* Rating Breakdown */}
+             <div className="md:w-1/3 p-8 border-b md:border-b-0 md:border-r border-gray-100">
+                <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wider mb-6 text-center">Rating Breakdown</h3>
+                <div className="space-y-3.5 px-4">
                   {[5,4,3,2,1].map((star) => (
-                    <div key={star} className="flex items-center text-xs text-gray-500 gap-3">
-                      <span className="w-2 font-medium text-orange-400">{star}</span>
-                      <Star className="w-3 h-3 text-orange-400 fill-current -ml-1" />
-                      <div className="flex-1 h-[7px] bg-gray-200 rounded-full overflow-hidden">
-                         <div className={`h-full ${star === 5 ? 'bg-emerald-500 w-full' : 'w-0'}`}></div>
+                    <div key={star} className="flex items-center text-sm text-gray-600 gap-3 group cursor-pointer">
+                      <span className="w-3 font-semibold text-gray-700">{star}</span>
+                      <Star className="w-4 h-4 text-yellow-400 fill-current -ml-1 group-hover:scale-110 transition-transform" />
+                      <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden shadow-inner">
+                         <div className={`h-full rounded-full transition-all duration-1000 ${star === 5 ? 'bg-gradient-to-r from-emerald-400 to-emerald-500 w-full' : 'w-0'}`}></div>
                       </div>
-                      <span className="w-2 text-right">{star === 5 ? '1' : '0'}</span>
+                      <span className="w-4 text-right font-medium text-gray-500">{star === 5 ? '1' : '0'}</span>
                     </div>
                   ))}
                 </div>
              </div>
 
-             <div className="md:w-1/3 p-6">
-                <div className="flex items-center gap-2 mb-8 text-blue-400 font-semibold text-[13px]">
-                  <div className="w-3.5 h-3.5 rounded-full border-2 border-blue-400"></div> User Satisfaction
-                </div>
-                <div className="flex justify-around px-2 mt-4">
-                   <div className="flex flex-col items-center">
-                     <div className="w-[60px] h-[60px] rounded-full border-[5px] border-gray-200 flex items-center justify-center text-[13px] font-bold text-gray-700 mb-3">0%</div>
-                     <span className="text-xs text-gray-600 font-medium">Response</span>
-                   </div>
-                   <div className="flex flex-col items-center">
-                     <div className="w-[60px] h-[60px] rounded-full border-[5px] border-gray-200 flex items-center justify-center text-[13px] font-bold text-gray-700 mb-3">0%</div>
-                     <span className="text-xs text-gray-600 font-medium">Quality</span>
-                   </div>
-                   <div className="flex flex-col items-center">
-                     <div className="w-[60px] h-[60px] rounded-full border-[5px] border-gray-200 flex items-center justify-center text-[13px] font-bold text-gray-700 mb-3">0%</div>
-                     <span className="text-xs text-gray-600 font-medium">Delivery</span>
-                   </div>
+             {/* User Satisfaction */}
+             <div className="md:w-1/3 p-8 bg-gray-50/30">
+                <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wider mb-8 text-center">User Satisfaction</h3>
+                <div className="flex justify-around px-2">
+                   {['Response', 'Quality', 'Delivery'].map((metric, i) => (
+                     <div key={i} className="flex flex-col items-center">
+                       <div className="w-16 h-16 rounded-full border-4 border-gray-100 bg-white shadow-sm flex items-center justify-center text-sm font-bold text-gray-400 mb-3 relative">
+                         0%
+                         {/* Circle progress mockup */}
+                         <svg className="absolute inset-0 w-full h-full -rotate-90">
+                            <circle cx="28" cy="28" r="28" className="stroke-current text-blue-500/20" strokeWidth="4" fill="transparent" />
+                         </svg>
+                       </div>
+                       <span className="text-xs text-gray-600 font-semibold uppercase tracking-wide">{metric}</span>
+                     </div>
+                   ))}
                 </div>
              </div>
           </div>
 
           {/* Individual Review */}
-          <div className="bg-white border border-gray-200 rounded-sm shadow-sm p-5 flex gap-4">
-             <div className="w-12 h-12 bg-purple-600 rounded-full text-white flex items-center justify-center text-xl font-medium flex-shrink-0">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 flex flex-col md:flex-row gap-6 hover:shadow-md transition-shadow">
+             <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl shadow-inner text-white flex items-center justify-center text-2xl font-bold flex-shrink-0">
                R
              </div>
-             <div>
-               <div className="flex items-center gap-1 mb-1">
-                 <h4 className="font-semibold text-[13px] text-gray-800">R.k. Aggarwal</h4>
-                 <span className="text-[11px] text-gray-400">| Delhi,</span>
-               </div>
-               <p className="text-[11px] text-gray-500 mb-1.5">Product name : <span className="font-semibold text-gray-700">Assam Ctc Tea</span></p>
-               <div className="flex items-center gap-2 mb-3">
-                 <div className="flex text-yellow-400">
-                     <Star className="w-[11px] h-[11px] fill-current mx-0.5" />
-                     <Star className="w-[11px] h-[11px] fill-current mx-0.5" />
-                     <Star className="w-[11px] h-[11px] fill-current mx-0.5" />
-                     <Star className="w-[11px] h-[11px] fill-current mx-0.5" />
-                     <Star className="w-[11px] h-[11px] fill-current mx-0.5" />
+             <div className="flex-1">
+               <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
+                 <div className="flex items-center gap-2">
+                   <h4 className="font-bold text-gray-900 text-lg">R.k. Aggarwal</h4>
+                   <span className="px-2 py-0.5 bg-gray-100 text-gray-500 rounded-md text-xs font-medium">Delhi</span>
                  </div>
-                 <span className="text-[11px] text-gray-400">| 07 Jan 2025</span>
+                 <div className="flex items-center gap-2">
+                   <div className="flex text-yellow-400 gap-0.5">
+                       <Star className="w-4 h-4 fill-current drop-shadow-sm" />
+                       <Star className="w-4 h-4 fill-current drop-shadow-sm" />
+                       <Star className="w-4 h-4 fill-current drop-shadow-sm" />
+                       <Star className="w-4 h-4 fill-current drop-shadow-sm" />
+                       <Star className="w-4 h-4 fill-current drop-shadow-sm" />
+                   </div>
+                   <span className="text-xs text-gray-400 font-medium">07 Jan 2025</span>
+                 </div>
                </div>
-               <p className="text-[13px] text-gray-700">Refreshingly unique features that enhance usability</p>
+               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 text-blue-700 rounded-lg text-xs font-semibold mb-3">
+                 <CheckCircle2 className="w-3.5 h-3.5" /> Product: Assam Ctc Tea
+               </div>
+               <p className="text-gray-700 text-base leading-relaxed italic">"Refreshingly unique features that enhance usability and overall experience. Highly recommended for wholesale buyers."</p>
              </div>
           </div>
         </div>
       </section>
 
       {/* 4. FAQs */}
-      <section className="w-full bg-gray-50 pb-16">
-         <div className="container mx-auto px-4 max-w-5xl">
-            <h2 className="text-lg md:text-[20px] font-medium text-gray-800 text-center mb-6">
-               FAQs : Shahinur Global Exporter (Opc) Private Limited
-            </h2>
+      <section className="w-full bg-[#f8f9fa] py-20 relative overflow-hidden">
+         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100 rounded-full blur-[100px] opacity-50 -z-0 pointer-events-none"></div>
+         <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-100 rounded-full blur-[100px] opacity-50 -z-0 pointer-events-none"></div>
+         
+         <div className="container mx-auto px-4 max-w-4xl relative z-10">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+              <p className="text-gray-500">Everything you need to know about Shahinur Global Exporter.</p>
+            </div>
             
-            <div className="space-y-2.5">
+            <div className="space-y-4">
                {/* Expanded FAQ */}
-               <div className="bg-white border border-gray-200 rounded-sm shadow-sm relative overflow-hidden">
-                 <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#e96e25]"></div>
-                 <div className="p-4 flex justify-between items-start cursor-pointer">
-                    <div className="flex gap-2.5 items-start">
-                       <span className="text-[#e96e25] font-bold text-[13px] mt-0.5">Q.</span>
-                       <h3 className="font-semibold text-[13px] text-gray-800 mt-0.5 leading-snug">What is the year of establishment of Shahinur Global Exporter (Opc) Private Limited?</h3>
+               <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group">
+                 <div className="p-6 flex justify-between items-start cursor-pointer bg-gradient-to-r from-blue-50/50 to-transparent">
+                    <div className="flex gap-4 items-start pr-8">
+                       <span className="text-blue-600 font-black text-xl mt-0.5 opacity-40">01</span>
+                       <h3 className="font-bold text-gray-900 text-base mt-1">What is the year of establishment of Shahinur Global Exporter (Opc) Private Limited?</h3>
                     </div>
-                    <div className="w-6 h-6 rounded-full border border-blue-200 flex items-center justify-center text-blue-500 flex-shrink-0 mt-0.5">
-                       <ChevronUp className="w-4 h-4" />
+                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0 mt-0.5 shadow-inner">
+                       <ChevronUp className="w-5 h-5" />
                     </div>
                  </div>
-                 <div className="px-4 pb-4 pl-[34px] text-[12px] text-gray-500 leading-relaxed pr-8">
-                    The establishment year of Shahinur Global Exporter (Opc) Private Limited is 2023. Since its inception, the company has been engaged in business activities focused on customer satisfaction.
+                 <div className="px-6 pb-6 pl-14 text-sm text-gray-600 leading-relaxed pr-10">
+                    The establishment year of Shahinur Global Exporter (Opc) Private Limited is 2023. Since its inception, the company has been engaged in business activities focused on customer satisfaction and premium tea exports globally.
                  </div>
                </div>
 
                {/* Collapsed FAQs */}
                {[
-                 "What are the main products offered by Shahinur Global Exporter (Opc) Private Limited?",
-                 "Where is Shahinur Global Exporter (Opc) Private Limited located?",
-                 "How many products are listed by Shahinur Global Exporter (Opc) Private Limited?",
-                 "Which product categories does Shahinur Global Exporter (Opc) Private Limited specialize in?",
-                 "What industries does Shahinur Global Exporter (Opc) Private Limited cater to?",
-                 "Is Shahinur Global Exporter (Opc) Private Limited a manufacturer, supplier, exporter, or trader?",
-                 "How can buyers contact Shahinur Global Exporter (Opc) Private Limited?",
-                 "Does Shahinur Global Exporter (Opc) Private Limited supply products across India?",
-                 "What is the complete address of Shahinur Global Exporter (Opc) Private Limited?"
+                 "What are the main products offered by Shahinur Global Exporter?",
+                 "Where is Shahinur Global Exporter located?",
+                 "Which product categories does the company specialize in?",
+                 "How can international buyers contact you for bulk orders?"
                ].map((question, i) => (
-                 <div key={i} className="bg-white border border-gray-200 rounded-sm shadow-sm relative">
-                   <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#e96e25]"></div>
-                   <div className="p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50">
-                      <div className="flex gap-2.5 pr-4 items-center">
-                         <span className="text-[#e96e25] font-bold text-[13px]">Q.</span>
-                         <h3 className="font-semibold text-[13px] text-gray-800">{question}</h3>
+                 <div key={i} className="bg-white rounded-2xl border border-gray-100 hover:border-blue-200 shadow-sm hover:shadow-md transition-all duration-300">
+                   <div className="p-6 flex justify-between items-center cursor-pointer">
+                      <div className="flex gap-4 items-center pr-8">
+                         <span className="text-gray-300 font-black text-xl w-6">0{i+2}</span>
+                         <h3 className="font-semibold text-gray-800 text-base">{question}</h3>
                       </div>
-                      <ChevronDown className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                      <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 flex-shrink-0">
+                        <ChevronDown className="w-5 h-5" />
+                      </div>
                    </div>
                  </div>
                ))}
+            </div>
+            
+            <div className="mt-8 text-center">
+              <Button variant="link" className="text-blue-600 font-semibold">View all FAQs <ArrowRight className="w-4 h-4 ml-1" /></Button>
             </div>
          </div>
       </section>
 
       {/* 5. Contact / Form Footer */}
-      <section className="w-full bg-gray-50 pb-16">
-         <div className="container mx-auto px-4 max-w-6xl">
-            <div className="flex flex-col lg:flex-row shadow-sm border border-gray-200 bg-white relative">
-               {/* Form Side */}
-               <div className="flex-1 flex flex-col">
-                  <div className="bg-[#1864b4] text-white px-5 py-3.5 font-semibold text-[15px]">
-                    Tell Us What are you looking for? Will call you back
+      <section className="w-full bg-white py-24 relative overflow-hidden">
+         {/* Background pattern */}
+         <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
+         
+         <div className="container mx-auto px-4 max-w-6xl relative z-10">
+            <div className="bg-white rounded-[2rem] shadow-[0_20px_50px_rgb(0,0,0,0.08)] border border-gray-100 flex flex-col lg:flex-row relative overflow-hidden">
+               
+               {/* Left Side: Contact Info (Integrated instead of floating for a cleaner modern look) */}
+               <div className="lg:w-[400px] bg-gradient-to-br from-[#0f3d6e] to-[#1864b4] text-white p-10 md:p-12 relative overflow-hidden">
+                  {/* Decorative circles */}
+                  <div className="absolute -top-24 -left-24 w-64 h-64 bg-white/10 rounded-full blur-2xl"></div>
+                  <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-blue-400/20 rounded-full blur-2xl"></div>
+                  
+                  <div className="relative z-10 h-full flex flex-col">
+                    <h3 className="text-3xl font-bold mb-2">Get in Touch</h3>
+                    <p className="text-blue-100 text-sm mb-10">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+                    
+                    <div className="space-y-8 mb-auto">
+                       <div className="flex items-start gap-4">
+                          <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm border border-white/10">
+                            <User className="w-5 h-5 text-blue-100" />
+                          </div>
+                          <div>
+                             <p className="text-blue-100 text-xs font-semibold uppercase tracking-wider mb-1">Contact Person</p>
+                             <p className="font-bold text-lg">Mr. Shahinur Islam</p>
+                          </div>
+                       </div>
+                       
+                       <div className="flex items-start gap-4">
+                          <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm border border-white/10">
+                            <MapPin className="w-5 h-5 text-blue-100" />
+                          </div>
+                          <div>
+                             <p className="text-blue-100 text-xs font-semibold uppercase tracking-wider mb-1">Office Address</p>
+                             <p className="font-medium text-sm leading-relaxed text-blue-50 pr-4">
+                                Pipulbari part 1, Hatsingimari, Mankachar, Dhubri, South Salmara, Assam - 783135
+                             </p>
+                          </div>
+                       </div>
+                    </div>
+                    
+                    <div className="mt-12 pt-8 border-t border-white/20">
+                       <p className="text-sm font-medium mb-4">Connect with us</p>
+                       <div className="flex gap-3">
+                          {['Facebook', 'Twitter', 'LinkedIn', 'Pinterest'].map((social, i) => (
+                             <div key={i} className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center cursor-pointer transition-colors backdrop-blur-sm border border-white/10">
+                               <span className="text-xs font-bold">{social[0]}</span>
+                             </div>
+                          ))}
+                       </div>
+                    </div>
                   </div>
-                  <div className="p-6 md:p-10 lg:pr-[380px]">
-                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5 mb-5">
+               </div>
+
+               {/* Right Side: Form */}
+               <div className="flex-1 p-10 md:p-14 bg-white">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Send an Inquiry</h3>
+                  <p className="text-gray-500 mb-8 text-sm">Tell us what you're looking for, and our team will get back to you with the best quote.</p>
+                  
+                  <div className="space-y-6">
+                     <div>
+                       <label className="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Product / Service</label>
+                       <input type="text" placeholder="e.g., Premium Assam CTC Tea" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-white transition-all shadow-sm placeholder-gray-400" />
+                     </div>
+                     
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                          <label className="block text-[11px] font-bold text-gray-700 mb-1.5">Product/Service</label>
-                          <input type="text" placeholder="Enter Product / Service" className="w-full border border-gray-300 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-blue-500 placeholder-gray-400" />
+                           <label className="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Quantity</label>
+                           <input type="number" placeholder="Enter quantity" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-white transition-all shadow-sm placeholder-gray-400" />
                         </div>
-                        <div className="flex gap-4">
-                           <div className="flex-1">
-                              <label className="block text-[11px] font-bold text-gray-700 mb-1.5">Quantity</label>
-                              <input type="text" className="w-full border border-gray-300 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-blue-500" />
-                           </div>
-                           <div className="flex-1">
-                              <label className="block text-[11px] font-bold text-gray-700 mb-1.5">Select Unit</label>
-                              <select className="w-full border border-gray-300 rounded-sm px-3 py-2 text-sm text-gray-400 bg-white focus:outline-none focus:border-blue-500 appearance-none">
-                                 <option>Unit of Measurement</option>
-                              </select>
+                        <div>
+                           <label className="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Unit</label>
+                           <div className="relative">
+                             <select className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-white transition-all shadow-sm appearance-none cursor-pointer">
+                                <option>Kilograms (kg)</option>
+                                <option>Metric Tons (MT)</option>
+                                <option>Boxes</option>
+                             </select>
+                             <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                            </div>
                         </div>
                      </div>
-                     <div className="w-full md:w-[48%] mb-6">
-                        <label className="block text-[11px] font-bold text-gray-700 mb-1.5">Mobile No.</label>
-                        <div className="flex border border-gray-300 rounded-sm overflow-hidden">
-                           <div className="bg-gray-50 px-3 py-2 border-r border-gray-300 text-sm text-gray-600 flex items-center gap-2">
-                             <div className="w-4 h-[11px] flex flex-col rounded-[1px] overflow-hidden"><div className="h-1/3 bg-orange-500"></div><div className="h-1/3 bg-white"></div><div className="h-1/3 bg-green-500"></div></div>
+                     
+                     <div>
+                        <label className="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Mobile Number</label>
+                        <div className="flex bg-gray-50 border border-gray-200 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-blue-500/20 focus-within:border-blue-500 focus-within:bg-white transition-all shadow-sm">
+                           <div className="bg-gray-100 px-4 py-3.5 border-r border-gray-200 text-sm text-gray-700 font-medium flex items-center gap-2">
+                             <div className="w-4 h-3 flex flex-col rounded-[1px] overflow-hidden shadow-sm"><div className="h-1/3 bg-orange-500"></div><div className="h-1/3 bg-white"></div><div className="h-1/3 bg-green-500"></div></div>
                              +91
                            </div>
-                           <input type="text" placeholder="Mobile No" className="flex-1 px-3 py-2 text-sm focus:outline-none placeholder-gray-400" />
+                           <input type="tel" placeholder="Enter your mobile number" className="flex-1 px-4 py-3.5 text-sm focus:outline-none bg-transparent placeholder-gray-400" />
                         </div>
                      </div>
-                     <div className="flex flex-col items-center">
-                        <Button className="bg-[#e96e25] hover:bg-[#d65f1a] text-white px-8 py-2.5 h-auto text-[14px] font-semibold rounded-[3px] mb-3">
-                           Send Inquiry
+                     
+                     <div className="pt-4">
+                        <Button className="w-full md:w-auto bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white px-10 py-6 h-auto text-base font-bold rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                           Submit Inquiry
                         </Button>
-                        <p className="text-[11px] text-gray-500">
-                           By clicking Send Inquiry, I accept the <span className="text-blue-500 cursor-pointer hover:underline">T&C</span> and <span className="text-blue-500 cursor-pointer hover:underline">Privacy Policy</span>.
+                        <p className="text-xs text-gray-500 mt-4 text-center md:text-left">
+                           By submitting, you agree to our <span className="text-blue-600 font-medium hover:underline cursor-pointer">Terms</span> and <span className="text-blue-600 font-medium hover:underline cursor-pointer">Privacy Policy</span>.
                         </p>
                      </div>
                   </div>
-               </div>
-               
-               {/* Contact Side (Desktop Absolute Floating Box) */}
-               <div className="hidden lg:block absolute -top-8 right-8 bg-white shadow-xl border border-gray-200 rounded-[3px] w-[320px] z-10">
-                  <div className="p-6">
-                     <h3 className="font-bold text-gray-800 text-[13px] mb-5">Contact Us</h3>
-                     
-                     <div className="flex items-start gap-3 mb-4">
-                        <User className="w-[18px] h-[18px] text-gray-400 mt-0.5" />
-                        <div>
-                           <p className="text-[13px] text-gray-800 font-semibold mb-0.5">Mr. Shahinur Islam</p>
-                           <p className="text-[12px] text-blue-500">(Shahinur Global Exporter (Opc) Private Limited)</p>
-                        </div>
-                     </div>
-                     
-                     <div className="flex items-start gap-3 mb-5">
-                        <MapPin className="w-[18px] h-[18px] text-gray-400 mt-0.5" />
-                        <p className="text-[12px] text-gray-600 leading-relaxed pr-2">
-                           Pipulbari part 1, Hatsingimari, Mankachar, Dhubri, South Salmara, Assam - 783135
-                        </p>
-                     </div>
-                     
-                     <div className="flex items-center gap-3 mb-5">
-                        <Share2 className="w-[18px] h-[18px] text-gray-600" />
-                        <span className="text-[13px] text-gray-800">Share us via</span>
-                        <div className="flex gap-1.5 ml-1">
-                           <div className="w-[22px] h-[22px] bg-[#3b5998] rounded-sm flex items-center justify-center text-white text-[11px] font-bold cursor-pointer">f</div>
-                           <div className="w-[22px] h-[22px] bg-black rounded-sm flex items-center justify-center text-white text-[11px] font-bold cursor-pointer">X</div>
-                           <div className="w-[22px] h-[22px] bg-[#007bb5] rounded-sm flex items-center justify-center text-white text-[11px] font-bold cursor-pointer">in</div>
-                           <div className="w-[22px] h-[22px] bg-[#cb2027] rounded-sm flex items-center justify-center text-white text-[11px] font-bold cursor-pointer">P</div>
-                        </div>
-                     </div>
-
-                     <p className="text-[12px] font-medium text-blue-600 hover:underline cursor-pointer mb-6">Manufacturers In South Salmara</p>
-                     
-                     <Button variant="outline" className="w-full border-blue-200 text-blue-600 hover:bg-blue-50 rounded-sm mb-6 font-semibold h-[34px] text-[13px]">
-                        View Contact No.
-                     </Button>
-
-                     <div className="flex items-center gap-2 justify-center text-[10px] text-gray-500 pt-2 border-t border-gray-100">
-                        <div className="w-3.5 h-3.5 bg-orange-100 text-orange-500 rounded-sm flex items-center justify-center font-bold">!</div>
-                        <span className="hover:underline cursor-pointer">Found Something Wrong with this Listing? Report Here.</span>
-                     </div>
-                  </div>
-               </div>
-
-               {/* Mobile view contact (simplified) */}
-               <div className="p-6 lg:hidden border-t border-gray-200">
-                  <h3 className="font-bold text-gray-800 text-[13px] mb-4">Contact Us</h3>
-                  <div className="flex items-start gap-3 mb-4">
-                     <User className="w-[18px] h-[18px] text-gray-400 mt-0.5" />
-                     <div>
-                        <p className="text-[13px] text-gray-800 font-semibold mb-0.5">Mr. Shahinur Islam</p>
-                        <p className="text-[12px] text-blue-500">(Shahinur Global Exporter (Opc) Private Limited)</p>
-                     </div>
-                  </div>
-                  <div className="flex items-start gap-3 mb-6">
-                     <MapPin className="w-[18px] h-[18px] text-gray-400 mt-0.5" />
-                     <p className="text-[12px] text-gray-600 leading-relaxed pr-2">
-                        Pipulbari part 1, Hatsingimari, Mankachar, Dhubri, South Salmara, Assam - 783135
-                     </p>
-                  </div>
-                  <Button variant="outline" className="w-full border-blue-200 text-blue-600 hover:bg-blue-50 rounded-sm font-semibold h-[34px] text-[13px]">
-                     View Contact No.
-                  </Button>
                </div>
             </div>
          </div>

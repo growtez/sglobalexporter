@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
-import SiteFooter from "@/pages/SiteFooter";
+import SiteFooter from "@/components/sections/SiteFooter";
 import "./globals.css";
 
 const inter = Inter({
