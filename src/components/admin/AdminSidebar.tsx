@@ -22,7 +22,7 @@ const navItems = [
 ];
 
 export default function AdminSidebar({ adminName }: { adminName: string }) {
-  const pathname = usePathname();
+  const pathname = usePathname() || "";
 
   return (
     <aside className="fixed top-0 left-0 h-full w-64 bg-[#1A3622] flex flex-col z-40 shadow-xl">

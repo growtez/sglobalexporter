@@ -20,7 +20,7 @@ type InquiryFormValues = z.infer<typeof inquirySchema>;
 
 export default function B2BForm() {
   const searchParams = useSearchParams();
-  const productId = searchParams.get("product") || undefined;
+  const productId = searchParams?.get("product") || undefined;
   
   const [serverError, setServerError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
