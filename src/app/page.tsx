@@ -1,107 +1,86 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import HeroSlider from "@/components/sections/HeroSlider";
+import { createClient } from '@/lib/supabase/server';
 import { 
   User, Building2, Briefcase, PiggyBank, 
   ChevronDown, ChevronUp, Star, MapPin, 
   Share2, ArrowRight, CheckCircle2, Play
 } from "lucide-react";
 
-export default function Home() {
+export default async function Home() {
+  let dbProducts = null;
+  
+  try {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    if (supabaseUrl && supabaseUrl.startsWith('http')) {
+      const supabase = await createClient();
+      const { data } = await supabase
+        .from('products')
+        .select('*')
+        .eq('is_active', true)
+        .order('created_at', { ascending: true });
+      dbProducts = data;
+    }
+  } catch (err) {
+    console.error("Failed to fetch products from Supabase:", err);
+  }
+
+  const fallbackProducts = [
+    { name: "Ashwagandha Tea", img: "/images/products/ashwagandha-tea.webp" },
+    { name: "Black Tea", img: "/images/products/black-tea.webp" },
+    { name: "Chamomile Tea", img: "/images/products/chamomile-tea.webp" },
+    { name: "CTC Tea", img: "/images/products/ctc-tea.webp" },
+    { name: "Darjeeling Tea", img: "/images/products/darjeeling-tea.webp" },
+    { name: "Green Tea", img: "/images/products/green-tea.webp" },
+    { name: "Jasmine Tea", img: "/images/products/jasmine-tea.webp" },
+    { name: "Loose Tea", img: "/images/products/loose-tea.webp" },
+  ];
+
+  const products = dbProducts && dbProducts.length > 0
+    ? dbProducts.map(p => ({ name: p.name, img: p.image_url || fallbackProducts[7].img }))
+    : fallbackProducts;
+
   return (
     <main className="flex flex-col min-h-screen bg-white font-sans w-full selection:bg-blue-100">
-      {/* 1. Hero / Intro Section */}
-      <section className="w-full pb-16 relative">
-        {/* Background decorative elements */}
-        <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-blue-50/50 to-white z-0 pointer-events-none"></div>
-        
-        {/* Slider Mockup */}
-        <div className="w-full flex h-[250px] md:h-[400px] relative z-10">
-          <div className="flex w-full overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            {/* Slide 1 */}
-            <div className="w-[85vw] sm:w-[50vw] md:w-1/4 flex-shrink-0 snap-center relative group cursor-pointer overflow-hidden border-r border-white/10">
-              <div className="absolute inset-0 bg-yellow-900/40 transition-transform duration-700 group-hover:scale-110"></div>
-              {/* Blur bg effect */}
-              <div className="absolute inset-0 bg-yellow-600/20 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
-                 <div className="w-24 h-24 md:w-40 md:h-40 rounded-full border-4 border-white/20 flex items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-white/50 transition-colors duration-500">
-                    <span className="text-white/80 font-medium text-sm z-10">Chamomile</span>
-                    <div className="absolute inset-0 bg-white/10 backdrop-blur-md"></div>
-                 </div>
-              </div>
-              
-              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                <h3 className="font-bold text-white text-lg tracking-wide">Chamomile Tea</h3>
-                <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                  <Button className="bg-white text-black hover:bg-gray-100 text-xs h-9 px-6 rounded-full font-semibold shadow-lg">Get Quote</Button>
+      {/* Hero Slider (Auto-scrolling) */}
+      <HeroSlider products={products} />
+
+      {/* 1. Product Range */}
+      <section className="w-full bg-[#f8f9fa] py-16 relative">
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4 tracking-tight">Our Premium Product Range</h2>
+            <p className="text-gray-500 max-w-2xl mx-auto">Explore our wide variety of meticulously sourced and processed teas and eco-friendly products.</p>
+          </div>
+          
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 md:gap-3">
+            {products.map((cat, idx) => (
+              <div key={idx} className="relative group rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 aspect-square cursor-pointer">
+                <Image src={cat.img} alt={cat.name} fill sizes="(max-width: 640px) 33vw, (max-width: 768px) 25vw, (max-width: 1024px) 16vw, 12.5vw" className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute bottom-0 inset-x-0 p-1.5 sm:p-2.5 text-center transform translate-y-1 group-hover:-translate-y-1 transition-transform duration-300">
+                  <h3 className="font-bold text-white text-[10px] sm:text-[12px] md:text-sm leading-tight drop-shadow-md">{cat.name}</h3>
                 </div>
               </div>
-            </div>
-            
-            {/* Slide 2 */}
-            <div className="w-[85vw] sm:w-[50vw] md:w-1/4 flex-shrink-0 snap-center relative group cursor-pointer overflow-hidden border-r border-white/10">
-              <div className="absolute inset-0 bg-amber-950/60 transition-transform duration-700 group-hover:scale-110"></div>
-              <div className="absolute inset-0 bg-amber-800/30 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
-                 <div className="w-24 h-24 md:w-40 md:h-40 rounded-full border-4 border-white/20 flex items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-white/50 transition-colors duration-500">
-                    <span className="text-white/80 font-medium text-sm z-10">Black Tea</span>
-                    <div className="absolute inset-0 bg-white/10 backdrop-blur-md"></div>
-                 </div>
-              </div>
-              
-              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-6 text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                <h3 className="font-bold text-white text-lg tracking-wide">Premium Black Tea</h3>
-                <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                  <Button className="bg-white text-black hover:bg-gray-100 text-xs h-9 px-6 rounded-full font-semibold shadow-lg">Get Quote</Button>
-                </div>
-              </div>
-            </div>
-            
-            {/* Slide 3 */}
-            <div className="w-[85vw] sm:w-[50vw] md:w-1/4 flex-shrink-0 snap-center relative group cursor-pointer overflow-hidden border-r border-white/10">
-              <div className="absolute inset-0 bg-green-950/60 transition-transform duration-700 group-hover:scale-110"></div>
-              <div className="absolute inset-0 bg-green-800/30 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
-                 <div className="w-24 h-24 md:w-40 md:h-40 rounded-full border-4 border-white/20 flex items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-white/50 transition-colors duration-500">
-                    <span className="text-white/80 font-medium text-sm z-10 text-center px-2">Ashwagandha</span>
-                    <div className="absolute inset-0 bg-white/10 backdrop-blur-md"></div>
-                 </div>
-              </div>
-              
-              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-6 text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                <h3 className="font-bold text-white text-lg tracking-wide">Ashwagandha Tea</h3>
-                <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                  <Button className="bg-white text-black hover:bg-gray-100 text-xs h-9 px-6 rounded-full font-semibold shadow-lg">Get Quote</Button>
-                </div>
-              </div>
-            </div>
-            
-            {/* Slide 4 */}
-            <div className="w-[85vw] sm:w-[50vw] md:w-1/4 flex-shrink-0 snap-center relative group cursor-pointer overflow-hidden">
-              <div className="absolute inset-0 bg-orange-950/60 transition-transform duration-700 group-hover:scale-110"></div>
-              <div className="absolute inset-0 bg-orange-800/30 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
-                 <div className="w-24 h-24 md:w-40 md:h-40 rounded-full border-4 border-white/20 flex items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-white/50 transition-colors duration-500">
-                    <span className="text-white/80 font-medium text-sm z-10">CTC Tea</span>
-                    <div className="absolute inset-0 bg-white/10 backdrop-blur-md"></div>
-                 </div>
-              </div>
-              
-              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-6 text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                <h3 className="font-bold text-white text-lg tracking-wide">CTC Assam Tea</h3>
-                <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                  <Button className="bg-white text-black hover:bg-gray-100 text-xs h-9 px-6 rounded-full font-semibold shadow-lg">Get Quote</Button>
-                </div>
-              </div>
-            </div>
+            ))}
+          </div>
+          
+          <div className="flex justify-center mt-12">
+            <Button className="bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white rounded-full px-8 h-12 text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+              Explore All Categories
+            </Button>
           </div>
         </div>
+      </section>
 
-        <div className="container mx-auto px-4 text-center mt-16 max-w-4xl relative z-10">
+      {/* 2. Hero / Intro Section */}
+      <section className="w-full pb-16 pt-16 relative">
+        <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-blue-50/50 to-white z-0 pointer-events-none"></div>
+        
+        <div className="container mx-auto px-4 text-center max-w-4xl relative z-10">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-semibold uppercase tracking-wider mb-6 shadow-sm">
             <Star className="w-3.5 h-3.5 fill-current" /> Premium Quality Exporter
           </div>
@@ -155,56 +134,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* 2. Product Range */}
-      <section className="w-full bg-[#f8f9fa] py-20 relative">
-        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
-        <div className="container mx-auto px-4 max-w-7xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4 tracking-tight">Our Premium Product Range</h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">Explore our wide variety of meticulously sourced and processed teas and eco-friendly jute products.</p>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {[
-              { name: "Jute Bag", subs: ["Jute Shopping Bag", "Plain Tote Bag", "Cosmetic Bag", "Pouch Bag"], color: "from-amber-50 to-orange-50/50" },
-              { name: "Black Tea", subs: ["Pure Assam Tea", "Premium BOP Tea", "Loose Tea", "CTC Tea"], color: "from-slate-100 to-gray-50/50" },
-              { name: "Herbal Tea", subs: ["Oolong Tea", "Peppermint Tea", "Chamomile Tea", "Lemongrass Tea"], color: "from-emerald-50 to-green-50/50" },
-              { name: "Jute Carry Bags", subs: ["Plain Carry Bag", "Printed Carry Bag", "Custom Size Bag", "Handle Bag"], color: "from-amber-50 to-orange-50/50" },
-              { name: "Flower Tea", subs: ["Jasmine Tea", "Rose Tea", "Hibiscus Tea", "Lotus Tea"], color: "from-pink-50 to-rose-50/50" },
-              { name: "White Tea", subs: ["Silver Needle", "White Peony", "Long Life Eyebrow", "Tribute Eyebrow"], color: "from-blue-50 to-indigo-50/50" },
-              { name: "Darjeeling Tea", subs: ["First Flush", "Second Flush", "Autumn Flush", "Monsoon Flush"], color: "from-teal-50 to-emerald-50/50" },
-              { name: "Tea Leaves", subs: ["Ashwagandha Tea", "Green Tea", "Matcha Powder", "Loose Leaf"], color: "from-green-50 to-lime-50/50" },
-            ].map((cat, idx) => (
-              <div key={idx} className="bg-white rounded-2xl p-1 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">
-                <div className={`h-40 rounded-xl bg-gradient-to-br ${cat.color} flex items-center justify-center relative overflow-hidden mb-1`}>
-                  <div className="w-24 h-24 bg-white/60 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-500">
-                    <span className="text-xs text-gray-400 font-medium">Image</span>
-                  </div>
-                </div>
-                <div className="p-5 text-center flex flex-col items-center h-[200px]">
-                  <h3 className="font-bold text-gray-800 text-base mb-3 group-hover:text-blue-600 transition-colors">{cat.name}</h3>
-                  <ul className="text-sm text-gray-500 space-y-1.5 mb-auto">
-                    {cat.subs.map((sub, i) => (
-                      <li key={i} className="hover:text-gray-900 cursor-pointer transition-colors line-clamp-1">{sub}</li>
-                    ))}
-                  </ul>
-                  <Button variant="ghost" className="text-blue-600 text-xs font-semibold h-8 mt-4 group/btn hover:bg-blue-50 rounded-full w-full">
-                    View All <ArrowRight className="w-3 h-3 ml-1.5 group-hover/btn:translate-x-1 transition-transform" />
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="flex justify-center mt-12">
-            <Button className="bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white rounded-full px-8 h-12 text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
-              Explore All Categories
-            </Button>
-          </div>
-        </div>
-      </section>
-
       {/* 3. Ratings & Reviews */}
       <section className="w-full bg-white py-20 relative">
         <div className="container mx-auto px-4 max-w-6xl">
