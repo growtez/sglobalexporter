@@ -70,13 +70,6 @@ export default async function AdminOrdersPage() {
                         <select
                           name="status"
                           defaultValue={order.status}
-                          onChange={async (e) => {
-                            // handled via form action below
-                          }}
-                          formAction={async (fd: FormData) => {
-                            "use server";
-                            await updateOrderStatus(order.id, fd.get("status") as string);
-                          }}
                           className="border border-stone-200 rounded-lg text-xs px-2 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30"
                         >
                           {ORDER_STATUSES.map((s) => (
