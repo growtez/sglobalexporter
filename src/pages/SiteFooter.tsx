@@ -154,6 +154,16 @@ export default function SiteFooter() {
             ))}
           </div>
         </div>
+
+        {/* Admin Panel Access */}
+        <div className="mt-8">
+          <Link
+            href="/admin"
+            className="inline-flex items-center gap-2 text-sm md:text-base font-semibold text-gold hover:text-white border border-gold/20 hover:border-white/30 rounded-xl px-5 py-2.5 bg-white/5 hover:bg-white/10 transition-all duration-300 shadow-sm"
+          >
+            Admin Panel &rarr;
+          </Link>
+        </div>
       </div>
 
       {/* Bottom bar */}
@@ -170,3 +180,5 @@ export default function SiteFooter() {
     </footer>
   );
 }
+
+

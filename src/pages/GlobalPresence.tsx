@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef, memo } from "react";
+import { useRef, memo, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { MapPin } from "lucide-react";
-import { ComposableMap, Geographies, Geography, Marker, Line } from "react-simple-maps";
+import * as d3 from "d3-geo";
+import * as topojson from "topojson-client";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
@@ -25,59 +26,88 @@ const regions = [
 const originCoord = [94.0166, 26.1420]; // Assam roughly
 
 const MapChart = memo(() => {
+  const [geographies, setGeographies] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetch(geoUrl)
+      .then((res) => res.json())
+      .then((topology) => {
+        // @ts-ignore
+        const geos = topojson.feature(topology, topology.objects.countries).features;
+        setGeographies(geos);
+      });
+  }, []);
+
+  const width = 800;
+  const height = 450;
+
+  // geoEqualEarth for accurate relative sizes, matching previous look
+  const projection = d3.geoEqualEarth()
+    .scale(160)
+    .translate([width / 2, height / 2]);
+    
+  const pathGenerator = d3.geoPath().projection(projection);
+
+  const getCoords = (coords: [number, number]) => projection(coords) || [0, 0];
+  const origin = getCoords(originCoord as [number, number]);
+
   return (
-    <ComposableMap
-      projectionConfig={{
-        scale: 250,
-        center: [10, 15]
-      }}
-      className="w-full h-auto max-h-[400px]"
-    >
-      <Geographies geography={geoUrl}>
-        {({ geographies }) =>
-          geographies.map((geo) => (
-            <Geography
-              key={geo.rsmKey}
-              geography={geo}
-              fill="hsl(150,20%,88%)"
-              stroke="hsl(150,15%,80%)"
-              strokeWidth={0.5}
-              style={{
-                default: { outline: "none" },
-                hover: { fill: "hsl(150,30%,80%)", outline: "none" },
-                pressed: { outline: "none" },
-              }}
-            />
-          ))
-        }
-      </Geographies>
+    <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto max-h-[400px]">
+      <g>
+        {geographies.map((geo, i) => (
+          <path
+            key={`geo-${i}`}
+            d={pathGenerator(geo) || ""}
+            fill="hsl(150,20%,88%)"
+            stroke="hsl(150,15%,80%)"
+            strokeWidth={0.5}
+            className="hover:fill-[#b5d5c5] transition-colors outline-none cursor-default"
+          />
+        ))}
+      </g>
 
       {/* Connection Lines from Assam to destinations */}
-      {regions.map((region) => (
-        <Line
-          key={`line-${region.name}`}
-          from={originCoord as [number, number]}
-          to={region.coords as [number, number]}
-          stroke="hsla(45, 14%, 17%, 1.00)"
-          strokeWidth={1.5}
-          strokeDasharray="2 3"
-          opacity={0.6}
-        />
-      ))}
+      <g>
+        {regions.map((region) => {
+          const dest = getCoords(region.coords as [number, number]);
+          return (
+            <line
+              key={`line-${region.name}`}
+              x1={origin[0]}
+              y1={origin[1]}
+              x2={dest[0]}
+              y2={dest[1]}
+              stroke="hsl(43,65%,52%)"
+              strokeWidth={1.5}
+              strokeDasharray="2 3"
+              opacity={0.6}
+            />
+          );
+        })}
+      </g>
       
       {/* Markers for Destinations */}
-      {regions.map((region) => (
-        <Marker key={region.name} coordinates={region.coords as [number, number]}>
-          <circle r={6} fill="hsla(43, 94%, 46%, 1.00)" />
-        </Marker>
-      ))}
+      <g>
+        {regions.map((region) => {
+          const dest = getCoords(region.coords as [number, number]);
+          return (
+            <circle
+              key={`marker-${region.name}`}
+              cx={dest[0]}
+              cy={dest[1]}
+              r={6}
+              fill="hsl(43,65%,52%)"
+            />
+          );
+        })}
+      </g>
 
       {/* Marker for Origin */}
-      <Marker coordinates={originCoord as [number, number]}>
-        <circle r={9} fill="hsl(150,35%,20%)" />
-        <circle r={15} fill="none" stroke="hsl(150,35%,20%)" strokeWidth={1.5} opacity={0.4} />
-      </Marker>
-    </ComposableMap>
+      <g>
+        <circle cx={origin[0]} cy={origin[1]} r={9} fill="hsl(150,35%,20%)" />
+        <circle cx={origin[0]} cy={origin[1]} r={15} fill="none" stroke="hsl(150,35%,20%)" strokeWidth={1.5} opacity={0.4} />
+      </g>
+    </svg>
   );
 });
 MapChart.displayName = "MapChart";
@@ -85,6 +115,11 @@ MapChart.displayName = "MapChart";
 export default function GlobalPresence() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <section
@@ -121,8 +156,12 @@ export default function GlobalPresence() {
         >
           <div className="absolute inset-0 bg-gradient-to-br from-forest/5 via-transparent to-gold/5 rounded-3xl" />
           
-          <div className="relative z-10 w-full h-full flex items-center justify-center">
-            <MapChart />
+          <div className="relative z-10 w-full h-[300px] md:h-[400px] flex items-center justify-center">
+            {mounted ? (
+              <MapChart />
+            ) : (
+              <div className="w-full h-full bg-forest/5 animate-pulse rounded-2xl" />
+            )}
           </div>
           
           {/* Legend */}

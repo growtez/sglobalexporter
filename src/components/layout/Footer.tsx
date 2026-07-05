@@ -35,9 +35,17 @@ export default function Footer() {
         </div>
       </div>
       
-      <div className="container mx-auto px-4 md:px-8 mt-16 pt-8 border-t border-cream/20 text-center text-sm text-cream/50">
-        &copy; {new Date().getFullYear()} SGlobalExporter. All rights reserved.
+      <div className="container mx-auto px-4 md:px-8 mt-16 pt-8 border-t border-cream/20 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-cream/50">
+        <div>
+          &copy; {new Date().getFullYear()} SGlobalExporter. All rights reserved.
+        </div>
+        <div>
+          <Link href="/admin" className="hover:text-white transition-colors duration-200">
+            Admin Panel
+          </Link>
+        </div>
       </div>
     </footer>
   );
 }
+
