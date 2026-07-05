@@ -16,17 +16,14 @@ export default function Navbar() {
           <Link href="/" className="text-stone-600 hover:text-forest transition-colors">
             Home
           </Link>
-          <Link href="/products?category=tea" className="text-stone-600 hover:text-forest transition-colors">
-            Assam Tea
-          </Link>
-          <Link href="/products?category=rice" className="text-stone-600 hover:text-forest transition-colors">
-            Premium Rice
-          </Link>
           <Link href="/about" className="text-stone-600 hover:text-forest transition-colors">
-            Our Heritage
+            About Us
           </Link>
-          <Link href="/b2b" className="text-stone-600 hover:text-forest transition-colors">
-            Wholesale
+          <Link href="/products" className="text-stone-600 hover:text-forest transition-colors">
+            Products
+          </Link>
+          <Link href="/contact" className="text-stone-600 hover:text-forest transition-colors">
+            Contact Us
           </Link>
         </div>
 
