@@ -44,7 +44,15 @@ const socialLinks = [
   { label: "WhatsApp", href: "#", icon: "wa" },
 ];
 
+import { usePathname } from "next/navigation";
+
 export default function SiteFooter() {
+  const pathname = usePathname();
+
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   return (
     <footer className="w-full bg-charcoal text-cream">
       {/* Main footer */}
