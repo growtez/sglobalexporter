@@ -58,14 +58,14 @@ export default function Navbar() {
       <div className="hidden sm:block bg-forest text-white overflow-hidden w-full">
         <div className="container mx-auto px-4 md:px-8 flex items-center justify-between h-9 text-[11px] tracking-wide">
           <div className="flex items-center gap-4">
-            <a href="tel:+910000000000" className="flex items-center gap-1.5 hover:text-gold transition-colors">
+            <a href="tel:+919181147813" className="flex items-center gap-1.5 hover:text-gold transition-colors">
               <Phone className="w-3 h-3" />
-              <span>+91 00000 00000</span>
+              <span>+91 91811 47813</span>
             </a>
             <span className="w-px h-3.5 bg-white/20 hidden sm:block" />
-            <a href="mailto:info@sglobalexporter.com" className="hidden sm:flex items-center gap-1.5 hover:text-gold transition-colors">
+            <a href="mailto:shahinur23287@gmail.com" className="hidden sm:flex items-center gap-1.5 hover:text-gold transition-colors">
               <Mail className="w-3 h-3" />
-              <span>info@sglobalexporter.com</span>
+              <span>shahinur23287@gmail.com</span>
             </a>
           </div>
           <div className="flex items-center gap-4">
@@ -152,7 +152,7 @@ export default function Navbar() {
             </Link>
 
             {/* Call Now CTA Button (Desktop) */}
-            <Link href="tel:+910000000000" className="hidden lg:block ml-2">
+            <Link href="tel:+919181147813" className="hidden lg:block ml-2">
               <Button variant="outline" className="rounded-xl border-forest text-forest hover:bg-forest/5 hover:text-forest font-semibold px-4 h-9 text-[13px] transition-all duration-300">
                 <Phone className="w-3.5 h-3.5 mr-1.5" />
                 Call Now
@@ -271,7 +271,7 @@ export default function Navbar() {
                   <User className="w-3.5 h-3.5 mr-1.5" /> Sign In
                 </Button>
               </Link>
-              <Link href="tel:+910000000000" className="flex-1" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link href="tel:+919181147813" className="flex-1" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button variant="outline" className="w-full bg-white border-forest text-forest h-11 rounded-xl font-semibold hover:bg-forest/5 transition-all text-xs">
                   <Phone className="w-3.5 h-3.5 mr-1.5" /> Call Now
                 </Button>

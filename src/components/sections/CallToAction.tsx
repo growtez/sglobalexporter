@@ -93,25 +93,25 @@ export default function CallToAction() {
             className="flex flex-col sm:flex-row items-center justify-center gap-8 border-t border-cream/15 pt-10"
           >
             <a
-              href="mailto:exports@sglobalexporter.com"
+              href="mailto:shahinur23287@gmail.com"
               className="flex items-center gap-3 text-cream/70 hover:text-gold transition-colors"
             >
               <div className="w-10 h-10 rounded-full bg-cream/10 flex items-center justify-center">
                 <Mail className="w-5 h-5" />
               </div>
               <span className="text-sm font-medium">
-                exports@sglobalexporter.com
+                shahinur23287@gmail.com
               </span>
             </a>
             <div className="hidden sm:block w-px h-8 bg-cream/20" />
             <a
-              href="tel:+911234567890"
+              href="tel:+919181147813"
               className="flex items-center gap-3 text-cream/70 hover:text-gold transition-colors"
             >
               <div className="w-10 h-10 rounded-full bg-cream/10 flex items-center justify-center">
                 <Phone className="w-5 h-5" />
               </div>
-              <span className="text-sm font-medium">+91 98765 43210</span>
+              <span className="text-sm font-medium">+91 91811 47813</span>
             </a>
           </motion.div>
         </motion.div>

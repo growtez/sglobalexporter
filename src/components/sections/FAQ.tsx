@@ -150,10 +150,10 @@ export default function FAQ() {
         >
           <p className="text-stone-500 mb-4">Still have questions?</p>
           <a
-            href="mailto:exports@sglobalexporter.com"
+            href="mailto:shahinur23287@gmail.com"
             className="inline-flex items-center gap-2 text-forest font-semibold hover:text-gold transition-colors text-lg"
           >
-            exports@sglobalexporter.com →
+            shahinur23287@gmail.com →
           </a>
         </motion.div>
       </div>
