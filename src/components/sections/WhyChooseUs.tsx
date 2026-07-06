@@ -25,7 +25,7 @@ const reasons = [
     icon: Globe2,
     title: "Export Expertise",
     description:
-      "15+ years navigating international trade — including FSSAI, FDA, EU, and Halal compliance. We handle all regulatory documentation seamlessly.",
+      "15+ years navigating international trade — including FSSAI, FDA, and EU compliance. We handle all regulatory documentation seamlessly.",
     accent: "bg-yellow-50 text-yellow-800 border-yellow-200",
     iconBg: "bg-yellow-100",
     iconColor: "text-yellow-700",

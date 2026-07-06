@@ -74,7 +74,7 @@ const steps = [
       "Tea Board of India Export Certificate",
       "Phytosanitary Certificate (NPPO)",
       "Certificate of Origin (APEDA / CoC)",
-      "FSSAI, EU, FDA & Halal documentation support",
+      "FSSAI, EU & FDA documentation support",
     ],
     color: "bg-forest",
     lightColor: "bg-forest/5",
