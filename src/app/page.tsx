@@ -47,25 +47,26 @@ export default async function Home() {
       {/* Hero Slider (Auto-scrolling) */}
       <HeroSlider products={products} />
 
-      {/* 1. Hero / Intro Section */}
-      <section className="w-full pb-16 pt-16 relative bg-cream">
-        
-        <div className="container mx-auto px-4 text-center max-w-4xl relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 border border-gold/25 text-gold text-xs font-semibold uppercase tracking-wider mb-6 shadow-sm">
-            <Star className="w-3.5 h-3.5 fill-current" /> Premium Quality Exporter
-          </div>
-          <h1 className="text-2xl md:text-4xl font-bold text-forest mb-6 leading-tight">
-            Welcome to Shahinur Global Exporter
+      <section className="w-full py-8 md:py-10 relative bg-cream overflow-hidden">
+        <div className="container mx-auto px-4 max-w-3xl text-center relative z-10">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-forest mb-4 leading-tight tracking-tight">
+            Serving the World with Premium Tea.
           </h1>
-          <p className="text-[15px] md:text-base text-gray-600 leading-relaxed mb-6 px-4 md:px-12 font-medium">
-            Established in 2023, we are a leading Manufacturer, Exporter, Supplier & Trader of premium teas.
+          <p className="text-sm md:text-base text-stone-600 leading-relaxed mb-6 font-medium">
+            Welcome to Shahinur Global Exporter. Established in 2023, we are a leading Manufacturer, Exporter, Supplier & Trader of premium teas.
           </p>
-          <Link href="/about">
-            <Button variant="link" className="text-gold font-semibold group h-auto p-0 text-sm">
-              Discover Our Story <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </Link>
-
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/about">
+              <Button variant="link" className="text-gold font-bold group h-auto p-0 text-sm hover:text-forest transition-colors">
+                Discover Our Story <ArrowRight className="w-4 h-4 ml-1.5 group-hover:translate-x-1.5 transition-transform" />
+              </Button>
+            </Link>
+            <Link href="/contact#inquiry-form">
+              <Button className="bg-forest hover:bg-forest/90 text-white rounded-full px-6 h-10 text-xs font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                Send Inquiry
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -80,7 +81,12 @@ export default async function Home() {
           
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-8">
             {products.map((cat, idx) => (
-              <div key={idx} className="relative group rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 aspect-square cursor-pointer">
+              <div 
+                key={idx} 
+                className={`relative group rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 aspect-square cursor-pointer ${
+                  idx >= 4 ? "hidden sm:block" : ""
+                }`}
+              >
                 <Image src={cat.img} alt={cat.name} fill sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw" className="object-cover group-hover:scale-110 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="absolute bottom-0 inset-x-0 p-1.5 sm:p-2.5 text-center transform translate-y-1 group-hover:-translate-y-1 transition-transform duration-300">
@@ -91,67 +97,52 @@ export default async function Home() {
           </div>
           
           <div className="flex justify-center mt-12">
-            <Button className="bg-forest hover:bg-forest/90 text-white rounded-full px-8 h-12 text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
-              Explore All Categories
-            </Button>
+            <Link href="/products">
+              <Button className="bg-forest hover:bg-forest/90 text-white rounded-full px-8 h-12 text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                View All
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
       {/* 3. Ratings & Reviews */}
-      <section className="w-full bg-white py-20 relative">
+      <section className="w-full bg-white py-10 md:py-16 relative">
         <div className="container mx-auto px-4 max-w-6xl">
-          <div className="text-center mb-14">
-             <h2 className="text-3xl font-bold text-gray-900 mb-4">Customer Trust & Reviews</h2>
-             <p className="text-gray-500">See what our global clients say about our products and services.</p>
+          <div className="text-center mb-8 md:mb-12">
+             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Customer Trust & Reviews</h2>
+             <p className="text-sm md:text-base text-gray-500">See what our global clients say about our products and services.</p>
           </div>
 
-          <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 flex flex-col md:flex-row overflow-hidden mb-8">
+          <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 flex flex-col md:flex-row overflow-hidden mb-6">
              {/* Overall Rating */}
-             <div className="md:w-1/3 p-8 border-b md:border-b-0 md:border-r border-gray-100 bg-gray-50/30">
-                <div className="flex items-center justify-center gap-2 mb-6 text-amber-700 font-semibold text-sm uppercase tracking-wider">
+             <div className="md:w-1/2 p-6 md:p-8 border-b md:border-b-0 md:border-r border-gray-100 bg-gray-50/30">
+                <div className="flex items-center justify-center gap-2 mb-4 md:mb-6 text-amber-700 font-semibold text-xs md:text-sm uppercase tracking-wider">
                   <Star className="w-4 h-4 fill-current" /> Overall Rating
                 </div>
                 <div className="flex flex-col items-center justify-center">
-                   <div className="text-6xl font-black text-gray-900 mb-2 tracking-tighter">5.0<span className="text-3xl text-gray-300 font-medium tracking-normal">/5</span></div>
-                   <div className="flex gap-1 mb-4">
-                     {[1,2,3,4,5].map(i => <Star key={i} className="w-6 h-6 text-yellow-400 fill-current drop-shadow-sm" />)}
+                   <div className="text-5xl md:text-6xl font-black text-gray-900 mb-2 tracking-tighter">5.0<span className="text-2xl md:text-3xl text-gray-300 font-medium tracking-normal">/5</span></div>
+                   <div className="flex gap-1 mb-3">
+                     {[1,2,3,4,5].map(i => <Star key={i} className="w-5 h-5 md:w-6 md:h-6 text-yellow-400 fill-current drop-shadow-sm" />)}
                    </div>
-                   <p className="text-sm text-gray-500 mb-6 font-medium">Based on verified reviews</p>
-                   <Button variant="outline" className="border-gray-200 text-gray-700 rounded-full h-10 px-6 font-semibold hover:bg-gray-50 hover:text-amber-700 shadow-sm">Write a Review</Button>
-                </div>
-             </div>
-             
-             {/* Rating Breakdown */}
-             <div className="md:w-1/3 p-8 border-b md:border-b-0 md:border-r border-gray-100">
-                <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wider mb-6 text-center">Rating Breakdown</h3>
-                <div className="space-y-3.5 px-4">
-                  {[5,4,3,2,1].map((star) => (
-                    <div key={star} className="flex items-center text-sm text-gray-600 gap-3 group cursor-pointer">
-                      <span className="w-3 font-semibold text-gray-700">{star}</span>
-                      <Star className="w-4 h-4 text-yellow-400 fill-current -ml-1 group-hover:scale-110 transition-transform" />
-                      <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden shadow-inner">
-                         <div className={`h-full rounded-full transition-all duration-1000 ${star === 5 ? 'bg-gold w-full' : 'w-0'}`}></div>
-                      </div>
-                      <span className="w-4 text-right font-medium text-gray-500">{star === 5 ? '1' : '0'}</span>
-                    </div>
-                  ))}
+                   <p className="text-xs md:text-sm text-gray-500 mb-4 md:mb-6 font-medium">Based on verified reviews</p>
+                   <Button variant="outline" className="border-gray-200 text-gray-700 rounded-full h-9 md:h-10 px-5 md:px-6 text-xs md:text-sm font-semibold hover:bg-gray-50 hover:text-amber-700 shadow-sm">Write a Review</Button>
                 </div>
              </div>
 
              {/* User Satisfaction */}
-             <div className="md:w-1/3 p-8 bg-gray-50/30">
-                <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wider mb-8 text-center">User Satisfaction</h3>
-                <div className="flex justify-around px-2">
+             <div className="md:w-1/2 p-6 md:p-8 bg-gray-50/30">
+                <h3 className="text-xs md:text-sm font-semibold text-gray-800 uppercase tracking-wider mb-5 md:mb-8 text-center">User Satisfaction</h3>
+                <div className="flex justify-around px-0 md:px-2">
                    {['Response', 'Quality', 'Delivery'].map((metric, i) => (
                      <div key={i} className="flex flex-col items-center">
-                       <div className="w-16 h-16 rounded-full border-4 border-gray-100 bg-white shadow-sm flex items-center justify-center text-sm font-bold text-gray-400 mb-3 relative">
+                       <div className="w-12 h-12 md:w-16 md:h-16 rounded-full border-4 border-gray-100 bg-white shadow-sm flex items-center justify-center text-xs md:text-sm font-bold text-gray-400 mb-2 md:mb-3 relative">
                          0%
                          {/* Circle progress mockup */}
                          <svg className="absolute inset-0 w-full h-full -rotate-90">
-                            <circle cx="28" cy="28" r="28" className="stroke-current text-gold/20" strokeWidth="4" fill="transparent" />
+                            <circle cx="50%" cy="50%" r="42%" className="stroke-current text-gold/20" strokeWidth="4" fill="transparent" />
                          </svg>
                        </div>
-                       <span className="text-xs text-gray-600 font-semibold uppercase tracking-wide">{metric}</span>
+                       <span className="text-[10px] md:text-xs text-gray-600 font-semibold uppercase tracking-wide">{metric}</span>
                      </div>
                    ))}
                 </div>
@@ -159,31 +150,31 @@ export default async function Home() {
           </div>
 
           {/* Individual Review */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 flex flex-col md:flex-row gap-6 hover:shadow-md transition-shadow">
-             <div className="w-14 h-14 bg-forest rounded-2xl shadow-inner text-white flex items-center justify-center text-2xl font-bold flex-shrink-0">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 md:p-8 flex flex-col md:flex-row gap-4 md:gap-6 hover:shadow-md transition-shadow">
+             <div className="w-12 h-12 md:w-14 md:h-14 bg-forest rounded-2xl shadow-inner text-white flex items-center justify-center text-xl md:text-2xl font-bold flex-shrink-0">
                R
              </div>
              <div className="flex-1">
-               <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
+               <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-1 md:gap-2">
                  <div className="flex items-center gap-2">
-                   <h4 className="font-bold text-gray-900 text-lg">R.k. Aggarwal</h4>
-                   <span className="px-2 py-0.5 bg-gray-100 text-gray-500 rounded-md text-xs font-medium">Delhi</span>
+                   <h4 className="font-bold text-gray-900 text-base md:text-lg">R.k. Aggarwal</h4>
+                   <span className="px-2 py-0.5 bg-gray-100 text-gray-500 rounded-md text-[10px] md:text-xs font-medium">Delhi</span>
                  </div>
                  <div className="flex items-center gap-2">
                    <div className="flex text-yellow-400 gap-0.5">
-                       <Star className="w-4 h-4 fill-current drop-shadow-sm" />
-                       <Star className="w-4 h-4 fill-current drop-shadow-sm" />
-                       <Star className="w-4 h-4 fill-current drop-shadow-sm" />
-                       <Star className="w-4 h-4 fill-current drop-shadow-sm" />
-                       <Star className="w-4 h-4 fill-current drop-shadow-sm" />
+                       <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
+                       <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
+                       <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
+                       <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
+                       <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
                    </div>
-                   <span className="text-xs text-gray-400 font-medium">07 Jan 2025</span>
+                   <span className="text-[10px] md:text-xs text-gray-400 font-medium">07 Jan 2025</span>
                  </div>
                </div>
-               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-gold/10 text-gold rounded-lg text-xs font-bold mb-3">
-                 <CheckCircle2 className="w-3.5 h-3.5" /> Product: Assam Ctc Tea
+               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gold/10 text-gold rounded-lg text-[11px] md:text-xs font-bold mb-2 md:mb-3">
+                 <CheckCircle2 className="w-3 h-3 md:w-3.5 md:h-3.5" /> Product: Assam Ctc Tea
                </div>
-               <p className="text-gray-700 text-base leading-relaxed italic">"Refreshingly unique features that enhance usability and overall experience. Highly recommended for wholesale buyers."</p>
+               <p className="text-gray-700 text-sm md:text-base leading-relaxed italic">"Refreshingly unique features that enhance usability and overall experience. Highly recommended for wholesale buyers."</p>
              </div>
           </div>
         </div>
@@ -245,7 +236,7 @@ export default async function Home() {
       </section>
 
       {/* 5. Contact / Form Footer */}
-      <section className="w-full bg-white py-24 relative overflow-hidden">
+      <section id="inquiry" className="w-full bg-white py-24 relative overflow-hidden scroll-mt-24">
          {/* Background pattern */}
          <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
          
