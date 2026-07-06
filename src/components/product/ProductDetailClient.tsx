@@ -45,16 +45,103 @@ const TRUST_BADGES = [
   { icon: Award, label: "Premium Grade", sub: "Lab tested" },
 ];
 
-const SPECS = (product: Product) => [
-  { label: "Origin", value: product.origin || "Assam, India" },
-  { label: "Category", value: product.category || "Tea" },
-  { label: "Grade", value: product.grade || "BOPF / BP" },
-  { label: "Min. Order", value: `${product.min_order_kg || 10} kg` },
-  { label: "Availability", value: (product.stock_kg || 0) > 0 ? "In Stock" : "On Demand" },
-  { label: "Packaging", value: "Bulk / Private Label" },
-  { label: "Shelf Life", value: "24 months" },
-  { label: "Certifications", value: "FSSAI, APEDA" },
-];
+const SPECS = (product: Product) => {
+  const name = product.name.toLowerCase();
+
+  if (name.includes("premium bop")) {
+    return [
+      { label: "Min. Order (MOQ)", value: "500 Kilogram" },
+      { label: "Cultivation Type", value: "Organic" },
+      { label: "Feature", value: "Strong Aroma, Nice Fragrance, Health Conscious" },
+      { label: "Packaging Size", value: "5-10kg" },
+      { label: "Packaging Type", value: "Plastic Packet" },
+      { label: "Shelf Life", value: "3 Months" },
+      { label: "Part", value: "Leaf" },
+      { label: "Country of Origin", value: "India" },
+    ];
+  }
+  if (name.includes("loose tea")) {
+    return [
+      { label: "Min. Order (MOQ)", value: "500 Kilogram" },
+      { label: "Cultivation Type", value: "Organic" },
+      { label: "Processing Type", value: "CTC" },
+      { label: "Form", value: "Granules" },
+      { label: "Usage", value: "For Making Tea" },
+      { label: "Packaging Type", value: "Plastic Packet" },
+      { label: "Packaging Size", value: "5-10kg" },
+      { label: "Shelf Life", value: "12 Months" },
+      { label: "Purity", value: "100%" },
+      { label: "Country of Origin", value: "India" },
+    ];
+  }
+  if (name.includes("orthodox tea")) {
+    return [
+      { label: "Min. Order (MOQ)", value: "500 Kilogram" },
+      { label: "Cultivation Type", value: "Organic" },
+      { label: "Processing Type", value: "Raw" },
+      { label: "Usage", value: "For Making Tea" },
+      { label: "Grade Standard", value: "Herbal Grade" },
+      { label: "Packaging Type", value: "Plastic Packet" },
+      { label: "Packaging Size", value: "5-10kg" },
+      { label: "Shelf Life", value: "3 Months" },
+      { label: "Ingredients", value: "Herbal Ingredients" },
+      { label: "Country of Origin", value: "India" },
+      { label: "Tea Type", value: "Orthodox" },
+    ];
+  }
+  if (name.includes("black tea")) {
+    return [
+      { label: "Min. Order (MOQ)", value: "500 Kilogram" },
+      { label: "Cultivation Type", value: "Natural" },
+      { label: "Processing Type", value: "Blended" },
+      { label: "Form", value: "Granules" },
+      { label: "Usage", value: "For Making Tea" },
+      { label: "Certification", value: "FSSAI Certified" },
+      { label: "Grade", value: "All Grades" },
+      { label: "Packaging Type", value: "Plastic Packet" },
+      { label: "Packaging Size", value: "5-10kg" },
+      { label: "Shelf Life", value: "3 Months" },
+      { label: "Country of Origin", value: "India" },
+      { label: "Speciality", value: "Strong Aroma, Nice Fragrance" },
+      { label: "Material", value: "Tea" },
+      { label: "Brand Name", value: "SG" },
+    ];
+  }
+  if (name.includes("ctc tea")) {
+    return [
+      { label: "Min. Order (MOQ)", value: "500 Kilogram" },
+      { label: "Cultivation Type", value: "Organic" },
+      { label: "Feature", value: "Strong Aroma, Nice Fragrance" },
+      { label: "Packaging Type", value: "Plastic Packet" },
+      { label: "Packaging Size", value: "5-10kg" },
+      { label: "Shelf Life", value: "3 Months" },
+      { label: "Country of Origin", value: "India" },
+    ];
+  }
+  if (name.includes("pure assam tea") || name.includes("assam")) {
+    return [
+      { label: "Min. Order (MOQ)", value: "500 Kilogram" },
+      { label: "Processing Type", value: "Raw" },
+      { label: "Storage Condition", value: "Loose Tea" },
+      { label: "Feature", value: "Strong Aroma, Nice Fragrance, Health Conscious" },
+      { label: "Packaging Type", value: "Plastic Packet" },
+      { label: "Packaging Size", value: "5-10kg" },
+      { label: "Shelf Life", value: "3 Months" },
+      { label: "Part", value: "Leaf" },
+      { label: "Country of Origin", value: "India" },
+    ];
+  }
+  
+  // Default fallback
+  return [
+    { label: "Min. Order (MOQ)", value: "500 Kilogram" },
+    { label: "Cultivation Type", value: "Organic" },
+    { label: "Packaging Size", value: "5-10kg" },
+    { label: "Packaging Type", value: "Plastic Packet" },
+    { label: "Shelf Life", value: "3 Months" },
+    { label: "Country of Origin", value: product.origin || "India" },
+  ];
+};
 
 const FAQS = [
   {

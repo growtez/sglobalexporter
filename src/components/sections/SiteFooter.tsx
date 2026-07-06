@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Leaf, Mail, Phone, MapPin, Globe2 } from "lucide-react";
 
 const navLinks = {
   Products: [
-    { label: "CTC Assam Tea", href: "/products?category=tea&type=ctc" },
-    { label: "Orthodox Assam Tea", href: "/products?category=tea&type=orthodox" },
+    { label: "CTC Tea", href: "/products?category=tea&type=ctc" },
+    { label: "Orthodox Tea", href: "/products?category=tea&type=orthodox" },
     { label: "Green Tea", href: "/products?category=tea&type=green" },
     { label: "White Tea", href: "/products?category=tea&type=white" },
     { label: "Golden Tips", href: "/products?category=tea&type=golden" },
@@ -35,7 +36,6 @@ const certifications = [
   "Tea Board of India Certified",
   "FSSAI Licensed",
   "APEDA Registered",
-  "Halal Certified (Select Grades)",
 ];
 
 const socialLinks = [
@@ -49,45 +49,49 @@ export default function SiteFooter() {
     <footer className="w-full bg-charcoal text-cream">
       {/* Main footer */}
       <div className="container mx-auto px-4 md:px-8 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-6 gap-12">
+        <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-6 gap-x-6 gap-y-12">
           {/* Brand column — wider */}
-          <div className="xl:col-span-2 flex flex-col gap-6">
+          <div className="col-span-2 xl:col-span-2 flex flex-col gap-6">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-forest flex items-center justify-center">
-                <Leaf className="w-5 h-5 text-gold" />
+              <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center p-0.5 relative overflow-hidden group-hover:scale-105 transition-transform">
+                <Image 
+                  src="/images/logo.png" 
+                  alt="SGlobalExporter Logo" 
+                  width={48}
+                  height={48}
+                  className="object-contain w-full h-full"
+                />
               </div>
               <div>
                 <div className="text-xl font-serif font-bold text-cream leading-none">
-                  SGlobalExporter
+                  Shahinur Global Exporter
                 </div>
-                <div className="text-xs text-cream/40 tracking-widest uppercase">
-                  Premium Tea Export
+                <div className="text-xs text-cream/40 tracking-widest uppercase mt-1">
+                  Premium Tea Exporters
                 </div>
               </div>
             </Link>
 
             <p className="text-cream/55 text-sm leading-relaxed max-w-xs">
-              Curating the finest single-origin Assam teas from the
-              Brahmaputra Valley for the global market. Heritage in every
-              leaf.
+              Established in 2023, we are a leading Manufacturer, Exporter, Supplier & Trader of premium teas for the global market.
             </p>
 
             {/* Contact */}
             <div className="flex flex-col gap-3">
               <a
-                href="mailto:exports@sglobalexporter.com"
+                href="mailto:info@sglobalexporter.com"
                 className="flex items-center gap-3 text-sm text-cream/60 hover:text-gold transition-colors"
               >
                 <Mail className="w-4 h-4 text-gold flex-shrink-0" />
-                exports@sglobalexporter.com
+                info@sglobalexporter.com
               </a>
               <a
-                href="tel:+911234567890"
+                href="tel:+910000000000"
                 className="flex items-center gap-3 text-sm text-cream/60 hover:text-gold transition-colors"
               >
                 <Phone className="w-4 h-4 text-gold flex-shrink-0" />
-                +91 98765 43210
+                +91 00000 00000
               </a>
               <div className="flex items-start gap-3 text-sm text-cream/60">
                 <MapPin className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
@@ -134,47 +138,35 @@ export default function SiteFooter() {
                   </li>
                 ))}
               </ul>
+              
+              {category === "Legal" && (
+                <div className="mt-8">
+                  <h4 className="text-sm font-semibold uppercase tracking-widest text-cream/40 mb-3">
+                    Certifications & Compliance
+                  </h4>
+                  <ul className="flex flex-col gap-2.5">
+                    {certifications.map((cert) => (
+                      <li key={cert} className="text-xs text-cream/60 flex items-start gap-1.5 leading-snug">
+                        <span className="text-gold">✓</span> {cert}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           ))}
-        </div>
-
-        {/* Certifications */}
-        <div className="mt-16 pt-8 border-t border-cream/10">
-          <div className="text-xs font-semibold uppercase tracking-widest text-cream/30 mb-4">
-            Certifications & Compliance
-          </div>
-          <div className="flex flex-wrap gap-3">
-            {certifications.map((cert) => (
-              <span
-                key={cert}
-                className="px-4 py-1.5 rounded-full border border-cream/15 text-xs text-cream/50 bg-cream/5"
-              >
-                ✓ {cert}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Admin Panel Access */}
-        <div className="mt-8">
-          <Link
-            href="/admin"
-            className="inline-flex items-center gap-2 text-sm md:text-base font-semibold text-gold hover:text-white border border-gold/20 hover:border-white/30 rounded-xl px-5 py-2.5 bg-white/5 hover:bg-white/10 transition-all duration-300 shadow-sm"
-          >
-            Admin Panel &rarr;
-          </Link>
         </div>
       </div>
 
       {/* Bottom bar */}
       <div className="border-t border-cream/10">
-        <div className="container mx-auto px-4 md:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-cream/35">
-          <span>
-            © {new Date().getFullYear()} SGlobalExporter. All rights reserved.
-          </span>
-          <span>
-            Crafted with ♥ in Assam, India · Exporting Heritage Globally
-          </span>
+        <div className="container mx-auto px-4 md:px-8 py-6 flex flex-col items-center justify-center gap-2.5 text-xs text-cream/40 text-center">
+          <p>
+            © {new Date().getFullYear()} Shahinur Global Exporter. All rights reserved.
+          </p>
+          <p>
+            Made by <a href="https://growtez.com" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-white font-medium transition-colors">Growtez</a>
+          </p>
         </div>
       </div>
     </footer>

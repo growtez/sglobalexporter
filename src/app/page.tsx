@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import HeroSlider from "@/components/sections/HeroSlider";
+import HomeFAQ from "@/components/sections/HomeFAQ";
 import { createClient } from '@/lib/supabase/server';
 import { 
   User, Building2, Briefcase, PiggyBank, 
@@ -71,22 +72,20 @@ export default async function Home() {
       </section>
 
       {/* 2. Product Range */}
-      <section className="w-full bg-stone-50/50 py-16 relative">
+      <section className="w-full bg-stone-50/50 py-8 md:py-12 relative">
         <div className="absolute top-0 inset-x-0 h-px bg-stone-200/50"></div>
         <div className="container mx-auto px-4 max-w-7xl">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-forest mb-4 tracking-tight">Our Premium Product Range</h2>
             <p className="text-gray-500 max-w-2xl mx-auto">Explore our wide variety of meticulously sourced and processed teas and eco-friendly products.</p>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5 md:gap-6">
-            {products.map((cat, idx) => (
+            {products.slice(0, 5).map((cat, idx) => (
               <div 
                 key={idx} 
                 className={`relative group rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 aspect-square cursor-pointer ${
                   idx >= 4 ? "hidden lg:block" : ""
-                } ${
-                  idx >= 5 ? "hidden" : ""
                 }`}
               >
                 <Image src={cat.img} alt={cat.name} fill sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 20vw" className="object-cover group-hover:scale-110 transition-transform duration-700" />
@@ -98,7 +97,7 @@ export default async function Home() {
             ))}
           </div>
           
-          <div className="flex justify-center mt-12">
+          <div className="flex justify-center mt-8">
             <Link href="/products">
               <Button className="bg-forest hover:bg-forest/90 text-white rounded-full px-8 h-12 text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
                 View All
@@ -108,166 +107,113 @@ export default async function Home() {
         </div>
       </section>
       {/* 3. Ratings & Reviews */}
-      <section className="w-full bg-white py-10 md:py-16 relative">
+      <section className="w-full bg-white py-8 md:py-12 relative">
         <div className="container mx-auto px-4 max-w-6xl">
-          <div className="text-center mb-8 md:mb-12">
+          <div className="text-center mb-6 md:mb-8">
              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Customer Trust & Reviews</h2>
              <p className="text-sm md:text-base text-gray-500">See what our global clients say about our products and services.</p>
           </div>
 
-          <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 flex flex-col md:flex-row overflow-hidden mb-6">
+          <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 grid grid-cols-2 lg:grid-cols-4 overflow-hidden mb-6">
              {/* Overall Rating */}
-             <div className="md:w-1/2 p-6 md:p-8 border-b md:border-b-0 md:border-r border-gray-100 bg-gray-50/30">
+             <div className="col-span-1 lg:col-span-1 p-6 md:p-8 border-r border-b lg:border-b-0 border-gray-100 bg-gray-50/30">
                 <div className="flex items-center justify-center gap-2 mb-4 md:mb-6 text-amber-700 font-semibold text-xs md:text-sm uppercase tracking-wider">
                   <Star className="w-4 h-4 fill-current" /> Overall Rating
                 </div>
                 <div className="flex flex-col items-center justify-center">
-                   <div className="text-5xl md:text-6xl font-black text-gray-900 mb-2 tracking-tighter">5.0<span className="text-2xl md:text-3xl text-gray-300 font-medium tracking-normal">/5</span></div>
+                   <div className="text-4xl md:text-6xl font-black text-gray-900 mb-2 tracking-tighter">5.0<span className="text-xl md:text-3xl text-gray-300 font-medium tracking-normal">/5</span></div>
                    <div className="flex gap-1 mb-3">
-                     {[1,2,3,4,5].map(i => <Star key={i} className="w-5 h-5 md:w-6 md:h-6 text-yellow-400 fill-current drop-shadow-sm" />)}
+                     {[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 md:w-6 md:h-6 text-yellow-400 fill-current drop-shadow-sm" />)}
                    </div>
-                   <p className="text-xs md:text-sm text-gray-500 mb-4 md:mb-6 font-medium">Based on verified reviews</p>
-                   <Button variant="outline" className="border-gray-200 text-gray-700 rounded-full h-9 md:h-10 px-5 md:px-6 text-xs md:text-sm font-semibold hover:bg-gray-50 hover:text-amber-700 shadow-sm">Write a Review</Button>
+                   <p className="text-[10px] md:text-sm text-gray-500 mb-4 md:mb-6 font-medium">Based on verified reviews</p>
+                   <Button variant="outline" className="border-gray-200 text-gray-700 rounded-full h-8 md:h-10 px-4 md:px-6 text-[10px] md:text-sm font-semibold hover:bg-gray-50 hover:text-amber-700 shadow-sm">Write a Review</Button>
                 </div>
              </div>
 
-             {/* User Satisfaction */}
-             <div className="md:w-1/2 p-6 md:p-8 bg-gray-50/30">
-                <h3 className="text-xs md:text-sm font-semibold text-gray-800 uppercase tracking-wider mb-5 md:mb-8 text-center">User Satisfaction</h3>
-                <div className="flex justify-around px-0 md:px-2">
-                   {[
-                     { label: 'Response', value: 98 },
-                     { label: 'Quality', value: 99 },
-                     { label: 'Delivery', value: 97 }
-                   ].map((metric, i) => {
-                     // SVG Circle math: r=24, circumference = 2 * pi * 24 = 150.8
-                     const r = 24;
-                     const c = 2 * Math.PI * r;
-                     const offset = c - (metric.value / 100) * c;
-                     
-                     return (
-                       <div key={i} className="flex flex-col items-center">
-                         <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white shadow-sm flex items-center justify-center text-xs md:text-sm font-extrabold text-stone-900 mb-2 md:mb-3 relative">
-                           {metric.value}%
-                           {/* Circle progress SVG */}
-                           <svg className="absolute inset-0 w-full h-full -rotate-90">
-                              <circle 
-                                cx="50%" 
-                                cy="50%" 
-                                r={r} 
-                                className="stroke-stone-100" 
-                                strokeWidth="4" 
-                                fill="transparent" 
-                              />
-                              <circle 
-                                cx="50%" 
-                                cy="50%" 
-                                r={r} 
-                                className="stroke-gold transition-all duration-1000 ease-out" 
-                                strokeWidth="4" 
-                                fill="transparent" 
-                                strokeDasharray={c}
-                                strokeDashoffset={offset}
-                                strokeLinecap="round"
-                              />
-                           </svg>
-                         </div>
-                         <span className="text-[10px] md:text-xs text-stone-600 font-bold uppercase tracking-wide">{metric.label}</span>
-                       </div>
-                     );
-                   })}
-                </div>
-             </div>
-          </div>
+              {/* User Satisfaction */}
+              <div className="col-span-1 lg:col-span-1 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-gray-100 bg-gray-50/30 flex flex-col justify-center">
+                 <h3 className="text-xs md:text-sm font-semibold text-gray-800 uppercase tracking-wider mb-6 text-center">User Satisfaction</h3>
+                 <div className="flex flex-col gap-5 md:gap-6 items-center justify-center">
+                    {[
+                      { label: 'Response', value: 98 },
+                      { label: 'Quality', value: 99 },
+                      { label: 'Delivery', value: 97 }
+                    ].map((metric, i) => {
+                      // SVG Circle math: r=24, circumference = 2 * pi * 24 = 150.8
+                      const r = 20; // slightly smaller for mobile layout scaling
+                      const c = 2 * Math.PI * r;
+                      const offset = c - (metric.value / 100) * c;
+                      
+                      return (
+                        <div key={i} className="flex flex-row items-center gap-2.5 md:gap-4 w-full max-w-[150px] md:max-w-[180px] justify-start">
+                          <div className="w-10 h-10 md:w-16 md:h-16 rounded-full bg-white shadow-sm flex items-center justify-center text-[10px] md:text-sm font-extrabold text-stone-900 relative flex-shrink-0">
+                            {metric.value}%
+                            {/* Circle progress SVG */}
+                            <svg className="absolute inset-0 w-full h-full -rotate-90">
+                               <circle 
+                                 cx="50%" 
+                                 cy="50%" 
+                                 r={r} 
+                                 className="stroke-stone-100" 
+                                 strokeWidth="3 md:strokeWidth=4" 
+                                 fill="transparent" 
+                               />
+                               <circle 
+                                 cx="50%" 
+                                 cy="50%" 
+                                 r={r} 
+                                 className="stroke-gold transition-all duration-1000 ease-out" 
+                                 strokeWidth="3 md:strokeWidth=4" 
+                                 fill="transparent" 
+                                 strokeDasharray={c}
+                                 strokeDashoffset={offset}
+                                 strokeLinecap="round"
+                               />
+                            </svg>
+                          </div>
+                          <span className="text-[10px] md:text-sm text-stone-600 font-bold uppercase tracking-wide">{metric.label}</span>
+                        </div>
+                      );
+                    })}
+                 </div>
+              </div>
 
-          {/* Individual Review */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 md:p-8 flex flex-col md:flex-row gap-4 md:gap-6 hover:shadow-md transition-shadow">
-             <div className="w-12 h-12 md:w-14 md:h-14 bg-forest rounded-2xl shadow-inner text-white flex items-center justify-center text-xl md:text-2xl font-bold flex-shrink-0">
-               R
-             </div>
-             <div className="flex-1">
-               <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-1 md:gap-2">
-                 <div className="flex items-center gap-2">
-                   <h4 className="font-bold text-gray-900 text-base md:text-lg">R.k. Aggarwal</h4>
-                   <span className="px-2 py-0.5 bg-gray-100 text-gray-500 rounded-md text-[10px] md:text-xs font-medium">Delhi</span>
+              {/* Individual Review */}
+              <div className="col-span-2 lg:col-span-2 p-6 md:p-8 bg-white flex flex-col justify-center">
+                 <div className="flex gap-4 items-start">
+                    <div className="w-12 h-12 md:w-14 md:h-14 bg-forest rounded-2xl shadow-inner text-white flex items-center justify-center text-xl md:text-2xl font-bold flex-shrink-0">
+                      R
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-1">
+                        <div className="flex items-center gap-2">
+                          <h4 className="font-bold text-gray-900 text-base md:text-lg">R.k. Aggarwal</h4>
+                          <span className="px-2 py-0.5 bg-gray-100 text-gray-500 rounded-md text-[10px] md:text-xs font-medium">Delhi</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="flex text-yellow-400 gap-0.5">
+                              <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
+                              <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
+                              <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
+                              <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
+                              <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
+                          </div>
+                          <span className="text-[10px] md:text-xs text-gray-400 font-medium">07 Jan 2025</span>
+                        </div>
+                      </div>
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gold/10 text-gold rounded-lg text-[11px] md:text-xs font-bold mb-3">
+                        <CheckCircle2 className="w-3 h-3 md:w-3.5 md:h-3.5" /> Product: Assam Ctc Tea
+                      </div>
+                      <p className="text-gray-700 text-sm md:text-base leading-relaxed italic">"Refreshingly unique features that enhance usability and overall experience. Highly recommended for wholesale buyers."</p>
+                    </div>
                  </div>
-                 <div className="flex items-center gap-2">
-                   <div className="flex text-yellow-400 gap-0.5">
-                       <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
-                       <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
-                       <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
-                       <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
-                       <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
-                   </div>
-                   <span className="text-[10px] md:text-xs text-gray-400 font-medium">07 Jan 2025</span>
-                 </div>
-               </div>
-               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gold/10 text-gold rounded-lg text-[11px] md:text-xs font-bold mb-2 md:mb-3">
-                 <CheckCircle2 className="w-3 h-3 md:w-3.5 md:h-3.5" /> Product: Assam Ctc Tea
-               </div>
-               <p className="text-gray-700 text-sm md:text-base leading-relaxed italic">"Refreshingly unique features that enhance usability and overall experience. Highly recommended for wholesale buyers."</p>
-             </div>
+              </div>
           </div>
         </div>
       </section>
 
-      {/* 4. FAQs */}
-      <section className="w-full bg-stone-50/50 py-20 relative overflow-hidden">
-         <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-[100px] opacity-50 -z-0 pointer-events-none"></div>
-         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gold/5 rounded-full blur-[100px] opacity-50 -z-0 pointer-events-none"></div>
-         
-         <div className="container mx-auto px-4 max-w-4xl relative z-10">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-forest mb-4">Frequently Asked Questions</h2>
-              <p className="text-gray-500">Everything you need to know about Shahinur Global Exporter.</p>
-            </div>
-            
-            <div className="space-y-4">
-               {/* Expanded FAQ */}
-               <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group">
-                 <div className="p-6 flex justify-between items-start cursor-pointer bg-[#FAF7F0]">
-                    <div className="flex gap-4 items-start pr-8">
-                       <span className="text-gold font-black text-xl mt-0.5 opacity-40">01</span>
-                       <h3 className="font-bold text-forest text-base mt-1">What is the year of establishment of Shahinur Global Exporter (Opc) Private Limited?</h3>
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center text-gold flex-shrink-0 mt-0.5 shadow-inner">
-                       <ChevronUp className="w-5 h-5" />
-                    </div>
-                 </div>
-                 <div className="px-6 pb-6 pl-14 text-sm text-gray-600 leading-relaxed pr-10">
-                    The establishment year of Shahinur Global Exporter (Opc) Private Limited is 2023. Since its inception, the company has been engaged in business activities focused on customer satisfaction and premium tea exports globally.
-                 </div>
-               </div>
-
-               {/* Collapsed FAQs */}
-               {[
-                 "What are the main products offered by Shahinur Global Exporter?",
-                 "Where is Shahinur Global Exporter located?",
-                 "Which product categories does the company specialize in?",
-                 "How can international buyers contact you for bulk orders?"
-               ].map((question, i) => (
-                 <div key={i} className="bg-white rounded-2xl border border-gray-100 hover:border-gold/30 shadow-sm hover:shadow-md transition-all duration-300">
-                   <div className="p-6 flex justify-between items-center cursor-pointer">
-                      <div className="flex gap-4 items-center pr-8">
-                         <span className="text-gray-300 font-black text-xl w-6">0{i+2}</span>
-                         <h3 className="font-semibold text-stone-850 text-base">{question}</h3>
-                      </div>
-                      <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 flex-shrink-0">
-                        <ChevronDown className="w-5 h-5" />
-                      </div>
-                   </div>
-                 </div>
-               ))}
-            </div>
-            
-            <div className="mt-8 text-center">
-              <Button variant="link" className="text-gold font-semibold">View all FAQs <ArrowRight className="w-4 h-4 ml-1" /></Button>
-            </div>
-         </div>
-      </section>
-
-      {/* 5. Contact / Form Footer */}
-      <section id="inquiry" className="w-full bg-white py-24 relative overflow-hidden scroll-mt-24">
+      {/* 4. Contact / Form Footer */}
+      <section id="inquiry" className="w-full bg-white py-8 md:py-12 relative overflow-hidden scroll-mt-24">
          {/* Background pattern */}
          <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
          
@@ -374,6 +320,9 @@ export default async function Home() {
             </div>
          </div>
       </section>
+
+      {/* 5. FAQs */}
+      <HomeFAQ limit={3} />
     </main>
   );
 }

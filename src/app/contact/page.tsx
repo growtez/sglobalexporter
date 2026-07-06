@@ -6,6 +6,7 @@ import {
   CheckCircle2, Send, Star, MessageSquare 
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import HomeFAQ from "@/components/sections/HomeFAQ";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -20,16 +21,6 @@ export default function ContactPage() {
     <main className="min-h-screen bg-stone-50/50 py-16 md:py-24 font-sans">
       <div className="container mx-auto px-4 max-w-6xl">
         
-        {/* Header section */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h1 className="text-4xl md:text-5xl font-black text-stone-900 mb-4 tracking-tight">
-            Contact Us
-          </h1>
-          <p className="text-stone-600 text-lg">
-            Have questions about our premium tea collections or export services? Get in touch with our team today.
-          </p>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
           {/* Left Column: Contact Cards (5 cols) */}
@@ -159,6 +150,10 @@ export default function ContactPage() {
             )}
           </div>
 
+        </div>
+
+        <div id="faq-section" className="mt-20 scroll-mt-24">
+          <HomeFAQ />
         </div>
 
       </div>

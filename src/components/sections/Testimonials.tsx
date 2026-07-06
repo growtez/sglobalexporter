@@ -32,7 +32,7 @@ const testimonials = [
       "https://images.unsplash.com/photo-1494790108755-2616b612b786?q=80&w=200&auto=format&fit=crop",
     rating: 5,
     quote:
-      "The Halal certification process was handled without a single query from our end. Quality is impeccable and their Golden Tips range has become our best-selling premium line. Highly recommended.",
+      "The export documentation and certification process was handled without a single query from our end. Quality is impeccable and their Golden Tips range has become our best-selling premium line. Highly recommended.",
     tea: "CTC BOP + Golden Tips",
     volume: "3MT/month",
   },

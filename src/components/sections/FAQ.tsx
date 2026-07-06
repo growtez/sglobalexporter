@@ -21,7 +21,7 @@ const faqs = [
     id: 3,
     question: "What certifications do your teas carry?",
     answer:
-      "Our teas are certified by the Tea Board of India and carry FSSAI compliance. We support USDA Organic, EU Organic, Halal, Rainforest Alliance, and Fairtrade certifications — specific certification availability depends on the estate and variety. Please enquire for your requirement.",
+      "Our teas are certified by the Tea Board of India and carry FSSAI compliance. We support USDA Organic, EU Organic, Rainforest Alliance, and Fairtrade certifications — specific certification availability depends on the estate and variety. Please enquire for your requirement.",
   },
   {
     id: 4,
