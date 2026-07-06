@@ -57,7 +57,7 @@ export default function ContactPage() {
                     <div>
                       <p className="text-stone-300 text-xs font-bold uppercase tracking-wider mb-1">Office Address</p>
                       <p className="font-medium text-sm leading-relaxed text-stone-200">
-                        Pipulbari part 1, Hatsingimari, Mankachar, Dhubri, South Salmara, Assam - 783135
+                        HN 27, Hatigarh Chariali, Guwahati, Kamrup Metropolitan, Assam - 781038
                       </p>
                     </div>
                   </div>

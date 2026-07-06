@@ -80,23 +80,23 @@ export default function SiteFooter() {
             {/* Contact */}
             <div className="flex flex-col gap-3">
               <a
-                href="mailto:info@sglobalexporter.com"
+                href="mailto:shahinur23287@gmail.com"
                 className="flex items-center gap-3 text-sm text-cream/60 hover:text-gold transition-colors"
               >
                 <Mail className="w-4 h-4 text-gold flex-shrink-0" />
-                info@sglobalexporter.com
+                shahinur23287@gmail.com
               </a>
               <a
-                href="tel:+910000000000"
+                href="tel:+919181147813"
                 className="flex items-center gap-3 text-sm text-cream/60 hover:text-gold transition-colors"
               >
                 <Phone className="w-4 h-4 text-gold flex-shrink-0" />
-                +91 00000 00000
+                +91 91811 47813
               </a>
               <div className="flex items-start gap-3 text-sm text-cream/60">
                 <MapPin className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
                 <span>
-                  Dibrugarh, Assam, India — 786001
+                  HN 27, Hatigarh Chariali, Guwahati, Kamrup Metropolitan, Assam — 781038
                 </span>
               </div>
               <div className="flex items-center gap-3 text-sm text-cream/60">

@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 const faqData = [
   {
     id: 1,
-    question: "What is the year of establishment of Shahinur Global Exporter (Opc) Private Limited?",
-    answer: "The establishment year of Shahinur Global Exporter (Opc) Private Limited is 2023. Since its inception, the company has been engaged in business activities focused on customer satisfaction and premium tea exports globally."
+    question: "What is the year of establishment of Shahinur Global Exporter (OPC) Private Limited?",
+    answer: "The establishment year of Shahinur Global Exporter (OPC) Private Limited is 2023. Since its inception, the company has been engaged in business activities focused on customer satisfaction and premium tea exports globally."
   },
   {
     id: 2,
@@ -18,7 +18,7 @@ const faqData = [
   {
     id: 3,
     question: "Where is Shahinur Global Exporter located?",
-    answer: "Our registered office is located in Assam, India. Specifically, our address is Pipulbari part 1, Hatsingimari, Mankachar, Dhubri, South Salmara, Assam - 783135."
+    answer: "Our registered office is located in Assam, India. Specifically, our address is HN 27, Hatigarh Chariali, Guwahati, Kamrup Metropolitan, Assam - 781038."
   },
   {
     id: 4,
@@ -28,7 +28,7 @@ const faqData = [
   {
     id: 5,
     question: "How can international buyers contact you for bulk orders?",
-    answer: "International buyers can fill out the 'Send an Inquiry' form directly on our website or email us at info@sglobalexporter.com. Our export team will get back to you within 24 hours with a custom quote."
+    answer: "International buyers can fill out the 'Send an Inquiry' form directly on our website or email us at shahinur23287@gmail.com. Our export team will get back to you within 24 hours with a custom quote."
   }
 ];
 

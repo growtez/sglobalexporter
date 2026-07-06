@@ -37,7 +37,7 @@ export default function AboutPage() {
               className="space-y-6"
             >
               <span className="uppercase tracking-widest text-sm font-semibold text-gold">Our Story</span>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-forest">Shahinur Global Exporter (Opc) Private Limited</h2>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-forest">Shahinur Global Exporter (OPC) Private Limited</h2>
               <p className="text-stone-600 leading-relaxed font-light text-lg">
                 Established in the year 2023, we Manufacturer, Exporter, Supplier & Trader of premium teas.
               </p>
@@ -250,34 +250,29 @@ export default function AboutPage() {
                 </div>
                 <div className="grid grid-cols-2 text-sm py-2 border-b border-stone-100/50 last:border-0 gap-4">
                   <span className="font-semibold text-stone-700">Registered Address:</span>
-                  <span className="text-stone-600 font-medium leading-relaxed">Pipulbari part 1, Hatsingimari, Mankachar, Dhubri, South Salmara, Assam - 783135</span>
+                  <span className="text-stone-600 font-medium leading-relaxed">HN 27, Hatigarh Chariali, Guwahati, Kamrup Metropolitan, Assam - 781038</span>
                 </div>
               </div>
 
               <div className="space-y-8">
                 <div className="space-y-2">
                   <h4 className="font-serif text-lg text-forest font-semibold border-b border-stone-200/60 pb-1">Head Office</h4>
-                  <p className="text-sm font-medium text-stone-600 leading-relaxed">Pipulbari part 1, Hatsingimari, Mankachar, Dhubri, South Salmara, Assam - 783135</p>
+                  <p className="text-sm font-medium text-stone-600 leading-relaxed">HN 27, Hatigarh Chariali, Guwahati, Kamrup Metropolitan, Assam - 781038</p>
                 </div>
                 
                 <div className="space-y-2">
                   <h4 className="font-serif text-lg text-forest font-semibold border-b border-stone-200/60 pb-1">Corporate Office</h4>
-                  <p className="text-sm font-medium text-stone-600 leading-relaxed">Boragaon Guwahati, Assam - 781035, India</p>
-                </div>
-
-                <div className="space-y-2">
-                  <h4 className="font-serif text-lg text-forest font-semibold border-b border-stone-200/60 pb-1">Branch Office</h4>
-                  <p className="text-sm font-medium text-stone-600 leading-relaxed">Pipulbari part 1, Hatsingimari, Mankachar, Dhubri, Guwahati Assam, South Salmara - 783135</p>
+                  <p className="text-sm font-medium text-stone-600 leading-relaxed">HN 27, Hatigarh Chariali, Guwahati, Kamrup Metropolitan, Assam - 781038</p>
                 </div>
 
                 <div className="space-y-2">
                   <h4 className="font-serif text-lg text-forest font-semibold border-b border-stone-200/60 pb-1">Warehouse</h4>
-                  <p className="text-sm font-medium text-stone-600 leading-relaxed">Hatigaon Guwahati , seiju path, Assam - 781038, India</p>
+                  <p className="text-sm font-medium text-stone-600 leading-relaxed">HN 27, Hatigarh Chariali, Guwahati, Kamrup Metropolitan, Assam - 781038</p>
                 </div>
 
                 <div className="space-y-2">
                   <h4 className="font-serif text-lg text-forest font-semibold border-b border-stone-200/60 pb-1">Technical Support</h4>
-                  <p className="text-sm font-medium text-stone-600 leading-relaxed">Pipulbari part 1, Hatsingimari, Mankachar, Dhubri, Guwahati Assam - 783135</p>
+                  <p className="text-sm font-medium text-stone-600 leading-relaxed">HN 27, Hatigarh Chariali, Guwahati, Kamrup Metropolitan, Assam - 781038</p>
                 </div>
               </div>
             </div>
