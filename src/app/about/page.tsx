@@ -23,34 +23,7 @@ export default function AboutPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-cream overflow-hidden">
-      {/* Hero Section */}
-      <section className="relative h-[60vh] min-h-[500px] w-full bg-forest flex items-center justify-center text-center">
-        <div className="absolute inset-0 bg-forest/80 z-10" />
-        <div 
-          className="absolute inset-0 z-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1563889362-ec00b9021c11?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center" 
-          aria-hidden="true" 
-        />
-        
-        <div className="container mx-auto px-4 md:px-8 relative z-20 max-w-4xl">
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col items-center"
-          >
-            <span className="uppercase tracking-[0.3em] text-sm font-semibold text-gold mb-4">
-              Est. Generations Ago
-            </span>
-            <h1 className="text-4xl md:text-6xl font-serif font-bold text-cream mb-6 leading-tight">
-              Our Heritage & Story
-            </h1>
-            <div className="h-1 w-24 bg-gold mb-8"></div>
-            <p className="text-lg md:text-xl text-cream/90 font-light max-w-2xl leading-relaxed">
-              Rooted in the fertile valleys of the Brahmaputra, SGlobalExporter bridges the gap between Assam's ancient agricultural legacy and the global connoisseur.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+
 
       {/* The Journey Section */}
       <section className="py-24 bg-cream text-charcoal">
@@ -66,7 +39,7 @@ export default function AboutPage() {
               <span className="uppercase tracking-widest text-sm font-semibold text-gold">Our Story</span>
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-forest">Shahinur Global Exporter (Opc) Private Limited</h2>
               <p className="text-stone-600 leading-relaxed font-light text-lg">
-                Established in the year 2023, we Manufacturer, Exporter, Supplier & Trader of Ashwagandha Tea, Black Tea, Chamomile Tea, CTC Tea, Darjeeling Tea, Green Tea, Loose Tea, Jasmine Tea, Oolong Tea, Orthodox Tea etc.
+                Established in the year 2023, we Manufacturer, Exporter, Supplier & Trader of premium teas.
               </p>
               <p className="text-stone-600 leading-relaxed font-light">
                 Under the supervision of Mr. Shahinur Islam, our firm is achieving heights of achievement. We also provide various amenities to the patrons to put their demands forward and get them solve timely and as per their requirements.
@@ -97,8 +70,8 @@ export default function AboutPage() {
               viewport={{ once: true }}
               className="bg-white/80 backdrop-blur-xl border border-gray-100 rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center group relative overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-4 text-blue-600 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-4 text-amber-700 group-hover:scale-110 group-hover:bg-amber-700 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
                 <User className="w-7 h-7" />
               </div>
               <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-1.5 relative z-10">Founder</p>
@@ -112,8 +85,8 @@ export default function AboutPage() {
               transition={{ delay: 0.1 }}
               className="bg-white/80 backdrop-blur-xl border border-gray-100 rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center group relative overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-4 text-emerald-600 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-4 text-amber-700 group-hover:scale-110 group-hover:bg-amber-700 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
                 <Building2 className="w-7 h-7" />
               </div>
               <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-1.5 relative z-10">Established</p>
@@ -127,8 +100,8 @@ export default function AboutPage() {
               transition={{ delay: 0.2 }}
               className="bg-white/80 backdrop-blur-xl border border-gray-100 rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center group relative overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="w-14 h-14 rounded-2xl bg-purple-50 flex items-center justify-center mb-4 text-purple-600 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="w-14 h-14 rounded-2xl bg-orange-50 flex items-center justify-center mb-4 text-orange-700 group-hover:scale-110 group-hover:bg-orange-700 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
                 <Briefcase className="w-7 h-7" />
               </div>
               <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-1.5 relative z-10">Business Type</p>

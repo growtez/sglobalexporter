@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Outfit } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import SiteFooter from "@/components/sections/SiteFooter";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
-});
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -42,9 +38,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${playfair.variable} h-full antialiased`}
+      className={`${outfit.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans text-stone-900 bg-[#F9F9F8]">
+      <body className="min-h-full flex flex-col font-sans text-stone-900 bg-[#FDFBF7]">
         <Navbar />
         <main className="flex-1">{children}</main>
         <SiteFooter />
