@@ -23,9 +23,7 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const pathname = usePathname();
 
-  if (pathname?.startsWith("/admin")) {
-    return null;
-  }
+
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -42,6 +40,10 @@ export default function Navbar() {
     }
     return () => { document.body.style.overflow = ""; };
   }, [isMobileMenuOpen]);
+
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
 
   const navLinks = [
     { label: "Home", href: "/" },
