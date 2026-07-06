@@ -23,6 +23,10 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const pathname = usePathname();
 
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);

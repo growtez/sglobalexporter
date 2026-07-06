@@ -1,95 +1,291 @@
--- Create custom ENUM types for statuses
-CREATE TYPE order_status AS ENUM ('pending', 'processing', 'shipped', 'delivered', 'cancelled');
-CREATE TYPE inquiry_status AS ENUM ('pending', 'reviewed', 'quoted', 'closed');
-CREATE TYPE user_role AS ENUM ('customer', 'admin');
+/*
+==========================================================
+Shahinur Global Exporter
+Master Database Schema (Supabase/PostgreSQL)
 
--- 1. Profiles Table (Extends Supabase Auth)
-CREATE TABLE profiles (
-  id UUID REFERENCES auth.users(id) ON DELETE CASCADE PRIMARY KEY,
-  role user_role DEFAULT 'customer',
-  full_name TEXT,
-  company_name TEXT,
-  phone_number TEXT,
-  billing_address TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+Fully Idempotent & Safe to run multiple times.
+Roles: Admin and Customer only.
+No Activity Logging.
+(Fixed: Proper Order of Operations)
+==========================================================
+*/
+
+-- ==========================================
+-- 1. CLEANUP (Removing unused/old features)
+-- ==========================================
+DROP FUNCTION IF EXISTS public.is_manager();
+DROP TRIGGER IF EXISTS trg_log_products ON products;
+DROP FUNCTION IF EXISTS public.log_activity_trigger();
+DROP TABLE IF EXISTS activity_logs CASCADE;
+
+-- ==========================================
+-- 2. EXTENSIONS
+-- ==========================================
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+-- ==========================================
+-- 3. ENUMS
+-- ==========================================
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname='order_status') THEN
+        CREATE TYPE order_status AS ENUM ('pending','processing','shipped','delivered','cancelled');
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname='inquiry_status') THEN
+        CREATE TYPE inquiry_status AS ENUM ('pending','reviewed','quoted','closed');
+    END IF;
+END $$;
+
+-- ==========================================
+-- 4. TABLES (Base Definitions MUST come before functions)
+-- ==========================================
+
+CREATE TABLE IF NOT EXISTS profiles (
+    id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE
 );
 
--- 2. Products Table
-CREATE TABLE products (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  name TEXT NOT NULL,
-  slug TEXT UNIQUE NOT NULL,
-  description TEXT,
-  origin TEXT, -- e.g., 'Assam, India'
-  category TEXT, -- e.g., 'Tea', 'Rice'
-  price_per_kg DECIMAL(10, 2) NOT NULL,
-  min_order_kg INTEGER DEFAULT 1,
-  stock_kg INTEGER DEFAULT 0,
-  image_url TEXT,
-  is_active BOOLEAN DEFAULT true,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+CREATE TABLE IF NOT EXISTS allowed_users (
+    user_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE
 );
 
--- 3. Inquiries Table (For B2B / Custom Quotes)
-CREATE TABLE inquiries (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
-  product_id UUID REFERENCES products(id),
-  requested_kg INTEGER NOT NULL,
-  destination_country TEXT NOT NULL,
-  message TEXT,
-  status inquiry_status DEFAULT 'pending',
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+CREATE TABLE IF NOT EXISTS products (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    slug TEXT UNIQUE NOT NULL
 );
 
--- 4. Orders Table (For Direct Razorpay Checkouts)
-CREATE TABLE orders (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  user_id UUID REFERENCES profiles(id) ON DELETE SET NULL,
-  total_amount DECIMAL(12, 2) NOT NULL,
-  currency TEXT DEFAULT 'INR',
-  status order_status DEFAULT 'pending',
-  razorpay_order_id TEXT UNIQUE,
-  razorpay_payment_id TEXT UNIQUE,
-  shipping_address TEXT NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+CREATE TABLE IF NOT EXISTS inquiries (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid()
 );
 
--- 5. Order Items Table
-CREATE TABLE order_items (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  order_id UUID REFERENCES orders(id) ON DELETE CASCADE,
-  product_id UUID REFERENCES products(id),
-  quantity_kg INTEGER NOT NULL,
-  price_at_time DECIMAL(10, 2) NOT NULL
+CREATE TABLE IF NOT EXISTS orders (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid()
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid()
+);
+
+CREATE TABLE IF NOT EXISTS site_settings (
+    key TEXT PRIMARY KEY
 );
 
 -- ==========================================
--- ROW LEVEL SECURITY (RLS) POLICIES
+-- 5. ALTER TABLES (Schema Evolution)
 -- ==========================================
 
+-- Profiles
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS full_name TEXT;
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS company_name TEXT;
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS phone_number TEXT;
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS billing_address TEXT;
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ DEFAULT timezone('utc', now());
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT timezone('utc', now());
+ALTER TABLE profiles DROP COLUMN IF EXISTS role;
+
+-- Allowed Users (Admin only)
+ALTER TABLE allowed_users ADD COLUMN IF NOT EXISTS role TEXT;
+ALTER TABLE allowed_users DROP CONSTRAINT IF EXISTS allowed_users_role_check;
+ALTER TABLE allowed_users ADD CONSTRAINT allowed_users_role_check CHECK (role = 'admin');
+ALTER TABLE allowed_users ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT TRUE;
+ALTER TABLE allowed_users ADD COLUMN IF NOT EXISTS created_by UUID REFERENCES auth.users(id);
+ALTER TABLE allowed_users ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ DEFAULT now();
+
+-- Products
+ALTER TABLE products ADD COLUMN IF NOT EXISTS name TEXT NOT NULL DEFAULT 'Unnamed Product';
+ALTER TABLE products ADD COLUMN IF NOT EXISTS description TEXT;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS origin TEXT;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS category TEXT;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS price_per_kg DECIMAL(10,2) NOT NULL DEFAULT 0.00;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS min_order_kg INTEGER DEFAULT 1;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS stock_kg INTEGER DEFAULT 0;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS image_url TEXT;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT TRUE;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ DEFAULT timezone('utc', now());
+ALTER TABLE products ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT timezone('utc', now());
+
+-- Inquiries
+ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS user_id UUID REFERENCES profiles(id) ON DELETE CASCADE;
+ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS product_id UUID REFERENCES products(id);
+ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS requested_kg INTEGER NOT NULL DEFAULT 1;
+ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS destination_country TEXT NOT NULL DEFAULT 'Unknown';
+ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS message TEXT;
+ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS status inquiry_status DEFAULT 'pending';
+ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ DEFAULT timezone('utc', now());
+
+-- Orders
+ALTER TABLE orders ADD COLUMN IF NOT EXISTS user_id UUID REFERENCES profiles(id) ON DELETE SET NULL;
+ALTER TABLE orders ADD COLUMN IF NOT EXISTS total_amount DECIMAL(12,2) NOT NULL DEFAULT 0.00;
+ALTER TABLE orders ADD COLUMN IF NOT EXISTS currency TEXT DEFAULT 'INR';
+ALTER TABLE orders ADD COLUMN IF NOT EXISTS status order_status DEFAULT 'pending';
+ALTER TABLE orders ADD COLUMN IF NOT EXISTS razorpay_order_id TEXT UNIQUE;
+ALTER TABLE orders ADD COLUMN IF NOT EXISTS razorpay_payment_id TEXT UNIQUE;
+ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_address TEXT NOT NULL DEFAULT 'N/A';
+ALTER TABLE orders ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ DEFAULT timezone('utc', now());
+
+-- Order Items
+ALTER TABLE order_items ADD COLUMN IF NOT EXISTS order_id UUID REFERENCES orders(id) ON DELETE CASCADE;
+ALTER TABLE order_items ADD COLUMN IF NOT EXISTS product_id UUID REFERENCES products(id);
+ALTER TABLE order_items ADD COLUMN IF NOT EXISTS quantity_kg INTEGER NOT NULL DEFAULT 1;
+ALTER TABLE order_items ADD COLUMN IF NOT EXISTS price_at_time DECIMAL(10,2) NOT NULL DEFAULT 0.00;
+
+-- Site Settings
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS value JSONB;
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT now();
+
+-- ==========================================
+-- 6. FUNCTIONS (Now safely after tables)
+-- ==========================================
+
+-- Authorization Function
+CREATE OR REPLACE FUNCTION public.is_admin()
+RETURNS BOOLEAN
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+    SELECT EXISTS (
+        SELECT 1 FROM allowed_users 
+        WHERE user_id = auth.uid() AND role = 'admin' AND is_active = true
+    );
+$$;
+
+-- Trigger Functions
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER 
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    NEW.updated_at = now();
+    RETURN NEW;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+    INSERT INTO public.profiles (id)
+    VALUES (NEW.id)
+    ON CONFLICT (id) DO NOTHING;
+    RETURN NEW;
+END;
+$$;
+
+-- ==========================================
+-- 7. INDEXES
+-- ==========================================
+CREATE INDEX IF NOT EXISTS idx_products_slug ON products(slug);
+CREATE INDEX IF NOT EXISTS idx_products_category ON products(category);
+CREATE INDEX IF NOT EXISTS idx_orders_user_id ON orders(user_id);
+CREATE INDEX IF NOT EXISTS idx_inquiries_user_id ON inquiries(user_id);
+CREATE INDEX IF NOT EXISTS idx_allowed_users_role ON allowed_users(role);
+
+-- ==========================================
+-- 8. TRIGGERS
+-- ==========================================
+DO $$ 
+BEGIN
+    -- Profiles Updated At
+    IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname='trg_profiles_updated_at') THEN
+        CREATE TRIGGER trg_profiles_updated_at BEFORE UPDATE ON profiles
+        FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+    END IF;
+
+    -- Products Updated At
+    IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname='trg_products_updated_at') THEN
+        CREATE TRIGGER trg_products_updated_at BEFORE UPDATE ON products
+        FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+    END IF;
+
+    -- Auth User Created
+    IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname='on_auth_user_created') THEN
+        CREATE TRIGGER on_auth_user_created AFTER INSERT ON auth.users
+        FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+    END IF;
+END $$;
+
+-- ==========================================
+-- 9. ROW LEVEL SECURITY (RLS)
+-- ==========================================
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE inquiries ENABLE ROW LEVEL SECURITY;
 ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE order_items ENABLE ROW LEVEL SECURITY;
+ALTER TABLE allowed_users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE site_settings ENABLE ROW LEVEL SECURITY;
 
--- Profiles: Users can read/update their own profile.
-CREATE POLICY "Users can view own profile" ON profiles FOR SELECT USING (auth.uid() = id);
-CREATE POLICY "Users can update own profile" ON profiles FOR UPDATE USING (auth.uid() = id);
+-- ==========================================
+-- 10. POLICIES
+-- ==========================================
 
--- Products: Anyone can read active products. Admins can do anything (handled via Supabase service role or admin check).
-CREATE POLICY "Anyone can view active products" ON products FOR SELECT USING (is_active = true);
+-- Clean up any residual manager policies if ran previously
+DROP POLICY IF EXISTS "Managers manage products" ON products;
+DROP POLICY IF EXISTS "Managers can view all inquiries" ON inquiries;
+DROP POLICY IF EXISTS "Managers can view all orders" ON orders;
 
--- Inquiries: Users can create and view their own inquiries.
-CREATE POLICY "Users can insert own inquiries" ON inquiries FOR INSERT WITH CHECK (auth.uid() = user_id);
-CREATE POLICY "Users can view own inquiries" ON inquiries FOR SELECT USING (auth.uid() = user_id);
+DO $$
+BEGIN
+    -- Profiles
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname='Users can view own profile') THEN
+        CREATE POLICY "Users can view own profile" ON profiles FOR SELECT USING (auth.uid() = id);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname='Users can update own profile') THEN
+        CREATE POLICY "Users can update own profile" ON profiles FOR UPDATE USING (auth.uid() = id);
+    END IF;
 
--- Orders: Users can view their own orders.
-CREATE POLICY "Users can view own orders" ON orders FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY "Users can insert own orders" ON orders FOR INSERT WITH CHECK (auth.uid() = user_id);
+    -- Allowed Users (Admins only)
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname='Admins manage allowed_users') THEN
+        CREATE POLICY "Admins manage allowed_users" ON allowed_users FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname='Users can read own role') THEN
+        CREATE POLICY "Users can read own role" ON allowed_users FOR SELECT USING (auth.uid() = user_id);
+    END IF;
 
--- Order Items: Users can view items attached to their own orders.
-CREATE POLICY "Users can view own order items" ON order_items FOR SELECT USING (
-  order_id IN (SELECT id FROM orders WHERE user_id = auth.uid())
-);
+    -- Products
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname='Anyone can view active products') THEN
+        CREATE POLICY "Anyone can view active products" ON products FOR SELECT USING (is_active = true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname='Admins manage products') THEN
+        CREATE POLICY "Admins manage products" ON products FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
+    END IF;
+
+    -- Inquiries
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname='Users can manage own inquiries') THEN
+        CREATE POLICY "Users can manage own inquiries" ON inquiries FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname='Admins can view all inquiries') THEN
+        CREATE POLICY "Admins can view all inquiries" ON inquiries FOR SELECT USING (public.is_admin());
+    END IF;
+
+    -- Orders & Items
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname='Users can manage own orders') THEN
+        CREATE POLICY "Users can manage own orders" ON orders FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname='Users can view own order items') THEN
+        CREATE POLICY "Users can view own order items" ON order_items FOR SELECT USING (order_id IN (SELECT id FROM orders WHERE user_id = auth.uid()));
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname='Admins can view all orders') THEN
+        CREATE POLICY "Admins can view all orders" ON orders FOR SELECT USING (public.is_admin());
+    END IF;
+
+END $$;
+
+-- ==========================================
+-- 11. SEED DATA (First Admin)
+-- ==========================================
+/*
+To seed your first admin, uncomment the block below and replace the UUID 
+with the actual auth.users.id of the account you registered via Supabase Auth.
+
+INSERT INTO allowed_users (user_id, role, is_active)
+VALUES ('00000000-0000-0000-0000-000000000000', 'admin', true)
+ON CONFLICT (user_id) DO UPDATE 
+SET role = 'admin', is_active = true;
+*/

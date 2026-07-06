@@ -9,13 +9,28 @@ export async function login(formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data: authData, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
   if (error) {
     return { error: error.message };
+  }
+
+  if (authData.user) {
+    const { data: adminData } = await supabase
+      .from("allowed_users")
+      .select("role")
+      .eq("user_id", authData.user.id)
+      .eq("role", "admin")
+      .eq("is_active", true)
+      .single();
+
+    if (adminData) {
+      revalidatePath("/", "layout");
+      redirect("/admin");
+    }
   }
 
   revalidatePath("/", "layout");
@@ -49,7 +64,6 @@ export async function signup(formData: FormData) {
       id: data.user.id,
       full_name: fullName,
       company_name: companyName,
-      role: 'customer'
     });
 
     if (profileError) {
