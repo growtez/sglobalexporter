@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { 
   Search, 
@@ -20,6 +21,7 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -99,30 +101,44 @@ export default function Navbar() {
 
           {/* Center: Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1 h-full">
-            {navLinks.map((link) => (
-              <div key={link.label} className="relative group h-full flex items-center">
-                {link.hasDropdown ? (
-                  <div className="relative flex items-center h-full px-4 cursor-pointer">
-                    <span className="text-[13px] font-semibold text-stone-600 group-hover:text-gold transition-colors flex items-center gap-1">
-                      {link.label}
-                      <ChevronDown className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180 text-stone-400 group-hover:text-stone-600" />
-                    </span>
-                    {/* Animated underline */}
-                    <span className="absolute bottom-0 left-4 right-4 h-[2px] bg-gold rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                  </div>
-                ) : (
-                  <Link 
-                    href={link.href} 
-                    className="relative flex items-center h-full px-4"
-                  >
-                    <span className="text-[13px] font-semibold text-stone-600 group-hover:text-gold transition-colors">
-                      {link.label}
-                    </span>
-                    <span className="absolute bottom-0 left-4 right-4 h-[2px] bg-gold rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                  </Link>
-                )}
-              </div>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+              
+              return (
+                <div key={link.label} className="relative group h-full flex items-center">
+                  {link.hasDropdown ? (
+                    <div className="relative flex items-center h-full px-4 cursor-pointer">
+                      <span className={`text-[13px] font-semibold transition-colors flex items-center gap-1 ${
+                        isActive ? "text-gold" : "text-stone-600 group-hover:text-gold"
+                      }`}>
+                        {link.label}
+                        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180 ${
+                          isActive ? "text-gold" : "text-stone-400 group-hover:text-stone-600"
+                        }`} />
+                      </span>
+                      {/* Animated underline */}
+                      <span className={`absolute bottom-0 left-4 right-4 h-[2px] bg-gold rounded-full transition-transform duration-300 origin-left ${
+                        isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                      }`} />
+                    </div>
+                  ) : (
+                    <Link 
+                      href={link.href} 
+                      className="relative flex items-center h-full px-4"
+                    >
+                      <span className={`text-[13px] font-semibold transition-colors ${
+                        isActive ? "text-gold" : "text-stone-600 group-hover:text-gold"
+                      }`}>
+                        {link.label}
+                      </span>
+                      <span className={`absolute bottom-0 left-4 right-4 h-[2px] bg-gold rounded-full transition-transform duration-300 origin-left ${
+                        isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                      }`} />
+                    </Link>
+                  )}
+                </div>
+              );
+            })}
           </nav>
 
           {/* Right: Actions */}
