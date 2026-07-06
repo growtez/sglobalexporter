@@ -169,13 +169,19 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [activeTab, setActiveTab] = useState<"description" | "specs" | "faq">("description");
 
+  const images = product.image_url
+    ? product.image_url.split(",").filter((url) => url.trim() !== "")
+    : [];
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const selectedImage = images[activeImageIndex] || "/placeholder-tea.jpg";
+
   const handleAddToCart = () => {
     addItem({
       id: product.id,
       name: product.name,
       price_per_kg: product.price_per_kg,
       quantity_kg: qty,
-      image_url: product.image_url || "/placeholder-tea.jpg",
+      image_url: images[0] || "/placeholder-tea.jpg",
     });
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
@@ -207,9 +213,10 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             <div className="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
               <div className="relative aspect-square w-full">
                 <Image
-                  src={product.image_url || "/placeholder-tea.jpg"}
+                  src={selectedImage}
                   alt={product.name}
                   fill
+                  unoptimized
                   className="object-cover"
                   priority
                 />
@@ -230,22 +237,30 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 </button>
               </div>
 
-              {/* Thumbnail strip (placeholder — same image 3x) */}
-              <div className="flex gap-2 p-3 border-t border-stone-100">
-                {[1, 2, 3].map((i) => (
-                  <div
-                    key={i}
-                    className={`relative w-16 h-16 rounded-lg overflow-hidden border-2 cursor-pointer transition-colors ${i === 1 ? "border-forest" : "border-stone-200 hover:border-stone-400"}`}
-                  >
-                    <Image
-                      src={product.image_url || "/placeholder-tea.jpg"}
-                      alt={`${product.name} view ${i}`}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
+              {/* Thumbnail strip */}
+              {images.length > 0 && (
+                <div className="flex gap-2 p-3 border-t border-stone-100">
+                  {images.map((url, i) => (
+                    <div
+                      key={url || i}
+                      onClick={() => setActiveImageIndex(i)}
+                      className={`relative w-16 h-16 rounded-lg overflow-hidden border-2 cursor-pointer transition-all duration-200 ${
+                        i === activeImageIndex
+                          ? "border-forest scale-105 shadow-sm"
+                          : "border-stone-200 hover:border-stone-400"
+                      }`}
+                    >
+                      <Image
+                        src={url}
+                        alt={`${product.name} view ${i + 1}`}
+                        fill
+                        unoptimized
+                        className="object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Mini trust badges below image */}

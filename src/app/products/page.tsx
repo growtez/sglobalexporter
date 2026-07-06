@@ -29,7 +29,12 @@ export default async function ProductsPage({
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     if (supabaseUrl && supabaseUrl.startsWith('http')) {
       const supabase = await createClient();
-      let query = supabase.from("products").select("*").eq("is_active", true);
+      let query = supabase
+        .from("products")
+        .select("*")
+        .eq("is_active", true)
+        .order("created_at", { ascending: false })
+        .order("name", { ascending: true });
 
       if (category) {
         query = query.ilike("category", category);
@@ -38,7 +43,10 @@ export default async function ProductsPage({
       const { data, error } = await query;
       
       if (!error && data) {
-        products = data;
+        products = data.map((p: any) => ({
+          ...p,
+          price_per_kg: Number(p.price_per_kg),
+        }));
       } else {
         console.error("Error fetching products:", error);
       }

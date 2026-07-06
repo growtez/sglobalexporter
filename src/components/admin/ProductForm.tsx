@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import ImageUpload from "./ImageUpload";
 
 interface ProductFormProps {
   action: (formData: FormData) => Promise<void | { error: string }>;
@@ -27,6 +28,7 @@ export default function ProductForm({
   submitLabel = "Save Product",
 }: ProductFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
+  const [imageUrl, setImageUrl] = useState(defaultValues.image_url ?? "");
 
   const handleSubmit = async (formData: FormData) => {
     await action(formData);
@@ -111,16 +113,14 @@ export default function ProductForm({
           />
         </div>
 
-        {/* Image URL */}
-        <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1.5">Image URL</label>
-          <input
-            name="image_url"
-            type="url"
-            defaultValue={defaultValues.image_url}
-            placeholder="https://..."
-            className="w-full border border-stone-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition"
+        {/* Product Image */}
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-stone-700 mb-1.5">Product Image</label>
+          <ImageUpload
+            value={imageUrl}
+            onChange={(url) => setImageUrl(url)}
           />
+          <input type="hidden" name="image_url" value={imageUrl} />
         </div>
 
         {/* Active toggle */}
@@ -134,7 +134,7 @@ export default function ProductForm({
             className="w-4 h-4 accent-forest rounded"
           />
           <label htmlFor="is_active" className="text-sm font-medium text-stone-700">
-            Active (visible on storefront)
+            In Stock (visible on storefront)
           </label>
         </div>
 

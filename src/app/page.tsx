@@ -42,7 +42,7 @@ export default async function Home() {
   ];
 
   const products = dbProducts && dbProducts.length > 0
-    ? dbProducts.map(p => ({ id: p.id, name: p.name, img: p.image_url || fallbackProducts[7].img, slug: p.slug }))
+    ? dbProducts.map(p => ({ id: p.id, name: p.name, img: p.image_url ? p.image_url.split(",")[0] : fallbackProducts[7].img, slug: p.slug }))
     : fallbackProducts.map(p => ({ id: undefined, ...p, slug: p.name.toLowerCase().replace(/\s+/g, "-") }));
 
   return (

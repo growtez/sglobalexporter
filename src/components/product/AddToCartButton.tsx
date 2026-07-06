@@ -21,7 +21,7 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
       name: product.name,
       price_per_kg: product.price_per_kg,
       quantity_kg: 1, // Default to 1kg, can be enhanced to have a quantity selector
-      image_url: product.image_url || "/placeholder-tea.jpg",
+      image_url: product.image_url ? product.image_url.split(",")[0] : "/placeholder-tea.jpg",
     });
     // Optional: show a toast notification here
     alert("Added to cart!");
