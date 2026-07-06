@@ -10,13 +10,15 @@ async function requireAdmin() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/auth/login");
 
-  const { data: profile } = await supabase
-    .from("profiles")
+  const { data: adminData } = await supabase
+    .from("allowed_users")
     .select("role")
-    .eq("id", user.id)
+    .eq("user_id", user.id)
+    .eq("role", "admin")
+    .eq("is_active", true)
     .single();
 
-  if (!profile || profile.role !== "admin") redirect("/");
+  if (!adminData) redirect("/");
   return supabase;
 }
 
@@ -110,7 +112,19 @@ export async function updateInquiryStatus(id: string, status: string) {
 
 export async function updateCustomerRole(id: string, role: "customer" | "admin") {
   const supabase = await requireAdmin();
-  const { error } = await supabase.from("profiles").update({ role }).eq("id", id);
+  let error;
+  if (role === "admin") {
+    const res = await supabase
+      .from("allowed_users")
+      .upsert({ user_id: id, role: "admin", is_active: true });
+    error = res.error;
+  } else {
+    const res = await supabase
+      .from("allowed_users")
+      .delete()
+      .eq("user_id", id);
+    error = res.error;
+  }
   if (error) return { error: error.message };
   revalidatePath("/admin/customers");
 }

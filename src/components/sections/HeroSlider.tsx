@@ -64,6 +64,7 @@ export default function HeroSlider({ products }: { products: HeroProduct[] }) {
               alt={product.name} 
               fill 
               sizes="(max-width: 768px) 70vw, 20vw" 
+              unoptimized
               className="object-cover transition-transform duration-1000 group-hover:scale-110" 
             />
             {/* Lightweight image overlay for default brightness */}

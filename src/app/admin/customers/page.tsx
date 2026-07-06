@@ -6,10 +6,23 @@ export const metadata = { title: "Customers | Admin – SGlobalExporter" };
 
 export default async function AdminCustomersPage() {
   const supabase = await createClient();
-  const { data: profiles } = await supabase
-    .from("profiles")
-    .select("*")
-    .order("created_at", { ascending: false });
+  const [profilesResult, allowedUsersResult] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select("*")
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("allowed_users")
+      .select("user_id")
+      .eq("role", "admin")
+      .eq("is_active", true)
+  ]);
+
+  const allowedUserIds = new Set((allowedUsersResult.data || []).map((u: any) => u.user_id));
+  const profiles = (profilesResult.data || []).map((p: any) => ({
+    ...p,
+    role: allowedUserIds.has(p.id) ? "admin" : "customer"
+  }));
 
   return (
     <div>

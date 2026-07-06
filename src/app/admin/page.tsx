@@ -9,17 +9,16 @@ export default async function AdminDashboardPage() {
     { count: productCount },
     { count: orderCount },
     { count: inquiryCount },
-    { count: customerCount },
+    { count: totalProfileCount },
+    { count: adminCount },
     { data: recentOrders },
     { data: recentInquiries },
   ] = await Promise.all([
     supabase.from("products").select("*", { count: "exact", head: true }),
     supabase.from("orders").select("*", { count: "exact", head: true }),
     supabase.from("inquiries").select("*", { count: "exact", head: true }),
-    supabase
-      .from("profiles")
-      .select("*", { count: "exact", head: true })
-      .eq("role", "customer"),
+    supabase.from("profiles").select("*", { count: "exact", head: true }),
+    supabase.from("allowed_users").select("*", { count: "exact", head: true }).eq("role", "admin").eq("is_active", true),
     supabase
       .from("orders")
       .select("id, total_amount, currency, status, created_at, profiles(full_name)")
@@ -31,6 +30,8 @@ export default async function AdminDashboardPage() {
       .order("created_at", { ascending: false })
       .limit(5),
   ]);
+
+  const customerCount = (totalProfileCount ?? 0) - (adminCount ?? 0);
 
   const stats = [
     {

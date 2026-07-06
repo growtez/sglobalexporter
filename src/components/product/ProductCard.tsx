@@ -27,9 +27,10 @@ export default function ProductCard({ product }: ProductCardProps) {
                 {/* Image Container */}
                 <div className="relative aspect-square w-full overflow-hidden bg-stone-50">
                     <Image
-                        src={product.image_url || "/placeholder-tea.jpg"}
+                        src={product.image_url ? product.image_url.split(",")[0] : "/placeholder-tea.jpg"}
                         alt={product.name}
                         fill
+                        unoptimized
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                 </div>
