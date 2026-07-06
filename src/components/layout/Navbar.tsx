@@ -106,36 +106,19 @@ export default function Navbar() {
               
               return (
                 <div key={link.label} className="relative group h-full flex items-center">
-                  {link.hasDropdown ? (
-                    <div className="relative flex items-center h-full px-4 cursor-pointer">
-                      <span className={`text-[13px] font-semibold transition-colors flex items-center gap-1 ${
-                        isActive ? "text-gold" : "text-stone-600 group-hover:text-gold"
-                      }`}>
-                        {link.label}
-                        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180 ${
-                          isActive ? "text-gold" : "text-stone-400 group-hover:text-stone-600"
-                        }`} />
-                      </span>
-                      {/* Animated underline */}
-                      <span className={`absolute bottom-0 left-4 right-4 h-[2px] bg-gold rounded-full transition-transform duration-300 origin-left ${
-                        isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-                      }`} />
-                    </div>
-                  ) : (
-                    <Link 
-                      href={link.href} 
-                      className="relative flex items-center h-full px-4"
-                    >
-                      <span className={`text-[13px] font-semibold transition-colors ${
-                        isActive ? "text-gold" : "text-stone-600 group-hover:text-gold"
-                      }`}>
-                        {link.label}
-                      </span>
-                      <span className={`absolute bottom-0 left-4 right-4 h-[2px] bg-gold rounded-full transition-transform duration-300 origin-left ${
-                        isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-                      }`} />
-                    </Link>
-                  )}
+                  <Link 
+                    href={link.href} 
+                    className="relative flex items-center h-full px-4"
+                  >
+                    <span className={`text-[13px] font-semibold transition-colors ${
+                      isActive ? "text-gold" : "text-stone-600 group-hover:text-gold"
+                    }`}>
+                      {link.label}
+                    </span>
+                    <span className={`absolute bottom-0 left-4 right-4 h-[2px] bg-gold rounded-full transition-transform duration-300 origin-left ${
+                      isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                    }`} />
+                  </Link>
                 </div>
               );
             })}
@@ -264,11 +247,7 @@ export default function Navbar() {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.label}
-                {link.hasDropdown ? (
-                  <ChevronDown className="w-4 h-4 text-stone-400" />
-                ) : (
-                  <ArrowRight className="w-4 h-4 text-stone-300" />
-                )}
+                <ArrowRight className="w-4 h-4 text-stone-300" />
               </Link>
             ))}
 
