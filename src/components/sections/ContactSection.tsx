@@ -6,6 +6,7 @@ import {
   User, MapPin, ChevronDown, CheckCircle2, Send, Star
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { submitContactInquiry } from "@/app/contact/actions";
 
 // Custom SVG Brand Icons
 const Facebook = (props: React.SVGProps<SVGSVGElement>) => (
@@ -39,7 +40,13 @@ const Instagram = (props: React.SVGProps<SVGSVGElement>) => (
 export default function ContactSection() {
   const searchParams = useSearchParams();
   const [product, setProduct] = useState("");
+  const [quantity, setQuantity] = useState<number>(100);
+  const [unit, setUnit] = useState("Kilograms (kg)");
+  const [mobile, setMobile] = useState("");
+  const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const productParam = searchParams?.get("product");
@@ -48,13 +55,35 @@ export default function ContactSection() {
     }
   }, [searchParams]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
+    setLoading(true);
+    setError(null);
+
+    const res = await submitContactInquiry({
+      productName: product,
+      quantity,
+      unit,
+      mobile: "+91 " + mobile.trim(),
+      message: message.trim(),
+    });
+
+    setLoading(false);
+
+    if (res.error) {
+      setError(res.error);
+    } else {
+      setSubmitted(true);
+      // Reset form states
       setProduct("");
-    }, 5000);
+      setQuantity(100);
+      setUnit("Kilograms (kg)");
+      setMobile("");
+      setMessage("");
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 5000);
+    }
   };
 
   return (
@@ -142,6 +171,12 @@ export default function ContactSection() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
+            {error && (
+              <div className="p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl text-xs font-semibold">
+                {error}
+              </div>
+            )}
+            
             <div>
               <label className="block text-[9px] font-bold text-stone-700 uppercase tracking-widest mb-1.5">Product / Service</label>
               <input 
@@ -158,12 +193,23 @@ export default function ContactSection() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-[9px] font-bold text-stone-700 uppercase tracking-widest mb-1.5">Quantity</label>
-                <input required type="number" placeholder="Enter quantity" className="w-full bg-stone-50 border border-stone-200 rounded-lg px-3 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-forest/20 focus:border-forest focus:bg-white transition-all shadow-sm placeholder-stone-400 font-medium" />
+                <input 
+                  required 
+                  type="number" 
+                  value={quantity}
+                  onChange={(e) => setQuantity(Number(e.target.value))}
+                  placeholder="Enter quantity" 
+                  className="w-full bg-stone-50 border border-stone-200 rounded-lg px-3 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-forest/20 focus:border-forest focus:bg-white transition-all shadow-sm placeholder-stone-400 font-medium" 
+                />
               </div>
               <div>
                 <label className="block text-[9px] font-bold text-stone-700 uppercase tracking-widest mb-1.5">Unit</label>
                 <div className="relative">
-                  <select className="w-full bg-stone-50 border border-stone-200 rounded-lg pl-3 pr-8 py-2.5 text-xs text-stone-700 font-medium focus:outline-none focus:ring-2 focus:ring-forest/20 focus:border-forest focus:bg-white transition-all shadow-sm appearance-none cursor-pointer">
+                  <select 
+                    value={unit}
+                    onChange={(e) => setUnit(e.target.value)}
+                    className="w-full bg-stone-50 border border-stone-200 rounded-lg pl-3 pr-8 py-2.5 text-xs text-stone-700 font-medium focus:outline-none focus:ring-2 focus:ring-forest/20 focus:border-forest focus:bg-white transition-all shadow-sm appearance-none cursor-pointer"
+                  >
                     <option>Kilograms (kg)</option>
                     <option>Metric Tons (MT)</option>
                     <option>Boxes</option>
@@ -179,18 +225,35 @@ export default function ContactSection() {
                 <div className="bg-stone-100 px-3 py-2.5 border-r border-stone-200 text-xs text-stone-700 font-bold flex items-center gap-1.5 shrink-0">
                   +91
                 </div>
-                <input required type="tel" placeholder="Enter your mobile number" className="flex-1 px-3 py-2.5 text-xs font-medium focus:outline-none bg-transparent placeholder-stone-400" />
+                <input 
+                  required 
+                  type="tel" 
+                  value={mobile}
+                  onChange={(e) => setMobile(e.target.value)}
+                  placeholder="Enter your mobile number" 
+                  className="flex-1 px-3 py-2.5 text-xs font-medium focus:outline-none bg-transparent placeholder-stone-400" 
+                />
               </div>
             </div>
 
             <div>
               <label className="block text-[9px] font-bold text-stone-700 uppercase tracking-widest mb-1.5">Message (Optional)</label>
-              <textarea placeholder="Any specific requirements or queries..." rows={2} className="w-full bg-stone-50 border border-stone-200 rounded-lg px-3 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-forest/20 focus:border-forest focus:bg-white transition-all shadow-sm placeholder-stone-400 font-medium resize-none"></textarea>
+              <textarea 
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Any specific requirements or queries..." 
+                rows={2} 
+                className="w-full bg-stone-50 border border-stone-200 rounded-lg px-3 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-forest/20 focus:border-forest focus:bg-white transition-all shadow-sm placeholder-stone-400 font-medium resize-none"
+              ></textarea>
             </div>
 
             <div className="pt-1">
-              <Button type="submit" className="w-full bg-forest hover:bg-forest/90 text-white h-11 text-sm font-bold rounded-lg shadow-sm hover:shadow transition-all duration-300 flex items-center justify-center gap-2">
-                <Send className="w-3.5 h-3.5" /> Submit Inquiry
+              <Button 
+                type="submit" 
+                disabled={loading}
+                className="w-full bg-forest hover:bg-forest/90 text-white h-11 text-sm font-bold rounded-lg shadow-sm hover:shadow transition-all duration-300 flex items-center justify-center gap-2"
+              >
+                <Send className="w-3.5 h-3.5" /> {loading ? "Submitting..." : "Submit Inquiry"}
               </Button>
             </div>
           </form>
