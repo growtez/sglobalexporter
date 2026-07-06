@@ -79,18 +79,20 @@ export default async function Home() {
             <p className="text-gray-500 max-w-2xl mx-auto">Explore our wide variety of meticulously sourced and processed teas and eco-friendly products.</p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5 md:gap-6">
             {products.map((cat, idx) => (
               <div 
                 key={idx} 
                 className={`relative group rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 aspect-square cursor-pointer ${
-                  idx >= 4 ? "hidden sm:block" : ""
+                  idx >= 4 ? "hidden lg:block" : ""
+                } ${
+                  idx >= 5 ? "hidden" : ""
                 }`}
               >
-                <Image src={cat.img} alt={cat.name} fill sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw" className="object-cover group-hover:scale-110 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute bottom-0 inset-x-0 p-1.5 sm:p-2.5 text-center transform translate-y-1 group-hover:-translate-y-1 transition-transform duration-300">
-                  <h3 className="font-bold text-white text-[10px] sm:text-[12px] md:text-sm leading-tight drop-shadow-md">{cat.name}</h3>
+                <Image src={cat.img} alt={cat.name} fill sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 20vw" className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
+                <div className="absolute bottom-0 inset-x-0 p-3 sm:p-4 text-center transform translate-y-1 group-hover:-translate-y-1 transition-transform duration-300">
+                  <h3 className="font-bold text-white text-xs sm:text-sm md:text-base leading-tight drop-shadow-md">{cat.name}</h3>
                 </div>
               </div>
             ))}
@@ -133,18 +135,47 @@ export default async function Home() {
              <div className="md:w-1/2 p-6 md:p-8 bg-gray-50/30">
                 <h3 className="text-xs md:text-sm font-semibold text-gray-800 uppercase tracking-wider mb-5 md:mb-8 text-center">User Satisfaction</h3>
                 <div className="flex justify-around px-0 md:px-2">
-                   {['Response', 'Quality', 'Delivery'].map((metric, i) => (
-                     <div key={i} className="flex flex-col items-center">
-                       <div className="w-12 h-12 md:w-16 md:h-16 rounded-full border-4 border-gray-100 bg-white shadow-sm flex items-center justify-center text-xs md:text-sm font-bold text-gray-400 mb-2 md:mb-3 relative">
-                         0%
-                         {/* Circle progress mockup */}
-                         <svg className="absolute inset-0 w-full h-full -rotate-90">
-                            <circle cx="50%" cy="50%" r="42%" className="stroke-current text-gold/20" strokeWidth="4" fill="transparent" />
-                         </svg>
+                   {[
+                     { label: 'Response', value: 98 },
+                     { label: 'Quality', value: 99 },
+                     { label: 'Delivery', value: 97 }
+                   ].map((metric, i) => {
+                     // SVG Circle math: r=24, circumference = 2 * pi * 24 = 150.8
+                     const r = 24;
+                     const c = 2 * Math.PI * r;
+                     const offset = c - (metric.value / 100) * c;
+                     
+                     return (
+                       <div key={i} className="flex flex-col items-center">
+                         <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white shadow-sm flex items-center justify-center text-xs md:text-sm font-extrabold text-stone-900 mb-2 md:mb-3 relative">
+                           {metric.value}%
+                           {/* Circle progress SVG */}
+                           <svg className="absolute inset-0 w-full h-full -rotate-90">
+                              <circle 
+                                cx="50%" 
+                                cy="50%" 
+                                r={r} 
+                                className="stroke-stone-100" 
+                                strokeWidth="4" 
+                                fill="transparent" 
+                              />
+                              <circle 
+                                cx="50%" 
+                                cy="50%" 
+                                r={r} 
+                                className="stroke-gold transition-all duration-1000 ease-out" 
+                                strokeWidth="4" 
+                                fill="transparent" 
+                                strokeDasharray={c}
+                                strokeDashoffset={offset}
+                                strokeLinecap="round"
+                              />
+                           </svg>
+                         </div>
+                         <span className="text-[10px] md:text-xs text-stone-600 font-bold uppercase tracking-wide">{metric.label}</span>
                        </div>
-                       <span className="text-[10px] md:text-xs text-gray-600 font-semibold uppercase tracking-wide">{metric}</span>
-                     </div>
-                   ))}
+                     );
+                   })}
                 </div>
              </div>
           </div>
