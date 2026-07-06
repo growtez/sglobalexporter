@@ -99,9 +99,9 @@ export default function Navbar() {
               <div className="px-6 py-3.5 text-[15px] font-semibold text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-b border-gray-50 flex items-center justify-between cursor-pointer">
                 Our Products <ChevronDown className="w-4 h-4" />
               </div>
-              <div className="px-6 py-3.5 text-[15px] font-semibold text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-b border-gray-50 flex items-center justify-between cursor-pointer">
-                About Us <ChevronDown className="w-4 h-4" />
-              </div>
+              <Link href="/about" className="px-6 py-3.5 text-[15px] font-semibold text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-b border-gray-50 flex items-center justify-between" onClick={() => setIsMobileMenuOpen(false)}>
+                About Us
+              </Link>
               <Link href="/contact" className="px-6 py-3.5 text-[15px] font-semibold text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-b border-gray-50 flex items-center justify-between" onClick={() => setIsMobileMenuOpen(false)}>
                 Contact Us
               </Link>
@@ -139,10 +139,10 @@ export default function Navbar() {
               <span className="absolute bottom-0 left-0 w-full h-1 bg-white scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-t-sm"></span>
             </div>
             
-            <div className="px-5 h-full flex items-center hover:text-white transition-colors cursor-pointer group relative">
-              <span className="flex items-center gap-1.5">About Us <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" /></span>
+            <Link href="/about" className="px-5 h-full flex items-center hover:text-white transition-colors relative group">
+              About Us
               <span className="absolute bottom-0 left-0 w-full h-1 bg-white scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-t-sm"></span>
-            </div>
+            </Link>
 
             <Link href="/contact" className="px-5 h-full flex items-center hover:text-white transition-colors relative group">
               Contact Us

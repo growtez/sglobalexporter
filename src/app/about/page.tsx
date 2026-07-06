@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { User, Building2, Briefcase } from "lucide-react";
 
 export default function AboutPage() {
   const fadeInUp = {
@@ -62,13 +63,13 @@ export default function AboutPage() {
               viewport={{ once: true, margin: "-100px" }}
               className="space-y-6"
             >
-              <span className="uppercase tracking-widest text-sm font-semibold text-gold">The Genesis</span>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-forest">Cultivating a Legacy</h2>
+              <span className="uppercase tracking-widest text-sm font-semibold text-gold">Our Story</span>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-forest">Shahinur Global Exporter (Opc) Private Limited</h2>
               <p className="text-stone-600 leading-relaxed font-light text-lg">
-                For centuries, the state of Assam has been celebrated worldwide for its unparalleled natural bounty. The heavy rainfall, humid climate, and rich alluvial soil deposits of the Brahmaputra River valley create an unmatched terroir, perfect for cultivating the finest teas and unique heritage rice grains.
+                Established in the year 2023, we Manufacturer, Exporter, Supplier & Trader of Ashwagandha Tea, Black Tea, Chamomile Tea, CTC Tea, Darjeeling Tea, Green Tea, Loose Tea, Jasmine Tea, Oolong Tea, Orthodox Tea etc.
               </p>
               <p className="text-stone-600 leading-relaxed font-light">
-                SGlobalExporter was founded with a singular, passionate mission: to share this rich agricultural heritage directly with the world. We partner with multigenerational tea gardens and traditional local farmers who have guarded these cultivation secrets for generations, ensuring every leaf and grain reflects the true spirit of Assam.
+                Under the supervision of Mr. Shahinur Islam, our firm is achieving heights of achievement. We also provide various amenities to the patrons to put their demands forward and get them solve timely and as per their requirements.
               </p>
             </motion.div>
             
@@ -85,6 +86,53 @@ export default function AboutPage() {
                 fill
                 className="object-cover"
               />
+            </motion.div>
+          </div>
+
+          {/* Stat Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-20">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-white/80 backdrop-blur-xl border border-gray-100 rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center group relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-4 text-blue-600 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
+                <User className="w-7 h-7" />
+              </div>
+              <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-1.5 relative z-10">Founder</p>
+              <p className="font-bold text-gray-800 text-sm relative z-10">Mr. Shahinur Islam</p>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="bg-white/80 backdrop-blur-xl border border-gray-100 rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center group relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-4 text-emerald-600 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
+                <Building2 className="w-7 h-7" />
+              </div>
+              <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-1.5 relative z-10">Established</p>
+              <p className="font-bold text-gray-800 text-sm relative z-10">2023</p>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="bg-white/80 backdrop-blur-xl border border-gray-100 rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center group relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="w-14 h-14 rounded-2xl bg-purple-50 flex items-center justify-center mb-4 text-purple-600 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
+                <Briefcase className="w-7 h-7" />
+              </div>
+              <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-1.5 relative z-10">Business Type</p>
+              <p className="font-bold text-gray-800 text-sm relative z-10">Manufacturer</p>
             </motion.div>
           </div>
         </div>
@@ -194,75 +242,73 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Corporate Registration Details */}
+      {/* Factsheet Section */}
       <section className="py-24 bg-white border-b border-stone-200">
         <div className="container mx-auto px-4 md:px-8 max-w-5xl">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="uppercase tracking-widest text-sm font-semibold text-gold">Official Registration</span>
-            <h2 className="text-3xl font-serif font-bold text-forest mt-2">Corporate Identity & Details</h2>
+            <span className="uppercase tracking-widest text-sm font-semibold text-gold">Factsheet</span>
+            <h2 className="text-3xl font-serif font-bold text-forest mt-2">Company Information & Offices</h2>
           </div>
 
           <div className="bg-cream/40 p-8 md:p-12 rounded-2xl border border-stone-200/80 shadow-sm space-y-12">
-            <div>
-              <h3 className="text-2xl font-serif font-bold text-forest mb-4">SHAHINUR GLOBAL EXPORTER (OPC) PRIVATE LIMITED</h3>
-              <p className="text-stone-600 leading-relaxed font-light">
-                SHAHINUR GLOBAL EXPORTER (OPC) PRIVATE LIMITED operates as a One Person Company (OPC) limited by shares, registered under the Registrar of Companies (ROC) Guwahati, serving the North Eastern Region.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 pt-6 border-t border-stone-200/60">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
               <div className="space-y-4">
-                <h4 className="font-serif text-lg text-forest font-semibold border-b border-stone-200/60 pb-2">Basic Information</h4>
-                <div className="grid grid-cols-2 text-sm py-1">
-                  <span className="font-semibold text-stone-700">Corporate Identity Number (CIN):</span>
-                  <span className="font-mono text-stone-600">U46909AS2025OPC028000</span>
+                <h4 className="font-serif text-xl text-forest font-bold border-b border-stone-200/60 pb-2">Basic Information</h4>
+                <div className="grid grid-cols-2 text-sm py-2 border-b border-stone-100/50 last:border-0 gap-4">
+                  <span className="font-semibold text-stone-700">Nature of Business:</span>
+                  <span className="text-stone-600 font-medium">Manufacturer / Exporter / Supplier</span>
                 </div>
-                <div className="grid grid-cols-2 text-sm py-1">
-                  <span className="font-semibold text-stone-700">Class:</span>
-                  <span className="text-stone-600">One Person Company</span>
+                <div className="grid grid-cols-2 text-sm py-2 border-b border-stone-100/50 last:border-0 gap-4">
+                  <span className="font-semibold text-stone-700">Contact Person:</span>
+                  <span className="text-stone-600 font-medium">Mr. Shahinur Islam</span>
                 </div>
-                <div className="grid grid-cols-2 text-sm py-1">
-                  <span className="font-semibold text-stone-700">Category:</span>
-                  <span className="text-stone-600">Company limited by shares</span>
+                <div className="grid grid-cols-2 text-sm py-2 border-b border-stone-100/50 last:border-0 gap-4">
+                  <span className="font-semibold text-stone-700">Total Number of Employees:</span>
+                  <span className="text-stone-600 font-medium">6 - 20</span>
                 </div>
-                <div className="grid grid-cols-2 text-sm py-1">
-                  <span className="font-semibold text-stone-700">Date of Incorporation:</span>
-                  <span className="text-stone-600">12/04/2025</span>
+                <div className="grid grid-cols-2 text-sm py-2 border-b border-stone-100/50 last:border-0 gap-4">
+                  <span className="font-semibold text-stone-700">Year of Establishment:</span>
+                  <span className="text-stone-600 font-medium">2023</span>
                 </div>
-                <div className="grid grid-cols-2 text-sm py-1">
+                <div className="grid grid-cols-2 text-sm py-2 border-b border-stone-100/50 last:border-0 gap-4">
+                  <span className="font-semibold text-stone-700">Legal Status of Firm:</span>
+                  <span className="text-stone-600 font-medium">Individual (Sole proprietorship)</span>
+                </div>
+                <div className="grid grid-cols-2 text-sm py-2 border-b border-stone-100/50 last:border-0 gap-4">
                   <span className="font-semibold text-stone-700">Registered Address:</span>
-                  <span className="text-stone-600 leading-relaxed">C/O SHAHINUR ISLAM, NANDIA, Kalapani, Dhubri, Fekamari, Assam, India, 783135</span>
+                  <span className="text-stone-600 font-medium leading-relaxed">Pipulbari part 1, Hatsingimari, Mankachar, Dhubri, South Salmara, Assam - 783135</span>
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <h4 className="font-serif text-lg text-forest font-semibold border-b border-stone-200/60 pb-2">Registration & Financials</h4>
-                <div className="grid grid-cols-2 text-sm py-1">
-                  <span className="font-semibold text-stone-700">Registration Number:</span>
-                  <span className="text-stone-600">28000</span>
+              <div className="space-y-8">
+                <div className="space-y-2">
+                  <h4 className="font-serif text-lg text-forest font-semibold border-b border-stone-200/60 pb-1">Head Office</h4>
+                  <p className="text-sm font-medium text-stone-600 leading-relaxed">Pipulbari part 1, Hatsingimari, Mankachar, Dhubri, South Salmara, Assam - 783135</p>
                 </div>
-                <div className="grid grid-cols-2 text-sm py-1">
-                  <span className="font-semibold text-stone-700">ROC Name:</span>
-                  <span className="text-stone-600">ROC Guwahati</span>
+                
+                <div className="space-y-2">
+                  <h4 className="font-serif text-lg text-forest font-semibold border-b border-stone-200/60 pb-1">Corporate Office</h4>
+                  <p className="text-sm font-medium text-stone-600 leading-relaxed">Boragaon Guwahati, Assam - 781035, India</p>
                 </div>
-                <div className="grid grid-cols-2 text-sm py-1">
-                  <span className="font-semibold text-stone-700">RD Name & Region:</span>
-                  <span className="text-stone-600">RD, North Eastern Region</span>
+
+                <div className="space-y-2">
+                  <h4 className="font-serif text-lg text-forest font-semibold border-b border-stone-200/60 pb-1">Branch Office</h4>
+                  <p className="text-sm font-medium text-stone-600 leading-relaxed">Pipulbari part 1, Hatsingimari, Mankachar, Dhubri, Guwahati Assam, South Salmara - 783135</p>
                 </div>
-                <div className="grid grid-cols-2 text-sm py-1">
-                  <span className="font-semibold text-stone-700">Authorized Capital:</span>
-                  <span className="text-stone-600">Rs. 1,00,000</span>
+
+                <div className="space-y-2">
+                  <h4 className="font-serif text-lg text-forest font-semibold border-b border-stone-200/60 pb-1">Warehouse</h4>
+                  <p className="text-sm font-medium text-stone-600 leading-relaxed">Hatigaon Guwahati , seiju path, Assam - 781038, India</p>
                 </div>
-                <div className="grid grid-cols-2 text-sm py-1">
-                  <span className="font-semibold text-stone-700">Paid-up Capital:</span>
-                  <span className="text-stone-600">Rs. 10,000</span>
-                </div>
-                <div className="grid grid-cols-2 text-sm py-1">
-                  <span className="font-semibold text-stone-700">Listed Status:</span>
-                  <span className="text-stone-600">Unlisted (No)</span>
+
+                <div className="space-y-2">
+                  <h4 className="font-serif text-lg text-forest font-semibold border-b border-stone-200/60 pb-1">Technical Support</h4>
+                  <p className="text-sm font-medium text-stone-600 leading-relaxed">Pipulbari part 1, Hatsingimari, Mankachar, Dhubri, Guwahati Assam - 783135</p>
                 </div>
               </div>
             </div>
+            
           </div>
         </div>
       </section>
