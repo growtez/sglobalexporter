@@ -41,7 +41,7 @@ export default async function AdminLayout({
 
   return (
     <div className="flex min-h-screen bg-[#F0F0EE]">
-      <AdminSidebar adminName={profile.full_name ?? user.email ?? "Admin"} />
+      <AdminSidebar adminName={profile?.full_name ?? user.email ?? "Admin"} />
       <main className="flex-1 ml-64 p-8 overflow-y-auto">
         {children}
       </main>
