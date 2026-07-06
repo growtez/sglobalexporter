@@ -81,7 +81,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
             <div className="relative rounded-xl overflow-hidden border border-gray-100/80 bg-white flex items-center justify-center transition-all duration-300 group-hover:shadow-lg group-hover:scale-[1.03] w-12 h-12 lg:w-14 lg:h-14">
               <Image 
-                src="/images/logo.png" 
+                src="/images/logo.webp" 
                 alt="SGlobalExporter Logo" 
                 width={56}
                 height={56}

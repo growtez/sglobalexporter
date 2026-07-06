@@ -56,7 +56,7 @@ export default function SiteFooter() {
             <Link href="/" className="flex items-center gap-3 group">
               <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center p-0.5 relative overflow-hidden group-hover:scale-105 transition-transform">
                 <Image 
-                  src="/images/logo.png" 
+                  src="/images/logo.webp" 
                   alt="SGlobalExporter Logo" 
                   width={48}
                   height={48}
