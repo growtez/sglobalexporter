@@ -65,7 +65,7 @@ export default function CallToAction() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
           >
-            <Link href="/b2b">
+            <Link href="/contact#inquiry-form">
               <Button
                 size="lg"
                 className="w-full sm:w-auto bg-gold text-charcoal hover:bg-gold/90 text-lg px-10 py-4 h-auto font-semibold shadow-xl shadow-gold/20 hover:shadow-gold/40 hover:scale-[1.02] transition-all duration-300"

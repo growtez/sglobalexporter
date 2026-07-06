@@ -3,8 +3,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { useCartStore } from "@/lib/store/cartStore";
+import { useSearchStore } from "@/lib/store/searchStore";
 import { 
   Search, 
   ShoppingBag, 
@@ -20,9 +22,17 @@ import {
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const [user, setUser] = useState<any>(null);
+  const [mounted, setMounted] = useState(false);
+  const items = useCartStore((state) => state.items);
+  const itemCount = items.length;
+  const { query, setQuery } = useSearchStore();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -75,6 +85,8 @@ export default function Navbar() {
       <div className="hidden sm:block bg-forest text-white overflow-hidden w-full">
         <div className="container mx-auto px-4 md:px-8 flex items-center justify-between h-9 text-[11px] tracking-wide">
           <div className="flex items-center gap-4">
+            <span className="hidden md:block text-white/50">GST: 18ABPCS9031G1ZX</span>
+            <span className="w-px h-3.5 bg-white/20 hidden md:block" />
             <a href="tel:+919181147813" className="flex items-center gap-1.5 hover:text-gold transition-colors">
               <Phone className="w-3 h-3" />
               <span>+91 91811 47813</span>
@@ -86,17 +98,31 @@ export default function Navbar() {
             </a>
           </div>
           <div className="flex items-center gap-4">
-            <span className="hidden md:block text-white/50">GST: 18ABPCS9031G1ZX</span>
+            {/* Desktop CTA buttons relocated to the top micro-bar */}
+            <div className="hidden lg:flex items-center gap-3">
+              <Link href="tel:+919181147813">
+                <button className="flex items-center gap-1 bg-white/10 hover:bg-white/20 text-white rounded-md px-2.5 py-1 text-[10px] font-bold transition-all cursor-pointer">
+                  <Phone className="w-3 h-3 text-gold" />
+                  Call Now
+                </button>
+              </Link>
+              <Link href="/contact#inquiry-form">
+                <button className="flex items-center gap-1 bg-white hover:bg-white/90 text-forest rounded-md px-2.5 py-1 text-[10px] font-extrabold transition-all cursor-pointer">
+                  <Mail className="w-3 h-3 text-forest" />
+                  Send Enquiry
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Main Nav */}
       <div className="container mx-auto px-4 md:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-[72px]">
+        <div className="flex items-center justify-between h-14 lg:h-[60px]">
           {/* Left: Logo + Brand */}
           <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
-            <div className="relative rounded-xl overflow-hidden border border-gray-100/80 bg-white flex items-center justify-center transition-all duration-300 group-hover:shadow-lg group-hover:scale-[1.03] w-12 h-12 lg:w-14 lg:h-14">
+            <div className="relative rounded-xl overflow-hidden border border-gray-100/80 bg-white flex items-center justify-center transition-all duration-300 group-hover:shadow-lg group-hover:scale-[1.03] w-10 h-10 lg:w-12 lg:h-12">
               <Image 
                 src="/images/logo.webp" 
                 alt="SGlobalExporter Logo" 
@@ -143,28 +169,30 @@ export default function Navbar() {
 
           {/* Right: Actions */}
           <div className="flex items-center gap-2">
-            {/* Search Toggle (Desktop) */}
-            <button 
-              onClick={() => setSearchOpen(!searchOpen)}
-              className="hidden lg:flex w-9 h-9 items-center justify-center rounded-xl text-stone-500 hover:text-gold hover:bg-stone-100 transition-all duration-200"
-            >
-              <Search className="w-[18px] h-[18px]" />
-            </button>
-
-            {/* Account */}
-            <Link 
-              href={user ? "/profile" : "/auth/login"}
-              className="hidden lg:flex items-center gap-2 rounded-xl text-stone-500 hover:text-gold transition-all duration-200"
-            >
-              <div className="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-stone-100">
-                <User className="w-[18px] h-[18px]" />
-              </div>
-              {user && (
-                <span className="text-[13px] font-semibold text-stone-600 truncate max-w-[100px]">
-                  {user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]}
-                </span>
+            {/* Search Input (Desktop) - Shown by default */}
+            <div className="hidden lg:block relative w-44 xl:w-56 transition-all duration-300">
+              <input 
+                type="text" 
+                placeholder="Search..." 
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  if (pathname !== "/products") {
+                    router.push("/products");
+                  }
+                }}
+                className="w-full pl-9 pr-8 h-9 rounded-xl text-[12px] bg-stone-50 border border-stone-200/80 focus:bg-white focus:outline-none focus:ring-1 focus:ring-gold/30 focus:border-gold transition-all placeholder:text-stone-400 font-medium"
+              />
+              <Search className="w-3.5 h-3.5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              {query && (
+                <button 
+                  onClick={() => setQuery("")}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 cursor-pointer"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
               )}
-            </Link>
+            </div>
 
             {/* Cart */}
             <Link 
@@ -172,23 +200,24 @@ export default function Navbar() {
               className="hidden lg:flex w-9 h-9 items-center justify-center rounded-xl text-stone-500 hover:text-gold hover:bg-stone-100 transition-all duration-200 relative"
             >
               <ShoppingBag className="w-[18px] h-[18px]" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-gold rounded-full ring-2 ring-white" />
+              {mounted && itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 min-w-4 h-4 px-1 bg-gold text-charcoal text-[9px] font-extrabold rounded-full flex items-center justify-center ring-2 ring-white">
+                  {itemCount}
+                </span>
+              )}
             </Link>
 
-            {/* Call Now CTA Button (Desktop) */}
-            <Link href="tel:+919181147813" className="hidden lg:block ml-2">
-              <Button variant="outline" className="rounded-xl border-forest text-forest hover:bg-forest/5 hover:text-forest font-semibold px-4 h-9 text-[13px] transition-all duration-300">
-                <Phone className="w-3.5 h-3.5 mr-1.5" />
-                Call Now
-              </Button>
-            </Link>
-
-            {/* Send Enquiry CTA Button (Desktop) */}
-            <Link href="/contact#inquiry-form" className="hidden lg:block">
-              <Button className="rounded-xl bg-forest hover:bg-forest/90 text-white font-bold px-5 h-9 text-[13px] shadow-sm hover:shadow-md transition-all duration-300 border-none">
-                <Mail className="w-3.5 h-3.5 mr-1.5" />
-                Send Enquiry
-              </Button>
+            {/* Account */}
+            <Link 
+              href={user ? "/profile" : "/auth/login"}
+              className="hidden lg:flex items-center gap-2 rounded-xl text-stone-500 hover:text-gold hover:bg-stone-100 h-9 px-2.5 transition-all duration-200"
+            >
+              <User className="w-[18px] h-[18px]" />
+              {user && (
+                <span className="text-[13px] font-semibold text-stone-600 truncate max-w-[100px]">
+                  {user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]}
+                </span>
+              )}
             </Link>
 
             {/* Mobile: Cart + Hamburger */}
@@ -197,7 +226,11 @@ export default function Navbar() {
               className="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl text-stone-600 hover:bg-stone-100 transition-all relative"
             >
               <ShoppingBag className="w-5 h-5" />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-gold rounded-full ring-2 ring-white" />
+              {mounted && itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 min-w-4 h-4 px-1 bg-gold text-charcoal text-[9px] font-extrabold rounded-full flex items-center justify-center ring-2 ring-white">
+                  {itemCount}
+                </span>
+              )}
             </Link>
             <button 
               className="lg:hidden w-10 h-10 flex items-center justify-center text-stone-700 rounded-xl hover:bg-stone-100 transition-all"
@@ -212,23 +245,11 @@ export default function Navbar() {
             </button>
           </div>
         </div>
-
-        {/* Expandable Search Bar (Desktop) */}
-        <div className={`hidden lg:block overflow-hidden transition-all duration-300 ${searchOpen ? "max-h-16 pb-3 opacity-100" : "max-h-0 opacity-0"}`}>
-          <div className="relative">
-            <input 
-              type="text" 
-              placeholder="Search for teas, products, categories..." 
-              className="w-full pl-12 pr-5 py-3 rounded-xl text-sm bg-stone-50 border border-stone-200/80 focus:bg-white focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all placeholder:text-stone-400"
-            />
-            <Search className="w-[18px] h-[18px] text-stone-400 absolute left-4 top-1/2 -translate-y-1/2" />
-          </div>
-        </div>
       </div>
 
       {/* Mobile Menu */}
       <div 
-        className={`lg:hidden fixed inset-0 top-[65px] z-50 transition-all duration-400 ${
+        className={`lg:hidden fixed inset-0 top-[56px] z-50 transition-all duration-400 ${
           isMobileMenuOpen 
             ? "opacity-100 pointer-events-auto" 
             : "opacity-0 pointer-events-none"
@@ -252,39 +273,46 @@ export default function Navbar() {
               <input 
                 type="text" 
                 placeholder="Search products..." 
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl text-sm bg-stone-50 border border-stone-200/80 focus:bg-white focus:outline-none focus:ring-2 focus:ring-gold/20 transition-all"
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  if (pathname !== "/products") {
+                    router.push("/products");
+                  }
+                }}
+                className="w-full pl-10 pr-9 py-2.5 rounded-xl text-sm bg-stone-50 border border-stone-200/80 focus:bg-white focus:outline-none focus:ring-2 focus:ring-gold/20 transition-all"
               />
               <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              {query && (
+                <button 
+                  onClick={() => setQuery("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
             </div>
           </div>
 
           {/* Mobile Nav Links */}
           <nav className="flex-1 overflow-y-auto py-2">
-            {navLinks.map((link, i) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className={`flex items-center justify-between px-6 py-4 text-[15px] font-semibold text-stone-700 hover:bg-stone-50 hover:text-gold transition-all duration-200 ${
-                  isMobileMenuOpen ? "animate-in slide-in-from-right" : ""
-                }`}
-                style={{ animationDelay: `${i * 50}ms` }}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.label}
-                <ArrowRight className="w-4 h-4 text-stone-300" />
-              </Link>
-            ))}
-
-            <div className="mx-6 my-3 h-px bg-stone-100" />
-
-            <Link
-              href="/contact#inquiry-form"
-              className="flex items-center gap-3 px-6 py-4 text-[15px] font-semibold text-gold hover:bg-stone-50 transition-all"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <Mail className="w-4 h-4" />
-              Send Enquiry
-            </Link>
+            {navLinks.map((link, i) => {
+              const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+              return (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className={`flex items-center justify-between px-6 py-4 text-[15px] font-semibold transition-all duration-200 ${
+                    isActive ? "text-gold bg-stone-50/80 border-r-4 border-gold" : "text-stone-700 hover:bg-stone-50 hover:text-gold"
+                  } ${isMobileMenuOpen ? "animate-in slide-in-from-right" : ""}`}
+                  style={{ animationDelay: `${i * 50}ms` }}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.label}
+                  <ArrowRight className={`w-4 h-4 transition-colors ${isActive ? "text-gold" : "text-stone-300"}`} />
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Mobile Bottom Actions */}

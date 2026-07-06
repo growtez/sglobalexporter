@@ -3,9 +3,11 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 interface HeroProduct {
+  id?: string;
   name: string;
   img: string;
   slug: string;
@@ -13,9 +15,13 @@ interface HeroProduct {
 
 export default function HeroSlider({ products }: { products: HeroProduct[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const isPausedRef = useRef(false);
+  const router = useRouter();
 
   useEffect(() => {
     const interval = setInterval(() => {
+      if (isPausedRef.current) return;
+
       if (scrollRef.current) {
         const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
         const cardWidth = scrollRef.current.children[0]?.clientWidth || clientWidth;
@@ -35,7 +41,14 @@ export default function HeroSlider({ products }: { products: HeroProduct[] }) {
   }, [products]);
 
   return (
-    <div className="w-full flex relative z-10">
+    <div 
+      className="w-full flex relative z-10"
+      onMouseEnter={() => { isPausedRef.current = true; }}
+      onMouseLeave={() => { isPausedRef.current = false; }}
+      onTouchStart={() => { isPausedRef.current = true; }}
+      onTouchEnd={() => { isPausedRef.current = false; }}
+      onTouchCancel={() => { isPausedRef.current = false; }}
+    >
       <div 
         ref={scrollRef}
         className="flex w-full overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
@@ -60,7 +73,24 @@ export default function HeroSlider({ products }: { products: HeroProduct[] }) {
             <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/85 to-transparent px-3 pb-3 pt-10 text-center">
               <h3 className="font-bold text-white text-xs md:text-sm tracking-wide drop-shadow-lg">{product.name}</h3>
               <div className="overflow-hidden max-h-0 opacity-0 group-hover:max-h-10 group-hover:opacity-100 group-hover:mt-2 transition-all duration-300">
-                <Button className="bg-white text-black hover:bg-gray-100 text-[10px] h-7 px-4 rounded-full font-bold shadow-lg">Get Quote</Button>
+                <Button 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const input = document.getElementById("homepage-product-input") as HTMLInputElement | null;
+                    const inquirySection = document.getElementById("inquiry");
+                    if (input && inquirySection) {
+                      input.value = product.name;
+                      inquirySection.scrollIntoView({ behavior: "smooth" });
+                      setTimeout(() => input.focus(), 600);
+                    } else {
+                      router.push(`/contact?product=${encodeURIComponent(product.name)}#inquiry-form`);
+                    }
+                  }}
+                  className="bg-white text-black hover:bg-gray-100 text-[10px] h-7 px-4 rounded-full font-bold shadow-lg"
+                >
+                  Get Quote
+                </Button>
               </div>
             </div>
           </Link>

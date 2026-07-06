@@ -1,18 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import HeroSlider from "@/components/sections/HeroSlider";
 import HomeFAQ from "@/components/sections/HomeFAQ";
+import ContactSection from "@/components/sections/ContactSection";
 import { createClient } from '@/lib/supabase/server';
-import { 
-  User, Building2, Briefcase, PiggyBank, 
-  ChevronDown, ChevronUp, Star, MapPin, 
+import {
+  User, Building2, Briefcase, PiggyBank,
+  ChevronDown, ChevronUp, Star, MapPin,
   Share2, ArrowRight, CheckCircle2, Play
 } from "lucide-react";
 
 export default async function Home() {
   let dbProducts = null;
-  
+
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     if (supabaseUrl && supabaseUrl.startsWith('http')) {
@@ -40,8 +42,8 @@ export default async function Home() {
   ];
 
   const products = dbProducts && dbProducts.length > 0
-    ? dbProducts.map(p => ({ name: p.name, img: p.image_url || fallbackProducts[7].img, slug: p.slug }))
-    : fallbackProducts.map(p => ({ ...p, slug: p.name.toLowerCase().replace(/\s+/g, "-") }));
+    ? dbProducts.map(p => ({ id: p.id, name: p.name, img: p.image_url || fallbackProducts[7].img, slug: p.slug }))
+    : fallbackProducts.map(p => ({ id: undefined, ...p, slug: p.name.toLowerCase().replace(/\s+/g, "-") }));
 
   return (
     <main className="flex flex-col min-h-screen bg-white font-sans w-full selection:bg-gold/25">
@@ -54,7 +56,7 @@ export default async function Home() {
             Serving the World with Premium Tea.
           </h1>
           <p className="text-sm md:text-base text-stone-600 leading-relaxed mb-6 font-medium">
-            Welcome to Shahinur Global Exporter. Established in 2023, we are a leading Manufacturer, Exporter, Supplier & Trader of premium teas.
+            Established in 2023, Shahinur Global Exporter is a leading Manufacturer, Exporter, Supplier & Trader of premium teas.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/about">
@@ -79,14 +81,13 @@ export default async function Home() {
             <h2 className="text-3xl font-bold text-forest mb-4 tracking-tight">Our Premium Product Range</h2>
             <p className="text-gray-500 max-w-2xl mx-auto">Explore our wide variety of meticulously sourced and processed teas and eco-friendly products.</p>
           </div>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5 md:gap-6">
             {products.slice(0, 5).map((cat, idx) => (
-              <div 
-                key={idx} 
-                className={`relative group rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 aspect-square cursor-pointer ${
-                  idx >= 4 ? "hidden lg:block" : ""
-                }`}
+              <div
+                key={idx}
+                className={`relative group rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 aspect-square cursor-pointer ${idx >= 4 ? "hidden lg:block" : ""
+                  }`}
               >
                 <Image src={cat.img} alt={cat.name} fill sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 20vw" className="object-cover group-hover:scale-110 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
@@ -96,7 +97,7 @@ export default async function Home() {
               </div>
             ))}
           </div>
-          
+
           <div className="flex justify-center mt-8">
             <Link href="/products">
               <Button className="bg-forest hover:bg-forest/90 text-white rounded-full px-8 h-12 text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
@@ -110,215 +111,122 @@ export default async function Home() {
       <section className="w-full bg-white py-8 md:py-12 relative">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-6 md:mb-8">
-             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Customer Trust & Reviews</h2>
-             <p className="text-sm md:text-base text-gray-500">See what our global clients say about our products and services.</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Customer Trust & Reviews</h2>
+            <p className="text-sm md:text-base text-gray-500">See what our global clients say about our products and services.</p>
           </div>
 
           <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 grid grid-cols-2 lg:grid-cols-4 overflow-hidden mb-6">
-             {/* Overall Rating */}
-             <div className="col-span-1 lg:col-span-1 p-6 md:p-8 border-r border-b lg:border-b-0 border-gray-100 bg-gray-50/30">
-                <div className="flex items-center justify-center gap-2 mb-4 md:mb-6 text-amber-700 font-semibold text-xs md:text-sm uppercase tracking-wider">
-                  <Star className="w-4 h-4 fill-current" /> Overall Rating
-                </div>
-                <div className="flex flex-col items-center justify-center">
-                   <div className="text-4xl md:text-6xl font-black text-gray-900 mb-2 tracking-tighter">5.0<span className="text-xl md:text-3xl text-gray-300 font-medium tracking-normal">/5</span></div>
-                   <div className="flex gap-1 mb-3">
-                     {[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 md:w-6 md:h-6 text-yellow-400 fill-current drop-shadow-sm" />)}
-                   </div>
-                   <p className="text-[10px] md:text-sm text-gray-500 mb-4 md:mb-6 font-medium">Based on verified reviews</p>
-                   <Button variant="outline" className="border-gray-200 text-gray-700 rounded-full h-8 md:h-10 px-4 md:px-6 text-[10px] md:text-sm font-semibold hover:bg-gray-50 hover:text-amber-700 shadow-sm">Write a Review</Button>
-                </div>
-             </div>
-
-              {/* User Satisfaction */}
-              <div className="col-span-1 lg:col-span-1 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-gray-100 bg-gray-50/30 flex flex-col justify-center">
-                 <h3 className="text-xs md:text-sm font-semibold text-gray-800 uppercase tracking-wider mb-6 text-center">User Satisfaction</h3>
-                 <div className="flex flex-col gap-5 md:gap-6 items-center justify-center">
-                    {[
-                      { label: 'Response', value: 98 },
-                      { label: 'Quality', value: 99 },
-                      { label: 'Delivery', value: 97 }
-                    ].map((metric, i) => {
-                      // SVG Circle math: r=24, circumference = 2 * pi * 24 = 150.8
-                      const r = 20; // slightly smaller for mobile layout scaling
-                      const c = 2 * Math.PI * r;
-                      const offset = c - (metric.value / 100) * c;
-                      
-                      return (
-                        <div key={i} className="flex flex-row items-center gap-2.5 md:gap-4 w-full max-w-[150px] md:max-w-[180px] justify-start">
-                          <div className="w-10 h-10 md:w-16 md:h-16 rounded-full bg-white shadow-sm flex items-center justify-center text-[10px] md:text-sm font-extrabold text-stone-900 relative flex-shrink-0">
-                            {metric.value}%
-                            {/* Circle progress SVG */}
-                            <svg className="absolute inset-0 w-full h-full -rotate-90">
-                               <circle 
-                                 cx="50%" 
-                                 cy="50%" 
-                                 r={r} 
-                                 className="stroke-stone-100" 
-                                 strokeWidth="3 md:strokeWidth=4" 
-                                 fill="transparent" 
-                               />
-                               <circle 
-                                 cx="50%" 
-                                 cy="50%" 
-                                 r={r} 
-                                 className="stroke-gold transition-all duration-1000 ease-out" 
-                                 strokeWidth="3 md:strokeWidth=4" 
-                                 fill="transparent" 
-                                 strokeDasharray={c}
-                                 strokeDashoffset={offset}
-                                 strokeLinecap="round"
-                               />
-                            </svg>
-                          </div>
-                          <span className="text-[10px] md:text-sm text-stone-600 font-bold uppercase tracking-wide">{metric.label}</span>
-                        </div>
-                      );
-                    })}
-                 </div>
+            {/* Overall Rating */}
+            <div className="col-span-1 lg:col-span-1 p-6 md:p-8 border-r border-b lg:border-b-0 border-gray-100 bg-gray-50/30">
+              <div className="flex items-center justify-center gap-2 mb-4 md:mb-6 text-amber-700 font-semibold text-xs md:text-sm uppercase tracking-wider">
+                <Star className="w-4 h-4 fill-current" /> Overall Rating
               </div>
-
-              {/* Individual Review */}
-              <div className="col-span-2 lg:col-span-2 p-6 md:p-8 bg-white flex flex-col justify-center">
-                 <div className="flex gap-4 items-start">
-                    <div className="w-12 h-12 md:w-14 md:h-14 bg-forest rounded-2xl shadow-inner text-white flex items-center justify-center text-xl md:text-2xl font-bold flex-shrink-0">
-                      R
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-1">
-                        <div className="flex items-center gap-2">
-                          <h4 className="font-bold text-gray-900 text-base md:text-lg">R.k. Aggarwal</h4>
-                          <span className="px-2 py-0.5 bg-gray-100 text-gray-500 rounded-md text-[10px] md:text-xs font-medium">Delhi</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="flex text-yellow-400 gap-0.5">
-                              <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
-                              <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
-                              <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
-                              <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
-                              <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
-                          </div>
-                          <span className="text-[10px] md:text-xs text-gray-400 font-medium">07 Jan 2025</span>
-                        </div>
-                      </div>
-                      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gold/10 text-gold rounded-lg text-[11px] md:text-xs font-bold mb-3">
-                        <CheckCircle2 className="w-3 h-3 md:w-3.5 md:h-3.5" /> Product: Assam Ctc Tea
-                      </div>
-                      <p className="text-gray-700 text-sm md:text-base leading-relaxed italic">"Refreshingly unique features that enhance usability and overall experience. Highly recommended for wholesale buyers."</p>
-                    </div>
-                 </div>
+              <div className="flex flex-col items-center justify-center">
+                <div className="text-4xl md:text-6xl font-black text-gray-900 mb-2 tracking-tighter">5.0<span className="text-xl md:text-3xl text-gray-300 font-medium tracking-normal">/5</span></div>
+                <div className="flex gap-1 mb-3">
+                  {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-4 h-4 md:w-6 md:h-6 text-yellow-400 fill-current drop-shadow-sm" />)}
+                </div>
+                <p className="text-[10px] md:text-sm text-gray-500 mb-4 md:mb-6 font-medium">Based on verified reviews</p>
+                <Button variant="outline" className="border-gray-200 text-gray-700 rounded-full h-8 md:h-10 px-4 md:px-6 text-[10px] md:text-sm font-semibold hover:bg-gray-50 hover:text-amber-700 shadow-sm">Write a Review</Button>
               </div>
+            </div>
+
+            {/* User Satisfaction */}
+            <div className="col-span-1 lg:col-span-1 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-gray-100 bg-gray-50/30 flex flex-col justify-center">
+              <h3 className="text-xs md:text-sm font-semibold text-gray-800 uppercase tracking-wider mb-6 text-center">User Satisfaction</h3>
+              <div className="flex flex-col gap-5 md:gap-6 items-center justify-center">
+                {[
+                  { label: 'Response', value: 98 },
+                  { label: 'Quality', value: 99 },
+                  { label: 'Delivery', value: 97 }
+                ].map((metric, i) => {
+                  // SVG Circle math: r=24, circumference = 2 * pi * 24 = 150.8
+                  const r = 20; // slightly smaller for mobile layout scaling
+                  const c = 2 * Math.PI * r;
+                  const offset = c - (metric.value / 100) * c;
+
+                  return (
+                    <div key={i} className="flex flex-row items-center gap-2.5 md:gap-4 w-full max-w-[150px] md:max-w-[180px] justify-start">
+                      <div className="w-10 h-10 md:w-16 md:h-16 rounded-full bg-white shadow-sm flex items-center justify-center text-[10px] md:text-sm font-extrabold text-stone-900 relative flex-shrink-0">
+                        {metric.value}%
+                        {/* Circle progress SVG */}
+                        <svg className="absolute inset-0 w-full h-full -rotate-90">
+                          <circle
+                            cx="50%"
+                            cy="50%"
+                            r={r}
+                            className="stroke-stone-100"
+                            strokeWidth="3 md:strokeWidth=4"
+                            fill="transparent"
+                          />
+                          <circle
+                            cx="50%"
+                            cy="50%"
+                            r={r}
+                            className="stroke-gold transition-all duration-1000 ease-out"
+                            strokeWidth="3 md:strokeWidth=4"
+                            fill="transparent"
+                            strokeDasharray={c}
+                            strokeDashoffset={offset}
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                      </div>
+                      <span className="text-[10px] md:text-sm text-stone-600 font-bold uppercase tracking-wide">{metric.label}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Individual Review */}
+            <div className="col-span-2 lg:col-span-2 p-6 md:p-8 bg-white flex flex-col justify-center">
+              <div className="flex gap-4 items-start">
+                <div className="w-12 h-12 md:w-14 md:h-14 bg-forest rounded-2xl shadow-inner text-white flex items-center justify-center text-xl md:text-2xl font-bold flex-shrink-0">
+                  R
+                </div>
+                <div className="flex-1">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-1">
+                    <div className="flex items-center gap-2">
+                      <h4 className="font-bold text-gray-900 text-base md:text-lg">R.k. Aggarwal</h4>
+                      <span className="px-2 py-0.5 bg-gray-100 text-gray-500 rounded-md text-[10px] md:text-xs font-medium">Delhi</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="flex text-yellow-400 gap-0.5">
+                        <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
+                        <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
+                        <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
+                        <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
+                        <Star className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current drop-shadow-sm" />
+                      </div>
+                      <span className="text-[10px] md:text-xs text-gray-400 font-medium">07 Jan 2025</span>
+                    </div>
+                  </div>
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gold/10 text-gold rounded-lg text-[11px] md:text-xs font-bold mb-3">
+                    <CheckCircle2 className="w-3 h-3 md:w-3.5 md:h-3.5" /> Product: Assam Ctc Tea
+                  </div>
+                  <p className="text-gray-700 text-sm md:text-base leading-relaxed italic">"Refreshingly unique features that enhance usability and overall experience. Highly recommended for wholesale buyers."</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* 4. Contact / Form Footer */}
       <section id="inquiry" className="w-full bg-white py-8 md:py-12 relative overflow-hidden scroll-mt-24">
-         {/* Background pattern */}
-         <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
-         
-         <div className="container mx-auto px-4 max-w-6xl relative z-10">
-            <div className="bg-white rounded-[2rem] shadow-[0_20px_50px_rgb(0,0,0,0.08)] border border-gray-100 flex flex-col lg:flex-row relative overflow-hidden">
-               
-               {/* Left Side: Contact Info (Integrated instead of floating for a cleaner modern look) */}
-               <div className="lg:w-[400px] bg-forest text-white p-10 md:p-12 relative overflow-hidden">
-                  {/* Decorative circles */}
-                  <div className="absolute -top-24 -left-24 w-64 h-64 bg-white/10 rounded-full blur-2xl"></div>
-                  <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-gold/15 rounded-full blur-2xl"></div>
-                  
-                  <div className="relative z-10 h-full flex flex-col">
-                    <h3 className="text-3xl font-bold mb-2">Get in Touch</h3>
-                    <p className="text-stone-300 text-sm mb-10">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
-                    
-                    <div className="space-y-8 mb-auto">
-                       <div className="flex items-start gap-4">
-                          <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm border border-white/10">
-                            <User className="w-5 h-5 text-gold" />
-                          </div>
-                          <div>
-                             <p className="text-stone-300 text-xs font-semibold uppercase tracking-wider mb-1">Contact Person</p>
-                             <p className="font-bold text-lg">Mr. Shahinur Islam</p>
-                          </div>
-                       </div>
-                       
-                       <div className="flex items-start gap-4">
-                          <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm border border-white/10">
-                            <MapPin className="w-5 h-5 text-gold" />
-                          </div>
-                          <div>
-                             <p className="text-stone-300 text-xs font-semibold uppercase tracking-wider mb-1">Office Address</p>
-                             <p className="font-medium text-sm leading-relaxed text-stone-200 pr-4">
-                                HN 27, Hatigarh Chariali, Guwahati, Kamrup Metropolitan, Assam - 781038
-                             </p>
-                          </div>
-                       </div>
-                    </div>
-                    
-                    <div className="mt-12 pt-8 border-t border-white/20">
-                       <p className="text-sm font-medium mb-4">Connect with us</p>
-                       <div className="flex gap-3">
-                          {['Facebook', 'Twitter', 'LinkedIn', 'Pinterest'].map((social, i) => (
-                             <div key={i} className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center cursor-pointer transition-colors backdrop-blur-sm border border-white/10">
-                               <span className="text-xs font-bold">{social[0]}</span>
-                             </div>
-                          ))}
-                       </div>
-                    </div>
-                  </div>
-               </div>
+        {/* Background pattern */}
+        <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
 
-               {/* Right Side: Form */}
-               <div className="flex-1 p-10 md:p-14 bg-white">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Send an Inquiry</h3>
-                  <p className="text-gray-500 mb-8 text-sm">Tell us what you're looking for, and our team will get back to you with the best quote.</p>
-                  
-                  <div className="space-y-6">
-                     <div>
-                       <label className="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Product / Service</label>
-                       <input type="text" placeholder="e.g., Premium Assam CTC Tea" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold focus:bg-white transition-all shadow-sm placeholder-gray-400" />
-                     </div>
-                     
-                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                           <label className="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Quantity</label>
-                           <input type="number" placeholder="Enter quantity" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold focus:bg-white transition-all shadow-sm placeholder-gray-400" />
-                        </div>
-                        <div>
-                           <label className="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Unit</label>
-                           <div className="relative">
-                             <select className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold focus:bg-white transition-all shadow-sm appearance-none cursor-pointer">
-                                <option>Kilograms (kg)</option>
-                                <option>Metric Tons (MT)</option>
-                                <option>Boxes</option>
-                             </select>
-                             <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                           </div>
-                        </div>
-                     </div>
-                     
-                     <div>
-                        <label className="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Mobile Number</label>
-                        <div className="flex bg-gray-50 border border-gray-200 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-gold/20 focus-within:border-gold focus-within:bg-white transition-all shadow-sm">
-                           <div className="bg-gray-100 px-4 py-3.5 border-r border-gray-200 text-sm text-gray-700 font-medium flex items-center gap-2">
-                             <div className="w-4 h-3 flex flex-col rounded-[1px] overflow-hidden shadow-sm"><div className="h-1/3 bg-orange-500"></div><div className="h-1/3 bg-white"></div><div className="h-1/3 bg-green-500"></div></div>
-                             +91
-                           </div>
-                           <input type="tel" placeholder="Enter your mobile number" className="flex-1 px-4 py-3.5 text-sm focus:outline-none bg-transparent placeholder-gray-400" />
-                        </div>
-                     </div>
-                     
-                     <div className="pt-4">
-                        <Button className="w-full md:w-auto bg-forest hover:bg-forest/90 text-white px-10 py-6 h-auto text-base font-bold rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
-                           Submit Inquiry
-                        </Button>
-                        <p className="text-xs text-gray-500 mt-4 text-center md:text-left">
-                           By submitting, you agree to our <span className="text-gold font-medium hover:underline cursor-pointer">Terms</span> and <span className="text-gold font-medium hover:underline cursor-pointer">Privacy Policy</span>.
-                        </p>
-                     </div>
-                  </div>
-               </div>
+        <div className="container mx-auto px-4 max-w-6xl relative z-10">
+          <Suspense fallback={
+            <div className="bg-white rounded-2xl p-8 border border-stone-100 text-center text-stone-500">
+              Loading form...
             </div>
-         </div>
+          }>
+            <ContactSection />
+          </Suspense>
+        </div>
       </section>
 
       {/* 5. FAQs */}

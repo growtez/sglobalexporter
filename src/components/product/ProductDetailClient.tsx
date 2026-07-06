@@ -363,7 +363,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                     <><ShoppingCart className="w-4 h-4 mr-2" /> Add to Cart</>
                   )}
                 </Button>
-                <Link href={`/b2b?product=${product.id}`} className="flex-1">
+                <Link href={`/contact?product=${encodeURIComponent(product.name)}#inquiry-form`} className="flex-1">
                   <Button
                     variant="outline"
                     className="w-full h-12 font-bold text-sm rounded-xl border-forest text-forest hover:bg-forest/5 transition-all"

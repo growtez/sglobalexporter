@@ -164,7 +164,7 @@ export default function WhyChooseUs() {
               </p>
             </div>
             <a
-              href="/b2b"
+              href="/contact#inquiry-form"
               className="mt-8 inline-flex items-center justify-center px-6 py-3 bg-charcoal text-cream rounded-xl font-semibold text-sm hover:bg-forest transition-colors duration-300"
             >
               Request a Quote →
