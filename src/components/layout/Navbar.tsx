@@ -93,10 +93,10 @@ export default function Navbar() {
 
       {/* Main Nav */}
       <div className="container mx-auto px-4 md:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-[72px]">
+        <div className="flex items-center justify-between h-14 lg:h-[60px]">
           {/* Left: Logo + Brand */}
           <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
-            <div className="relative rounded-xl overflow-hidden border border-gray-100/80 bg-white flex items-center justify-center transition-all duration-300 group-hover:shadow-lg group-hover:scale-[1.03] w-12 h-12 lg:w-14 lg:h-14">
+            <div className="relative rounded-xl overflow-hidden border border-gray-100/80 bg-white flex items-center justify-center transition-all duration-300 group-hover:shadow-lg group-hover:scale-[1.03] w-10 h-10 lg:w-12 lg:h-12">
               <Image 
                 src="/images/logo.webp" 
                 alt="SGlobalExporter Logo" 
@@ -228,7 +228,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div 
-        className={`lg:hidden fixed inset-0 top-[65px] z-50 transition-all duration-400 ${
+        className={`lg:hidden fixed inset-0 top-[56px] z-50 transition-all duration-400 ${
           isMobileMenuOpen 
             ? "opacity-100 pointer-events-auto" 
             : "opacity-0 pointer-events-none"
@@ -260,31 +260,23 @@ export default function Navbar() {
 
           {/* Mobile Nav Links */}
           <nav className="flex-1 overflow-y-auto py-2">
-            {navLinks.map((link, i) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className={`flex items-center justify-between px-6 py-4 text-[15px] font-semibold text-stone-700 hover:bg-stone-50 hover:text-gold transition-all duration-200 ${
-                  isMobileMenuOpen ? "animate-in slide-in-from-right" : ""
-                }`}
-                style={{ animationDelay: `${i * 50}ms` }}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.label}
-                <ArrowRight className="w-4 h-4 text-stone-300" />
-              </Link>
-            ))}
-
-            <div className="mx-6 my-3 h-px bg-stone-100" />
-
-            <Link
-              href="/contact#inquiry-form"
-              className="flex items-center gap-3 px-6 py-4 text-[15px] font-semibold text-gold hover:bg-stone-50 transition-all"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <Mail className="w-4 h-4" />
-              Send Enquiry
-            </Link>
+            {navLinks.map((link, i) => {
+              const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+              return (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className={`flex items-center justify-between px-6 py-4 text-[15px] font-semibold transition-all duration-200 ${
+                    isActive ? "text-gold bg-stone-50/80 border-r-4 border-gold" : "text-stone-700 hover:bg-stone-50 hover:text-gold"
+                  } ${isMobileMenuOpen ? "animate-in slide-in-from-right" : ""}`}
+                  style={{ animationDelay: `${i * 50}ms` }}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.label}
+                  <ArrowRight className={`w-4 h-4 transition-colors ${isActive ? "text-gold" : "text-stone-300"}`} />
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Mobile Bottom Actions */}
