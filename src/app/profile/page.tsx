@@ -20,11 +20,11 @@ export default async function ProfilePage() {
     .single();
 
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-12 md:py-20">
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-4xl font-serif font-bold text-forest">My Profile</h1>
+    <div className="container mx-auto max-w-2xl px-4 py-6 md:py-10">
+      <div className="flex items-center justify-between mb-5">
+        <h1 className="text-2xl md:text-3xl font-serif font-bold text-forest">My Profile</h1>
         <form action={logout}>
-          <Button variant="outline" type="submit">Log Out</Button>
+          <Button variant="outline" size="sm" type="submit" className="h-8.5 text-xs">Log Out</Button>
         </form>
       </div>
 

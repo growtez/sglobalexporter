@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import HeroSlider from "@/components/sections/HeroSlider";
 import HomeFAQ from "@/components/sections/HomeFAQ";
+import ContactSection from "@/components/sections/ContactSection";
 import { createClient } from '@/lib/supabase/server';
 import {
   User, Building2, Briefcase, PiggyBank,
@@ -54,7 +56,7 @@ export default async function Home() {
             Serving the World with Premium Tea.
           </h1>
           <p className="text-sm md:text-base text-stone-600 leading-relaxed mb-6 font-medium">
-            Welcome to Shahinur Global Exporter. Established in 2023, we are a leading Manufacturer, Exporter, Supplier & Trader of premium teas.
+            Established in 2023, Shahinur Global Exporter is a leading Manufacturer, Exporter, Supplier & Trader of premium teas.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/about">
@@ -217,106 +219,13 @@ export default async function Home() {
         <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
 
         <div className="container mx-auto px-4 max-w-6xl relative z-10">
-          <div className="bg-white rounded-[2rem] shadow-[0_20px_50px_rgb(0,0,0,0.08)] border border-gray-100 flex flex-col lg:flex-row relative overflow-hidden">
-
-            {/* Left Side: Contact Info (Integrated instead of floating for a cleaner modern look) */}
-            <div className="lg:w-[400px] bg-forest text-white p-10 md:p-12 relative overflow-hidden">
-              {/* Decorative circles */}
-              <div className="absolute -top-24 -left-24 w-64 h-64 bg-white/10 rounded-full blur-2xl"></div>
-              <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-gold/15 rounded-full blur-2xl"></div>
-
-              <div className="relative z-10 h-full flex flex-col">
-                <h3 className="text-3xl font-bold mb-2">Get in Touch</h3>
-                <p className="text-stone-300 text-sm mb-10">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
-
-                <div className="space-y-8 mb-auto">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm border border-white/10">
-                      <User className="w-5 h-5 text-gold" />
-                    </div>
-                    <div>
-                      <p className="text-stone-300 text-xs font-semibold uppercase tracking-wider mb-1">Contact Person</p>
-                      <p className="font-bold text-lg">Mr. Shahinur Islam</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm border border-white/10">
-                      <MapPin className="w-5 h-5 text-gold" />
-                    </div>
-                    <div>
-                      <p className="text-stone-300 text-xs font-semibold uppercase tracking-wider mb-1">Office Address</p>
-                      <p className="font-medium text-sm leading-relaxed text-stone-200 pr-4">
-                        HN 27, Hatigarh Chariali, Guwahati, Kamrup Metropolitan, Assam - 781038
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-12 pt-8 border-t border-white/20">
-                  <p className="text-sm font-medium mb-4">Connect with us</p>
-                  <div className="flex gap-3">
-                    {['Facebook', 'Twitter', 'LinkedIn', 'Pinterest'].map((social, i) => (
-                      <div key={i} className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center cursor-pointer transition-colors backdrop-blur-sm border border-white/10">
-                        <span className="text-xs font-bold">{social[0]}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+          <Suspense fallback={
+            <div className="bg-white rounded-2xl p-8 border border-stone-100 text-center text-stone-500">
+              Loading form...
             </div>
-
-            {/* Right Side: Form */}
-            <div className="flex-1 p-10 md:p-14 bg-white">
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Send an Inquiry</h3>
-              <p className="text-gray-500 mb-8 text-sm">Tell us what you're looking for, and our team will get back to you with the best quote.</p>
-
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Product / Service</label>
-                  <input id="homepage-product-input" type="text" placeholder="e.g., Premium Assam CTC Tea" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold focus:bg-white transition-all shadow-sm placeholder-gray-400" />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Quantity</label>
-                    <input type="number" placeholder="Enter quantity" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold focus:bg-white transition-all shadow-sm placeholder-gray-400" />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Unit</label>
-                    <div className="relative">
-                      <select className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold focus:bg-white transition-all shadow-sm appearance-none cursor-pointer">
-                        <option>Kilograms (kg)</option>
-                        <option>Metric Tons (MT)</option>
-                        <option>Boxes</option>
-                      </select>
-                      <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Mobile Number</label>
-                  <div className="flex bg-gray-50 border border-gray-200 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-gold/20 focus-within:border-gold focus-within:bg-white transition-all shadow-sm">
-                    <div className="bg-gray-100 px-4 py-3.5 border-r border-gray-200 text-sm text-gray-700 font-medium flex items-center gap-2">
-                      <div className="w-4 h-3 flex flex-col rounded-[1px] overflow-hidden shadow-sm"><div className="h-1/3 bg-orange-500"></div><div className="h-1/3 bg-white"></div><div className="h-1/3 bg-green-500"></div></div>
-                      +91
-                    </div>
-                    <input type="tel" placeholder="Enter your mobile number" className="flex-1 px-4 py-3.5 text-sm focus:outline-none bg-transparent placeholder-gray-400" />
-                  </div>
-                </div>
-
-                <div className="pt-4">
-                  <Button className="w-full md:w-auto bg-forest hover:bg-forest/90 text-white px-10 py-6 h-auto text-base font-bold rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
-                    Submit Inquiry
-                  </Button>
-                  <p className="text-xs text-gray-500 mt-4 text-center md:text-left">
-                    By submitting, you agree to our <span className="text-gold font-medium hover:underline cursor-pointer">Terms</span> and <span className="text-gold font-medium hover:underline cursor-pointer">Privacy Policy</span>.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          }>
+            <ContactSection />
+          </Suspense>
         </div>
       </section>
 

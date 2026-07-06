@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
 
 interface ProductCardProps {
     product: {
@@ -24,13 +23,6 @@ export default function ProductCard({ product }: ProductCardProps) {
                 transition={{ duration: 0.3, ease: "easeOut" }}
                 className="group flex flex-col bg-white rounded-2xl overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.03)] border border-stone-100 cursor-pointer h-full relative"
             >
-                {/* Favorite Icon */}
-                <button 
-                    className="absolute top-2 right-2 z-10 w-7 h-7 flex items-center justify-center bg-white/60 hover:bg-white backdrop-blur-md rounded-full transition-colors"
-                    onClick={(e) => { e.preventDefault(); /* Add to wishlist logic */ }}
-                >
-                    <Heart className="w-3.5 h-3.5 text-stone-600" strokeWidth={2} />
-                </button>
 
                 {/* Image Container */}
                 <div className="relative aspect-square w-full overflow-hidden bg-stone-50">
