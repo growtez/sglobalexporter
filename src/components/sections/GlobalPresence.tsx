@@ -154,7 +154,7 @@ export default function GlobalPresence() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="relative max-w-4xl mx-auto rounded-3xl bg-forest/5 border border-forest/10 p-2 md:p-4 mb-12 overflow-hidden"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-forest/5 via-transparent to-gold/5 rounded-3xl" />
+          <div className="absolute inset-0 bg-forest/[0.03] rounded-3xl" />
           
           <div className="relative z-10 w-full h-[300px] md:h-[400px] flex items-center justify-center">
             {mounted ? (

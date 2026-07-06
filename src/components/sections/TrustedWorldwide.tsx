@@ -43,8 +43,8 @@ const stats = [
     suffix: "+",
     label: "Countries Served",
     description: "Shipping premium Assam tea across 6 continents",
-    color: "from-emerald-500/20 to-green-600/10",
-    iconColor: "text-emerald-400",
+    color: "from-amber-500/20 to-yellow-600/10",
+    iconColor: "text-amber-400",
   },
   {
     icon: Award,
@@ -70,8 +70,8 @@ const stats = [
     suffix: "+",
     label: "Happy Clients",
     description: "Trusted by importers, brands & retailers worldwide",
-    color: "from-blue-500/20 to-indigo-600/10",
-    iconColor: "text-blue-400",
+    color: "from-yellow-500/20 to-amber-600/10",
+    iconColor: "text-yellow-400",
   },
 ];
 

@@ -24,7 +24,7 @@ export default function CallToAction() {
             "url('https://images.unsplash.com/photo-1544787219-7f47ccb76574?q=80&w=2070&auto=format&fit=crop')",
         }}
       />
-      <div className="absolute inset-0 z-10 bg-gradient-to-br from-forest/96 via-forest/88 to-charcoal/90" />
+      <div className="absolute inset-0 z-10 bg-forest/90" />
 
       {/* Decorative circles */}
       <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-gold/5 blur-3xl z-10" />

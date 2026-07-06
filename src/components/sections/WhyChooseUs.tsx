@@ -16,9 +16,9 @@ const reasons = [
     title: "Direct Sourcing",
     description:
       "We partner exclusively with certified estate owners in Assam, bypassing middlemen for maximum freshness, authentic provenance, and fair pricing.",
-    accent: "bg-emerald-50 text-emerald-700 border-emerald-200",
-    iconBg: "bg-emerald-100",
-    iconColor: "text-emerald-600",
+    accent: "bg-amber-50 text-amber-700 border-amber-200",
+    iconBg: "bg-amber-100",
+    iconColor: "text-amber-600",
     number: "01",
   },
   {
@@ -26,9 +26,9 @@ const reasons = [
     title: "Export Expertise",
     description:
       "15+ years navigating international trade — including FSSAI, FDA, EU, and Halal compliance. We handle all regulatory documentation seamlessly.",
-    accent: "bg-blue-50 text-blue-700 border-blue-200",
-    iconBg: "bg-blue-100",
-    iconColor: "text-blue-600",
+    accent: "bg-yellow-50 text-yellow-800 border-yellow-200",
+    iconBg: "bg-yellow-100",
+    iconColor: "text-yellow-700",
     number: "02",
   },
   {
@@ -46,9 +46,9 @@ const reasons = [
     title: "Competitive Pricing",
     description:
       "Our direct-estate model means lower overheads and better margins for you. Volume-based tiered pricing and long-term partnership rates available.",
-    accent: "bg-violet-50 text-violet-700 border-violet-200",
-    iconBg: "bg-violet-100",
-    iconColor: "text-violet-600",
+    accent: "bg-orange-50 text-orange-700 border-orange-200",
+    iconBg: "bg-orange-100",
+    iconColor: "text-orange-600",
     number: "04",
   },
   {
@@ -56,9 +56,9 @@ const reasons = [
     title: "Timely Delivery",
     description:
       "We commit to delivery timelines and honour them. With robust freight partnerships and pre-shipment planning, your consignment arrives on schedule.",
-    accent: "bg-rose-50 text-rose-700 border-rose-200",
-    iconBg: "bg-rose-100",
-    iconColor: "text-rose-600",
+    accent: "bg-red-50 text-red-700 border-red-200",
+    iconBg: "bg-red-100",
+    iconColor: "text-red-600",
     number: "05",
   },
 ];
