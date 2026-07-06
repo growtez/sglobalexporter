@@ -47,27 +47,15 @@ export default function Navbar() {
                 Shahinur Global Exporter <span className="hidden sm:inline">(Opc) Pvt. Ltd.</span>
               </Link>
               
-              <div className="flex items-center text-[11px] md:text-[13px] text-gray-500 mt-0.5 md:mt-1 mb-1 md:mb-1.5 gap-1.5">
-                <MapPin className="w-3 md:w-3.5 h-3 md:h-3.5 text-blue-500" />
-                <span className="font-medium">South Salmara, Assam</span>
-              </div>
-              
-              <div className="hidden md:flex flex-wrap items-center gap-3 md:gap-5 text-[12px] md:text-[13px] font-medium">
-                <div className="flex items-center gap-1.5 text-slate-600 bg-slate-50 px-2.5 py-0.5 rounded-full border border-slate-100 shadow-sm">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-                  <span>GST : 18ABPCS9031G1ZX</span>
+              <div className="flex flex-wrap items-center text-[11px] md:text-[13px] text-gray-500 mt-0.5 md:mt-1 mb-1 md:mb-1.5 gap-2.5">
+                <div className="flex items-center gap-1.5">
+                  <MapPin className="w-3 md:w-3.5 h-3 md:h-3.5 text-blue-500" />
+                  <span className="font-medium">South Salmara, Assam</span>
                 </div>
-                <div className="flex items-center gap-1.5 text-slate-600 bg-slate-50 px-2.5 py-0.5 rounded-full border border-slate-100 shadow-sm">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-                  <span>Verified Mobile</span>
-                </div>
-                <div className="flex items-center gap-1.5 text-slate-600 bg-slate-50 px-2.5 py-0.5 rounded-full border border-slate-100 shadow-sm">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-                  <span>Verified Email</span>
-                </div>
-                <div className="flex items-center gap-1 font-bold text-slate-700 ml-1">
-                  <ThumbsUp className="w-4 h-4 text-[#1864b4] fill-[#1864b4]" />
-                  <span className="text-[#1864b4]">5.0</span> <span className="text-gray-400 font-normal">/ 5</span>
+                <span className="text-gray-300 hidden md:inline">|</span>
+                <div className="flex items-center gap-1.5 text-slate-600 bg-slate-50 px-2 py-0.5 rounded-full border border-slate-100 shadow-sm text-[10px] md:text-[11px]">
+                  <CheckCircle2 className="w-3 md:w-3.5 h-3 md:h-3.5 text-emerald-500" />
+                  <span className="font-medium">GST: 18ABPCS9031G1ZX</span>
                 </div>
               </div>
             </div>

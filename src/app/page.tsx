@@ -47,36 +47,7 @@ export default async function Home() {
       {/* Hero Slider (Auto-scrolling) */}
       <HeroSlider products={products} />
 
-      {/* 1. Product Range */}
-      <section className="w-full bg-[#f8f9fa] py-16 relative">
-        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
-        <div className="container mx-auto px-4 max-w-7xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4 tracking-tight">Our Premium Product Range</h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">Explore our wide variety of meticulously sourced and processed teas and eco-friendly products.</p>
-          </div>
-          
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 md:gap-3">
-            {products.map((cat, idx) => (
-              <div key={idx} className="relative group rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 aspect-square cursor-pointer">
-                <Image src={cat.img} alt={cat.name} fill sizes="(max-width: 640px) 33vw, (max-width: 768px) 25vw, (max-width: 1024px) 16vw, 12.5vw" className="object-cover group-hover:scale-110 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute bottom-0 inset-x-0 p-1.5 sm:p-2.5 text-center transform translate-y-1 group-hover:-translate-y-1 transition-transform duration-300">
-                  <h3 className="font-bold text-white text-[10px] sm:text-[12px] md:text-sm leading-tight drop-shadow-md">{cat.name}</h3>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="flex justify-center mt-12">
-            <Button className="bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white rounded-full px-8 h-12 text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
-              Explore All Categories
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. Hero / Intro Section */}
+      {/* 1. Hero / Intro Section */}
       <section className="w-full pb-16 pt-16 relative">
         <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-blue-50/50 to-white z-0 pointer-events-none"></div>
         
@@ -95,7 +66,7 @@ export default async function Home() {
           </Button>
 
           {/* Stat Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-16">
             <div className="bg-white/80 backdrop-blur-xl border border-gray-100 rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center group relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
               <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-4 text-blue-600 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
@@ -122,15 +93,35 @@ export default async function Home() {
               <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-1.5 relative z-10">Business Type</p>
               <p className="font-bold text-gray-800 text-sm relative z-10">Manufacturer</p>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="bg-white/80 backdrop-blur-xl border border-gray-100 rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center group relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="w-14 h-14 rounded-2xl bg-orange-50 flex items-center justify-center mb-4 text-orange-600 group-hover:scale-110 group-hover:bg-orange-600 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
-                <PiggyBank className="w-7 h-7" />
+      {/* 2. Product Range */}
+      <section className="w-full bg-[#f8f9fa] py-16 relative">
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4 tracking-tight">Our Premium Product Range</h2>
+            <p className="text-gray-500 max-w-2xl mx-auto">Explore our wide variety of meticulously sourced and processed teas and eco-friendly products.</p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-8">
+            {products.map((cat, idx) => (
+              <div key={idx} className="relative group rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 aspect-square cursor-pointer">
+                <Image src={cat.img} alt={cat.name} fill sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw" className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute bottom-0 inset-x-0 p-1.5 sm:p-2.5 text-center transform translate-y-1 group-hover:-translate-y-1 transition-transform duration-300">
+                  <h3 className="font-bold text-white text-[10px] sm:text-[12px] md:text-sm leading-tight drop-shadow-md">{cat.name}</h3>
+                </div>
               </div>
-              <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-1.5 relative z-10">Annual Turnover</p>
-              <p className="font-bold text-gray-800 text-sm relative z-10">Below Rs. 0.5 Crore</p>
-            </div>
+            ))}
+          </div>
+          
+          <div className="flex justify-center mt-12">
+            <Button className="bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white rounded-full px-8 h-12 text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+              Explore All Categories
+            </Button>
           </div>
         </div>
       </section>
