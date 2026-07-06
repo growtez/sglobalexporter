@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
 import { logout } from "@/app/auth/actions";
+import ProfileForm from "./ProfileForm";
 
 export default async function ProfilePage() {
   const supabase = await createClient();
@@ -27,26 +28,7 @@ export default async function ProfilePage() {
         </form>
       </div>
 
-      <div className="bg-white border border-stone-200 p-8 shadow-sm">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div>
-            <h3 className="text-sm uppercase tracking-widest text-stone-500 font-medium mb-1">Full Name</h3>
-            <p className="text-lg text-charcoal">{profile?.full_name || "N/A"}</p>
-          </div>
-          <div>
-            <h3 className="text-sm uppercase tracking-widest text-stone-500 font-medium mb-1">Email Address</h3>
-            <p className="text-lg text-charcoal">{user.email}</p>
-          </div>
-          <div>
-            <h3 className="text-sm uppercase tracking-widest text-stone-500 font-medium mb-1">Company</h3>
-            <p className="text-lg text-charcoal">{profile?.company_name || "N/A"}</p>
-          </div>
-          <div>
-            <h3 className="text-sm uppercase tracking-widest text-stone-500 font-medium mb-1">Role</h3>
-            <p className="text-lg text-charcoal capitalize">{profile?.role || "Customer"}</p>
-          </div>
-        </div>
-      </div>
+      <ProfileForm profile={profile} userEmail={user.email || ""} />
     </div>
   );
 }

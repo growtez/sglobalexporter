@@ -22,8 +22,19 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const pathname = usePathname();
+  const [user, setUser] = useState<any>(null);
 
-
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setUser(user);
+      }
+    };
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -142,10 +153,17 @@ export default function Navbar() {
 
             {/* Account */}
             <Link 
-              href="/auth/login" 
-              className="hidden lg:flex w-9 h-9 items-center justify-center rounded-xl text-stone-500 hover:text-gold hover:bg-stone-100 transition-all duration-200"
+              href={user ? "/profile" : "/auth/login"}
+              className="hidden lg:flex items-center gap-2 rounded-xl text-stone-500 hover:text-gold transition-all duration-200"
             >
-              <User className="w-[18px] h-[18px]" />
+              <div className="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-stone-100">
+                <User className="w-[18px] h-[18px]" />
+              </div>
+              {user && (
+                <span className="text-[13px] font-semibold text-stone-600 truncate max-w-[100px]">
+                  {user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]}
+                </span>
+              )}
             </Link>
 
             {/* Cart */}
@@ -272,9 +290,9 @@ export default function Navbar() {
           {/* Mobile Bottom Actions */}
           <div className="border-t border-gray-100 p-4 space-y-3 bg-stone-50/50">
             <div className="flex gap-2">
-              <Link href="/auth/login" className="flex-1" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link href={user ? "/profile" : "/auth/login"} className="flex-1" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button variant="outline" className="w-full bg-white text-stone-700 h-11 rounded-xl font-semibold border-stone-200 hover:bg-stone-50 transition-all text-xs">
-                  <User className="w-3.5 h-3.5 mr-1.5" /> Sign In
+                  <User className="w-3.5 h-3.5 mr-1.5" /> {user ? "Profile" : "Sign In"}
                 </Button>
               </Link>
               <Link href="tel:+919181147813" className="flex-1" onClick={() => setIsMobileMenuOpen(false)}>
