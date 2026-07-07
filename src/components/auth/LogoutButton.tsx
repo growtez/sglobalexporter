@@ -1,9 +1,10 @@
 "use client";
 
-import { useCartStore } from "@/lib/store/cartStore";
 import { logout } from "@/app/auth/actions";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
+
+import { createClient } from "@/lib/supabase/client";
 
 interface LogoutButtonProps {
   className?: string;
@@ -20,11 +21,9 @@ export default function LogoutButton({
   showIcon = false,
   label = "Log Out",
 }: LogoutButtonProps) {
-  const clearCart = useCartStore((state) => state.clearCart);
-
   const handleLogout = async () => {
-    // Clear the cart from localStorage before signing out
-    clearCart();
+    const supabase = createClient();
+    await supabase.auth.signOut();
     await logout();
   };
 

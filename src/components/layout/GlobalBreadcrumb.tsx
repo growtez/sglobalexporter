@@ -18,6 +18,7 @@ export default function GlobalBreadcrumb() {
         <nav className="flex items-center gap-2 text-xs text-stone-500 dark:text-stone-400 overflow-x-auto whitespace-nowrap scrollbar-hide">
           <Link href="/" className="hover:text-gold transition-colors">Home</Link>
           {pathname.split('/').filter(Boolean).map((path, index, array) => {
+            if (path === 'auth') return null;
             const currentPath = `/${array.slice(0, index + 1).join('/')}`;
             const isLast = index === array.length - 1;
             let text = path.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());

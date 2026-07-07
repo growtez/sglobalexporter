@@ -37,15 +37,26 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const fetchUser = async () => {
+    let subscription: any;
+
+    const setupAuthListener = async () => {
       const { createClient } = await import("@/lib/supabase/client");
       const supabase = createClient();
+      
       const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        setUser(user);
-      }
+      setUser(user || null);
+
+      const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+        setUser(session?.user || null);
+      });
+      subscription = data.subscription;
     };
-    fetchUser();
+
+    setupAuthListener();
+
+    return () => {
+      if (subscription) subscription.unsubscribe();
+    };
   }, []);
 
   useEffect(() => {
@@ -220,7 +231,7 @@ export default function Navbar() {
 
             {/* Account */}
             <Link 
-              href={user ? "/profile" : "/auth/login"}
+              href={user ? "/profile" : `/auth/login?redirect=${pathname}`}
               className={`hidden lg:flex items-center gap-2 rounded-xl h-9 px-2.5 transition-all duration-200 ${
                 pathname === "/profile" || pathname.startsWith("/auth/")
                   ? "text-gold bg-stone-100 ring-1 ring-gold/15"
@@ -347,7 +358,7 @@ export default function Navbar() {
             </div>
 
             <div className="flex gap-2">
-              <Link href={user ? "/profile" : "/auth/login"} className="flex-1" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link href={user ? "/profile" : `/auth/login?redirect=${pathname}`} className="flex-1" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button variant="outline" className={`w-full bg-white dark:bg-stone-800 h-11 rounded-xl font-semibold border-stone-200 dark:border-stone-700 hover:bg-stone-50 transition-all text-xs ${
                   pathname === "/profile" || pathname.startsWith("/auth/")
                     ? "text-gold border-gold/40 bg-stone-50 ring-1 ring-gold/10"

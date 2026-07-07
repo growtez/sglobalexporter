@@ -164,9 +164,21 @@ export default function CartPage() {
                 <span>₹{getTotal()}</span>
               </div>
             </div>
-            <Link href="/checkout" className="block w-full">
+            <button 
+              onClick={async () => {
+                const { createClient } = await import("@/lib/supabase/client");
+                const supabase = createClient();
+                const { data: { user } } = await supabase.auth.getUser();
+                if (!user) {
+                  router.push("/auth/login?redirect=/cart");
+                } else {
+                  router.push("/checkout");
+                }
+              }}
+              className="block w-full"
+            >
               <Button size="lg" className="w-full">Proceed to Checkout</Button>
-            </Link>
+            </button>
           </div>
         </div>
       </div>

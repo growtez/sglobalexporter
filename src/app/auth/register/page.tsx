@@ -1,7 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
+import { Suspense, useActionState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { signup } from "../actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,6 +18,21 @@ export default function RegisterPage() {
   );
 
   return (
+    <Suspense fallback={
+      <div className="flex min-h-[calc(100vh-5rem)] items-center justify-center">
+        <div className="w-8 h-8 border-4 border-forest/20 border-t-forest rounded-full animate-spin"></div>
+      </div>
+    }>
+      <RegisterFormContent state={state} formAction={formAction} isPending={isPending} />
+    </Suspense>
+  );
+}
+
+function RegisterFormContent({ state, formAction, isPending }: { state: any; formAction: any; isPending: boolean }) {
+  const searchParams = useSearchParams();
+  const redirectPath = searchParams.get("redirect") || "";
+
+  return (
     <div className="flex min-h-[calc(100vh-5rem)] items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8 bg-white p-10 shadow-sm border border-stone-200">
         <div>
@@ -25,12 +41,13 @@ export default function RegisterPage() {
           </h2>
           <p className="mt-2 text-center text-sm text-stone-600">
             Or{" "}
-            <Link href="/auth/login" className="font-medium text-gold hover:text-gold/80 transition-colors">
+            <Link href={redirectPath ? `/auth/login?redirect=${redirectPath}` : "/auth/login"} className="font-medium text-gold hover:text-gold/80 transition-colors">
               sign in to your existing account
             </Link>
           </p>
         </div>
         <form className="mt-8 space-y-6" action={formAction}>
+          <input type="hidden" name="redirect" defaultValue={redirectPath} />
           <div className="space-y-4 rounded-md shadow-sm">
             <div className="space-y-1">
               <Label htmlFor="fullName">Full Name</Label>
