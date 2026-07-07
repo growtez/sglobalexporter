@@ -31,6 +31,11 @@ export default function LoginPage() {
 function LoginFormContent({ state, formAction, isPending }: { state: any; formAction: any; isPending: boolean }) {
   const searchParams = useSearchParams();
   const redirectPath = searchParams.get("redirect") || "";
+  
+  if (typeof window !== "undefined") {
+    console.log("[CLIENT_LOGIN] Rendered LoginFormContent");
+    console.log("[CLIENT_LOGIN] URL redirect search param:", redirectPath);
+  }
 
   return (
     <div className="flex min-h-[calc(100vh-5rem)] items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -106,7 +111,7 @@ function LoginFormContent({ state, formAction, isPending }: { state: any; formAc
                 await supabase.auth.signInWithOAuth({
                   provider: "google",
                   options: {
-                    redirectTo: `${window.location.origin}/auth/callback`,
+                    redirectTo: `${window.location.origin}/auth/callback${redirectPath ? `?next=${encodeURIComponent(redirectPath)}` : ''}`,
                   },
                 });
               }}

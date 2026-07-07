@@ -164,7 +164,9 @@ export default function CartPage() {
                 <span>₹{getTotal()}</span>
               </div>
             </div>
-            <button 
+            <Button 
+              size="lg" 
+              className="w-full"
               onClick={async () => {
                 const { createClient } = await import("@/lib/supabase/client");
                 const supabase = createClient();
@@ -175,10 +177,9 @@ export default function CartPage() {
                   router.push("/checkout");
                 }
               }}
-              className="block w-full"
             >
-              <Button size="lg" className="w-full">Proceed to Checkout</Button>
-            </button>
+              Proceed to Checkout
+            </Button>
           </div>
         </div>
       </div>
