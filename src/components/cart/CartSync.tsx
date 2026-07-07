@@ -28,7 +28,7 @@ export default function CartSync() {
         if (!error && dbItems) {
           // Merge logic: DB takes precedence, but if local has items not in DB, we keep them
           const currentLocalItems = useCartStore.getState().items;
-          const dbMapped = dbItems.map(dbItem => ({
+          const dbMapped: CartItem[] = dbItems.map(dbItem => ({
             id: dbItem.product_id, // Map DB product_id back to CartItem.id
             name: dbItem.name,
             price_per_kg: Number(dbItem.price_per_kg),
@@ -67,7 +67,7 @@ export default function CartSync() {
             
           if (dbItems) {
             const currentLocalItems = useCartStore.getState().items;
-            const dbMapped = dbItems.map(dbItem => ({
+            const dbMapped: CartItem[] = dbItems.map(dbItem => ({
               id: dbItem.product_id,
               name: dbItem.name,
               price_per_kg: Number(dbItem.price_per_kg),
