@@ -28,7 +28,7 @@ export default function CartSync() {
         if (!error && dbItems) {
           // Merge logic: DB takes precedence, but if local has items not in DB, we keep them
           const currentLocalItems = useCartStore.getState().items;
-          const merged = [...dbItems.map(dbItem => ({
+          const dbMapped = dbItems.map(dbItem => ({
             id: dbItem.product_id, // Map DB product_id back to CartItem.id
             name: dbItem.name,
             price_per_kg: Number(dbItem.price_per_kg),
@@ -36,7 +36,8 @@ export default function CartSync() {
             image_url: dbItem.image_url,
             slug: dbItem.slug,
             unit: dbItem.unit,
-          }))];
+          }));
+          const merged = [...dbMapped];
 
           // Add local items that aren't in DB
           currentLocalItems.forEach(localItem => {
@@ -46,13 +47,14 @@ export default function CartSync() {
           });
 
           setItems(merged);
+          // Set prevItemsRef to dbMapped so the sync useEffect detects the merge and pushes to DB
+          prevItemsRef.current = dbMapped;
         }
       } else {
         userIdRef.current = null;
       }
       
       initialized.current = true;
-      prevItemsRef.current = useCartStore.getState().items;
 
       // Listen for auth changes
       const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
@@ -65,7 +67,7 @@ export default function CartSync() {
             
           if (dbItems) {
             const currentLocalItems = useCartStore.getState().items;
-            const merged = [...dbItems.map(dbItem => ({
+            const dbMapped = dbItems.map(dbItem => ({
               id: dbItem.product_id,
               name: dbItem.name,
               price_per_kg: Number(dbItem.price_per_kg),
@@ -73,7 +75,8 @@ export default function CartSync() {
               image_url: dbItem.image_url,
               slug: dbItem.slug,
               unit: dbItem.unit,
-            }))];
+            }));
+            const merged = [...dbMapped];
             
             currentLocalItems.forEach(localItem => {
               if (!merged.find(m => m.id === localItem.id)) {
@@ -81,7 +84,8 @@ export default function CartSync() {
               }
             });
             setItems(merged);
-            prevItemsRef.current = merged;
+            // Set prevItemsRef to dbMapped so the sync useEffect detects the merge and pushes to DB
+            prevItemsRef.current = dbMapped;
           }
         } else if (event === "SIGNED_OUT") {
           userIdRef.current = null;
