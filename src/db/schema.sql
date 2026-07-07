@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS site_settings (
 -- ==========================================
 
 -- Profiles
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS email TEXT;
 ALTER TABLE profiles ADD COLUMN IF NOT EXISTS full_name TEXT;
 ALTER TABLE profiles ADD COLUMN IF NOT EXISTS company_name TEXT;
 ALTER TABLE profiles ADD COLUMN IF NOT EXISTS phone_number TEXT;
@@ -111,6 +112,7 @@ ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS product_id UUID REFERENCES produc
 ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS requested_kg INTEGER NOT NULL DEFAULT 1;
 ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS destination_country TEXT NOT NULL DEFAULT 'Unknown';
 ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS message TEXT;
+ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS email TEXT;
 ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS status inquiry_status DEFAULT 'pending';
 ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ DEFAULT timezone('utc', now());
 
@@ -170,9 +172,10 @@ SECURITY DEFINER
 SET search_path = public
 AS $$
 BEGIN
-    INSERT INTO public.profiles (id)
-    VALUES (NEW.id)
-    ON CONFLICT (id) DO NOTHING;
+    INSERT INTO public.profiles (id, email)
+    VALUES (NEW.id, NEW.email)
+    ON CONFLICT (id) DO UPDATE
+    SET email = EXCLUDED.email;
     RETURN NEW;
 END;
 $$;
@@ -236,6 +239,9 @@ BEGIN
     IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname='Users can view own profile') THEN
         CREATE POLICY "Users can view own profile" ON profiles FOR SELECT USING (auth.uid() = id);
     END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname='Admins can view all profiles') THEN
+        CREATE POLICY "Admins can view all profiles" ON profiles FOR SELECT USING (public.is_admin());
+    END IF;
     IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname='Users can update own profile') THEN
         CREATE POLICY "Users can update own profile" ON profiles FOR UPDATE USING (auth.uid() = id);
     END IF;
@@ -273,6 +279,9 @@ BEGIN
     END IF;
     IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname='Admins can view all orders') THEN
         CREATE POLICY "Admins can view all orders" ON orders FOR SELECT USING (public.is_admin());
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname='Admins can view all order items') THEN
+        CREATE POLICY "Admins can view all order items" ON order_items FOR SELECT USING (public.is_admin());
     END IF;
 
 END $$;

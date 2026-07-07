@@ -66,23 +66,23 @@ export default async function AdminDashboardPage() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-serif font-bold text-charcoal">Dashboard</h1>
-        <p className="text-stone-500 mt-1">Welcome back, here's what's happening today.</p>
+      <div className="mb-6 md:mb-8">
+        <h1 className="text-2xl md:text-3xl font-serif font-bold text-charcoal">Dashboard</h1>
+        <p className="text-stone-500 mt-1 text-xs md:text-sm">Welcome back, here's what's happening today.</p>
       </div>
 
       {/* KPI Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-10">
         {stats.map((s) => (
           <StatsCard key={s.label} {...s} />
         ))}
       </div>
 
       {/* Recent Activity */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
         {/* Recent Orders */}
-        <div className="bg-white rounded-2xl shadow-sm border border-stone-100 p-6">
-          <h2 className="text-lg font-semibold text-charcoal mb-4 flex items-center gap-2">
+        <div className="bg-white rounded-2xl shadow-sm border border-stone-100 p-4 md:p-6">
+          <h2 className="text-base md:text-lg font-semibold text-charcoal mb-4 flex items-center gap-2">
             <ShoppingCart size={18} className="text-forest" />
             Recent Orders
           </h2>
@@ -91,27 +91,29 @@ export default async function AdminDashboardPage() {
               recentOrders.map((order: any) => (
                 <div
                   key={order.id}
-                  className="flex items-center justify-between py-2 border-b border-stone-50 last:border-0"
+                  className="flex flex-row items-center justify-between py-3 border-b border-stone-50 last:border-0 gap-2"
                 >
-                  <div>
-                    <p className="text-sm font-medium text-charcoal">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-medium text-charcoal truncate">
                       {(order.profiles as any)?.full_name ?? "Guest"}
                     </p>
                     <p className="text-xs text-stone-400">
                       {new Date(order.created_at).toLocaleDateString("en-IN")}
                     </p>
                   </div>
-                  <div className="text-right">
-                    <p className="text-sm font-semibold text-forest">
+                  <div className="text-right shrink-0">
+                    <p className="text-sm font-semibold text-forest font-mono">
                       {order.currency} {Number(order.total_amount).toLocaleString("en-IN")}
                     </p>
-                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium
-                      ${order.status === "delivered" ? "bg-green-100 text-green-700" :
-                        order.status === "shipped"   ? "bg-blue-100 text-blue-700" :
-                        order.status === "cancelled" ? "bg-red-100 text-red-700" :
-                        "bg-amber-100 text-amber-700"}`}>
-                      {order.status}
-                    </span>
+                    <div className="mt-0.5">
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium inline-block
+                        ${order.status === "delivered" ? "bg-green-100 text-green-700" :
+                          order.status === "shipped"   ? "bg-blue-100 text-blue-700" :
+                          order.status === "cancelled" ? "bg-red-100 text-red-700" :
+                          "bg-amber-100 text-amber-700"}`}>
+                        {order.status}
+                      </span>
+                    </div>
                   </div>
                 </div>
               ))
@@ -122,8 +124,8 @@ export default async function AdminDashboardPage() {
         </div>
 
         {/* Recent Inquiries */}
-        <div className="bg-white rounded-2xl shadow-sm border border-stone-100 p-6">
-          <h2 className="text-lg font-semibold text-charcoal mb-4 flex items-center gap-2">
+        <div className="bg-white rounded-2xl shadow-sm border border-stone-100 p-4 md:p-6">
+          <h2 className="text-base md:text-lg font-semibold text-charcoal mb-4 flex items-center gap-2">
             <MessageSquare size={18} className="text-sky-600" />
             Recent Inquiries
           </h2>
@@ -132,23 +134,28 @@ export default async function AdminDashboardPage() {
               recentInquiries.map((inq: any) => (
                 <div
                   key={inq.id}
-                  className="flex items-center justify-between py-2 border-b border-stone-50 last:border-0"
+                  className="flex flex-row items-center justify-between py-3 border-b border-stone-50 last:border-0 gap-2"
                 >
-                  <div>
-                    <p className="text-sm font-medium text-charcoal">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-medium text-charcoal truncate">
                       {(inq.profiles as any)?.full_name ?? "Unknown"} — {(inq.products as any)?.name ?? "—"}
                     </p>
-                    <p className="text-xs text-stone-400">
+                    <p className="text-xs text-stone-400 truncate">
                       {inq.requested_kg} kg → {inq.destination_country}
                     </p>
+                    <p className="text-[10px] text-stone-400">
+                      {new Date(inq.created_at).toLocaleDateString("en-IN")}
+                    </p>
                   </div>
-                  <span className={`text-xs px-2 py-0.5 rounded-full font-medium
-                    ${inq.status === "closed"    ? "bg-stone-100 text-stone-600" :
-                      inq.status === "quoted"    ? "bg-green-100 text-green-700" :
-                      inq.status === "reviewed"  ? "bg-blue-100 text-blue-700" :
-                      "bg-amber-100 text-amber-700"}`}>
-                    {inq.status}
-                  </span>
+                  <div className="text-right shrink-0">
+                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium inline-block
+                      ${inq.status === "closed"    ? "bg-stone-100 text-stone-600" :
+                        inq.status === "quoted"    ? "bg-green-100 text-green-700" :
+                        inq.status === "reviewed"  ? "bg-blue-100 text-blue-700" :
+                        "bg-amber-100 text-amber-700"}`}>
+                      {inq.status}
+                    </span>
+                  </div>
                 </div>
               ))
             ) : (

@@ -27,7 +27,7 @@ interface ProductsAdminProps {
 
 export default function ProductsAdmin({ initialProducts }: ProductsAdminProps) {
   const [products, setProducts] = useState<Product[]>(initialProducts);
-  const [viewMode, setViewMode] = useState<"table" | "grid">("table");
+  const [viewMode, setViewMode] = useState<"table" | "grid">("grid");
   const [togglingId, setTogglingId] = useState<string | null>(null);
 
   // Sync state with server-updated props

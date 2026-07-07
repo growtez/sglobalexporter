@@ -34,7 +34,7 @@ export default function LogoutButton({
       className={className}
       onClick={handleLogout}
     >
-      {showIcon && <LogOut className="w-3.5 h-3.5 mr-1.5" />}
+      {showIcon && <LogOut className={`w-3.5 h-3.5 ${label ? "mr-1.5" : ""}`} />}
       {label}
     </Button>
   );

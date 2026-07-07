@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { submitContactInquiry } from "@/app/contact/actions";
+import { createClient } from "@/lib/supabase/client";
 
 // Custom SVG Brand Icons
 const Facebook = (props: React.SVGProps<SVGSVGElement>) => (
@@ -43,16 +44,41 @@ export default function ContactSection() {
   const [quantity, setQuantity] = useState<number>(100);
   const [unit, setUnit] = useState("Kilograms (kg)");
   const [mobile, setMobile] = useState("");
+  const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const [productList, setProductList] = useState<string[]>([]);
+
   useEffect(() => {
-    const productParam = searchParams?.get("product");
-    if (productParam) {
-      setProduct(productParam);
+    async function loadProducts() {
+      try {
+        const supabase = createClient();
+        const { data } = await supabase
+          .from("products")
+          .select("name")
+          .eq("is_active", true)
+          .order("name", { ascending: true });
+
+        if (data) {
+          const names = data.map((p: any) => p.name);
+          setProductList(names);
+          
+          // Check for URL param pre-selection
+          const productParam = searchParams?.get("product");
+          if (productParam) {
+            setProduct(productParam);
+          } else if (names.length > 0) {
+            setProduct(names[0]);
+          }
+        }
+      } catch (err) {
+        console.error("Error loading products:", err);
+      }
     }
+    loadProducts();
   }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -65,6 +91,7 @@ export default function ContactSection() {
       quantity,
       unit,
       mobile: "+91 " + mobile.trim(),
+      email: email.trim(),
       message: message.trim(),
     });
 
@@ -79,6 +106,7 @@ export default function ContactSection() {
       setQuantity(100);
       setUnit("Kilograms (kg)");
       setMobile("");
+      setEmail("");
       setMessage("");
       setTimeout(() => {
         setSubmitted(false);
@@ -179,15 +207,22 @@ export default function ContactSection() {
             
             <div>
               <label className="block text-[9px] font-bold text-stone-700 uppercase tracking-widest mb-1.5">Product / Service</label>
-              <input 
-                id="homepage-product-input"
-                required 
-                type="text" 
-                value={product} 
-                onChange={(e) => setProduct(e.target.value)} 
-                placeholder="e.g., Premium Assam CTC Tea" 
-                className="w-full bg-stone-50 border border-stone-200 rounded-lg px-3 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-forest/20 focus:border-forest focus:bg-white transition-all shadow-sm placeholder-stone-400 font-medium" 
-              />
+              <div className="relative">
+                <select 
+                  id="homepage-product-input"
+                  required 
+                  value={product} 
+                  onChange={(e) => setProduct(e.target.value)} 
+                  className="w-full bg-stone-50 border border-stone-200 rounded-lg pl-3 pr-8 py-2.5 text-xs text-stone-700 font-medium focus:outline-none focus:ring-2 focus:ring-forest/20 focus:border-forest focus:bg-white transition-all shadow-sm appearance-none cursor-pointer"
+                >
+                  <option value="" disabled>-- Select a Product --</option>
+                  {productList.map((name) => (
+                    <option key={name} value={name}>{name}</option>
+                  ))}
+                  <option value="Other / Custom Sourcing">Other / Custom Sourcing</option>
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-stone-400 pointer-events-none" />
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -219,20 +254,33 @@ export default function ContactSection() {
               </div>
             </div>
 
-            <div>
-              <label className="block text-[9px] font-bold text-stone-700 uppercase tracking-widest mb-1.5">Mobile Number</label>
-              <div className="flex bg-stone-50 border border-stone-200 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-forest/20 focus-within:border-forest focus-within:bg-white transition-all shadow-sm">
-                <div className="bg-stone-100 px-3 py-2.5 border-r border-stone-200 text-xs text-stone-700 font-bold flex items-center gap-1.5 shrink-0">
-                  +91
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-[9px] font-bold text-stone-700 uppercase tracking-widest mb-1.5">Email Address</label>
                 <input 
                   required 
-                  type="tel" 
-                  value={mobile}
-                  onChange={(e) => setMobile(e.target.value)}
-                  placeholder="Enter your mobile number" 
-                  className="flex-1 px-3 py-2.5 text-xs font-medium focus:outline-none bg-transparent placeholder-stone-400" 
+                  type="email" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email address" 
+                  className="w-full bg-stone-50 border border-stone-200 rounded-lg px-3 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-forest/20 focus:border-forest focus:bg-white transition-all shadow-sm placeholder-stone-400 font-medium" 
                 />
+              </div>
+              <div>
+                <label className="block text-[9px] font-bold text-stone-700 uppercase tracking-widest mb-1.5">Mobile Number</label>
+                <div className="flex bg-stone-50 border border-stone-200 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-forest/20 focus-within:border-forest focus-within:bg-white transition-all shadow-sm">
+                  <div className="bg-stone-100 px-3 py-2.5 border-r border-stone-200 text-xs text-stone-700 font-bold flex items-center gap-1.5 shrink-0">
+                    +91
+                  </div>
+                  <input 
+                    required 
+                    type="tel" 
+                    value={mobile}
+                    onChange={(e) => setMobile(e.target.value)}
+                    placeholder="Enter mobile number" 
+                    className="flex-1 px-3 py-2.5 text-xs font-medium focus:outline-none bg-transparent placeholder-stone-400" 
+                  />
+                </div>
               </div>
             </div>
 
