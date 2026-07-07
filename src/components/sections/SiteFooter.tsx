@@ -20,7 +20,7 @@ const navLinks = {
   ],
   Trade: [
     { label: "Wholesale / B2B", href: "/b2b" },
-    { label: "Export Process", href: "/#export-process" },
+    { label: "Export Process", href: "/b2b#export-process" },
     { label: "Request a Sample", href: "/b2b#sample" },
     { label: "Contact Us", href: "/contact" },
   ],

@@ -25,7 +25,7 @@ export default function AboutPage() {
     <div className="flex flex-col min-h-screen bg-cream overflow-hidden">
 
 
-      <section className="py-8 md:py-10 bg-cream text-charcoal">
+      <section id="heritage" className="py-8 md:py-10 bg-cream text-charcoal">
         <div className="container mx-auto px-4 md:px-8 max-w-6xl">
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -155,7 +155,7 @@ export default function AboutPage() {
       </section>
 
       {/* Factsheet Section */}
-      <section className="py-12 md:py-16 bg-white dark:bg-stone-950 border-b border-stone-200 dark:border-stone-800">
+      <section id="certifications" className="py-12 md:py-16 bg-white dark:bg-stone-950 border-b border-stone-200 dark:border-stone-800">
         <div className="container mx-auto px-4 md:px-8 max-w-5xl">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <span className="uppercase tracking-widest text-sm font-semibold text-gold">Factsheet</span>
