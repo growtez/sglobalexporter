@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Search, SlidersHorizontal, ChevronDown, ArrowDownUp, Filter } from "lucide-react";
+import Link from "next/link";
+import { Search, SlidersHorizontal, ChevronDown, ChevronRight, ArrowDownUp, Filter } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ProductGrid from "@/components/product/ProductGrid";
@@ -64,21 +65,7 @@ export default function ProductListingClient({ initialProducts }: { initialProdu
     }, [initialProducts, searchQuery, activeCategory]);
 
     return (
-        <div className="flex flex-col gap-6">
-            
-            {/* Desktop Header (Left-aligned, visible on desktop, hidden on mobile) */}
-            <div className="hidden md:flex justify-between items-center border-b border-stone-200 pb-4">
-                <h1 className="text-2xl font-bold text-stone-900 tracking-tight">
-                    Our Products ({filteredProducts.length})
-                </h1>
-            </div>
-
-            {/* Mobile Header (Centered, hidden on desktop) */}
-            <div className="md:hidden text-center">
-                <h1 className="text-xl font-bold text-stone-900 tracking-tight">
-                    Our Products ({filteredProducts.length})
-                </h1>
-            </div>
+        <div className="flex flex-col gap-6 pt-4">
 
             {/* Main Layout Area */}
             <div className="flex flex-col md:flex-row gap-8">

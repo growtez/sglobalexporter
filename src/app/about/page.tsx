@@ -25,13 +25,9 @@ export default function AboutPage() {
     <div className="flex flex-col min-h-screen bg-cream overflow-hidden">
 
 
-      <section className="pt-8 pb-12 md:pt-12 md:pb-16 bg-cream text-charcoal">
+      <section className="py-8 md:py-10 bg-cream text-charcoal">
         <div className="container mx-auto px-4 md:px-8 max-w-6xl">
-          <div className="mb-10 flex md:hidden items-center text-[13px] font-medium text-stone-500">
-            <Link href="/" className="hover:text-gold transition-colors">Home</Link>
-            <span className="mx-2 text-stone-300">/</span>
-            <span className="text-stone-900 font-semibold">About Us</span>
-          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
               variants={fadeInUp}

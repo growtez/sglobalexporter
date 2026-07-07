@@ -182,6 +182,8 @@ export default function ProductDetailClient({ product }: { product: Product }) {
       price_per_kg: product.price_per_kg,
       quantity_kg: qty,
       image_url: images[0] || "/placeholder-tea.jpg",
+      slug: product.slug,
+      unit: "Kilograms (kg)",
     });
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
@@ -190,19 +192,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   const totalPrice = (product.price_per_kg * qty).toLocaleString("en-IN");
 
   return (
-    <div className="bg-stone-50 min-h-screen font-sans">
-      {/* Breadcrumb */}
-      <div className="bg-white border-b border-stone-100">
-        <div className="container mx-auto px-4 md:px-8 py-3">
-          <nav className="flex items-center gap-2 text-xs text-stone-500">
-            <Link href="/" className="hover:text-forest transition-colors">Home</Link>
-            <span>/</span>
-            <Link href="/products" className="hover:text-forest transition-colors">Products</Link>
-            <span>/</span>
-            <span className="text-forest font-medium truncate">{product.name}</span>
-          </nav>
-        </div>
-      </div>
+    <div className="bg-stone-50 min-h-screen font-sans pt-2">
 
       <div className="container mx-auto px-4 md:px-8 py-6 max-w-7xl">
         {/* Main Product Section */}
@@ -601,39 +591,6 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               <Link href="/contact">
                 <Button variant="outline" className="w-full h-9 text-xs font-bold border-stone-200 text-stone-700 hover:bg-stone-50 rounded-xl">
                   Contact Seller
-                </Button>
-              </Link>
-            </div>
-
-            {/* Price Summary for selected qty */}
-            <div className="bg-forest rounded-2xl p-5 text-white">
-              <p className="text-xs font-semibold uppercase tracking-widest text-white/60 mb-3">Order Summary</p>
-              <div className="space-y-2 text-sm mb-4">
-                <div className="flex justify-between">
-                  <span className="text-white/70">Price per kg</span>
-                  <span>₹{product.price_per_kg}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-white/70">Quantity</span>
-                  <span>{qty} kg</span>
-                </div>
-                <div className="border-t border-white/20 pt-2 flex justify-between font-bold text-base">
-                  <span>Total</span>
-                  <span>₹{totalPrice}</span>
-                </div>
-              </div>
-              <Button
-                className="w-full h-10 bg-gold hover:bg-gold/90 text-forest font-bold text-sm rounded-xl transition-all"
-                onClick={handleAddToCart}
-              >
-                {added ? "✓ Added to Cart" : "Add to Cart"}
-              </Button>
-              <Link href={`/b2b?product=${product.id}`} className="block mt-2">
-                <Button
-                  variant="outline"
-                  className="w-full h-10 border-white/30 text-white hover:bg-white/10 font-semibold text-sm rounded-xl transition-all"
-                >
-                  Request Bulk Quote
                 </Button>
               </Link>
             </div>

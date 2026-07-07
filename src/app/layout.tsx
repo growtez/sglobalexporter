@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
+import GlobalBreadcrumb from "@/components/layout/GlobalBreadcrumb";
 import SiteFooter from "@/components/sections/SiteFooter";
 import "./globals.css";
 
@@ -42,6 +43,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-sans text-stone-900 bg-[#FDFBF7]">
         <Navbar />
+        <GlobalBreadcrumb />
         <main className="flex-1">{children}</main>
         <SiteFooter />
       </body>

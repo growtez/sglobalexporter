@@ -13,6 +13,7 @@ import {
   User, 
   Phone, 
   ChevronDown, 
+  ChevronRight,
   Mail,
   Menu,
   X,
@@ -197,11 +198,15 @@ export default function Navbar() {
             {/* Cart */}
             <Link 
               href="/cart" 
-              className="hidden lg:flex w-9 h-9 items-center justify-center rounded-xl text-stone-500 hover:text-gold hover:bg-stone-100 transition-all duration-200 relative"
+              className={`hidden lg:flex w-9 h-9 items-center justify-center rounded-xl transition-all duration-200 relative ${
+                pathname === "/cart"
+                  ? "text-gold bg-stone-100 ring-1 ring-gold/15"
+                  : "text-stone-500 hover:text-gold hover:bg-stone-100"
+              }`}
             >
               <ShoppingBag className="w-[18px] h-[18px]" />
               {mounted && itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-4 h-4 px-1 bg-gold text-charcoal text-[9px] font-extrabold rounded-full flex items-center justify-center ring-2 ring-white">
+                <span className="absolute -top-1.5 -right-1.5 min-w-[20px] h-[20px] px-1.5 bg-forest text-white text-[10px] font-extrabold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">
                   {itemCount}
                 </span>
               )}
@@ -210,11 +215,17 @@ export default function Navbar() {
             {/* Account */}
             <Link 
               href={user ? "/profile" : "/auth/login"}
-              className="hidden lg:flex items-center gap-2 rounded-xl text-stone-500 hover:text-gold hover:bg-stone-100 h-9 px-2.5 transition-all duration-200"
+              className={`hidden lg:flex items-center gap-2 rounded-xl h-9 px-2.5 transition-all duration-200 ${
+                pathname === "/profile" || pathname.startsWith("/auth/")
+                  ? "text-gold bg-stone-100 ring-1 ring-gold/15"
+                  : "text-stone-500 hover:text-gold hover:bg-stone-100"
+              }`}
             >
               <User className="w-[18px] h-[18px]" />
               {user && (
-                <span className="text-[13px] font-semibold text-stone-600 truncate max-w-[100px]">
+                <span className={`text-[13px] font-semibold truncate max-w-[100px] ${
+                  pathname === "/profile" || pathname.startsWith("/auth/") ? "text-gold" : "text-stone-600"
+                }`}>
                   {user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]}
                 </span>
               )}
@@ -223,11 +234,15 @@ export default function Navbar() {
             {/* Mobile: Cart + Hamburger */}
             <Link 
               href="/cart" 
-              className="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl text-stone-600 hover:bg-stone-100 transition-all relative"
+              className={`lg:hidden w-10 h-10 flex items-center justify-center rounded-xl transition-all relative ${
+                pathname === "/cart"
+                  ? "text-gold bg-stone-100 ring-1 ring-gold/15"
+                  : "text-stone-600 hover:bg-stone-100"
+              }`}
             >
               <ShoppingBag className="w-5 h-5" />
               {mounted && itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-4 h-4 px-1 bg-gold text-charcoal text-[9px] font-extrabold rounded-full flex items-center justify-center ring-2 ring-white">
+                <span className="absolute -top-1.5 -right-1.5 min-w-[20px] h-[20px] px-1.5 bg-forest text-white text-[10px] font-extrabold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">
                   {itemCount}
                 </span>
               )}
@@ -319,7 +334,11 @@ export default function Navbar() {
           <div className="border-t border-gray-100 p-4 space-y-3 bg-stone-50/50">
             <div className="flex gap-2">
               <Link href={user ? "/profile" : "/auth/login"} className="flex-1" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button variant="outline" className="w-full bg-white text-stone-700 h-11 rounded-xl font-semibold border-stone-200 hover:bg-stone-50 transition-all text-xs">
+                <Button variant="outline" className={`w-full bg-white h-11 rounded-xl font-semibold border-stone-200 hover:bg-stone-50 transition-all text-xs ${
+                  pathname === "/profile" || pathname.startsWith("/auth/")
+                    ? "text-gold border-gold/40 bg-stone-50 ring-1 ring-gold/10"
+                    : "text-stone-700"
+                }`}>
                   <User className="w-3.5 h-3.5 mr-1.5" /> {user ? "Profile" : "Sign In"}
                 </Button>
               </Link>

@@ -7,6 +7,8 @@ export interface CartItem {
   price_per_kg: number;
   quantity_kg: number;
   image_url: string;
+  slug?: string;
+  unit?: string;
 }
 
 interface CartState {
@@ -14,6 +16,7 @@ interface CartState {
   addItem: (item: CartItem) => void;
   removeItem: (id: string) => void;
   updateQuantity: (id: string, quantity_kg: number) => void;
+  updateUnit: (id: string, unit: string) => void;
   clearCart: () => void;
   getTotal: () => number;
 }
@@ -34,7 +37,7 @@ export const useCartStore = create<CartState>()(
               ),
             };
           }
-          return { items: [...state.items, newItem] };
+          return { items: [...state.items, { ...newItem, unit: newItem.unit || "Kilograms (kg)" }] };
         });
       },
       removeItem: (id) => {
@@ -49,10 +52,25 @@ export const useCartStore = create<CartState>()(
           ),
         }));
       },
+      updateUnit: (id, unit) => {
+        set((state) => ({
+          items: state.items.map((item) =>
+            item.id === id ? { ...item, unit } : item
+          ),
+        }));
+      },
       clearCart: () => set({ items: [] }),
       getTotal: () => {
         return get().items.reduce(
-          (total, item) => total + item.price_per_kg * item.quantity_kg,
+          (total, item) => {
+            let multiplier = 1;
+            if (item.unit === "Metric Tons (MT)") {
+              multiplier = 1000;
+            } else if (item.unit === "Boxes") {
+              multiplier = 10;
+            }
+            return total + item.price_per_kg * item.quantity_kg * multiplier;
+          },
           0
         );
       },
