@@ -69,6 +69,12 @@ body {
 .dark .border-stone-200\/50 {
   border-color: rgba(46,46,46,0.5) !important;
 }
+.dark .border-stone-50 {
+  border-color: #242424 !important;
+}
+.dark .divide-stone-50 > * {
+  border-color: #242424 !important;
+}
 
 /* Text colors */
 .dark .text-stone-900 {
@@ -188,6 +194,23 @@ body {
 /* Subtle row borders */
 .dark .border-stone-100\/50 {
   border-color: rgba(60, 60, 60, 0.5) !important;
+}
+
+/* Admin panel and toggle overrides */
+.dark .bg-\[\#F0F0EE\] {
+  background-color: #0f0f0f !important;
+}
+.dark .bg-stone-200 {
+  background-color: #333333 !important;
+}
+.dark .bg-stone-50\/30 {
+  background-color: rgba(22, 22, 22, 0.3) !important;
+}
+.dark .text-stone-400 {
+  color: #7a7470 !important;
+}
+.dark .text-stone-300 {
+  color: #5a5550 !important;
 }
 
 

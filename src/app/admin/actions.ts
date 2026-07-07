@@ -108,6 +108,13 @@ export async function updateInquiryStatus(id: string, status: string) {
   revalidatePath("/admin/inquiries");
 }
 
+export async function deleteInquiry(id: string) {
+  const supabase = await requireAdmin();
+  const { error } = await supabase.from("inquiries").delete().eq("id", id);
+  if (error) return { error: error.message };
+  revalidatePath("/admin/inquiries");
+}
+
 // ─── Customers ───────────────────────────────────────────────────────────────
 
 export async function updateCustomerRole(id: string, role: "customer" | "admin") {

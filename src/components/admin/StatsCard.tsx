@@ -19,14 +19,14 @@ export default function StatsCard({
   return (
     <Link
       href={href}
-      className="bg-white rounded-2xl shadow-sm border border-stone-100 p-6 flex items-center gap-5 hover:shadow-md transition-shadow group"
+      className="bg-white rounded-2xl shadow-sm border border-stone-100 p-4 sm:p-6 flex items-center gap-3 sm:gap-5 hover:shadow-md transition-shadow group"
     >
-      <div className={`${color} p-3 rounded-xl text-white group-hover:scale-110 transition-transform`}>
-        <Icon size={22} />
+      <div className={`${color} p-2.5 sm:p-3 rounded-xl text-white group-hover:scale-110 transition-transform shrink-0`}>
+        <Icon size={20} className="sm:w-[22px] sm:h-[22px]" />
       </div>
-      <div>
-        <p className="text-2xl font-bold text-charcoal">{value.toLocaleString()}</p>
-        <p className="text-sm text-stone-500 mt-0.5">{label}</p>
+      <div className="min-w-0">
+        <p className="text-xl sm:text-2xl font-bold text-charcoal truncate">{value.toLocaleString()}</p>
+        <p className="text-xs sm:text-sm text-stone-500 mt-0.5 truncate">{label}</p>
       </div>
     </Link>
   );

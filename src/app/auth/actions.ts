@@ -70,6 +70,7 @@ export async function signup(formData: FormData) {
       id: data.user.id,
       full_name: fullName,
       company_name: companyName,
+      email: email,
     });
 
     if (profileError) {

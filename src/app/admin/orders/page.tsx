@@ -20,7 +20,8 @@ export default async function AdminOrdersPage() {
         <p className="text-stone-500 mt-1">{orders?.length ?? 0} total orders</p>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+      {/* Desktop Table View */}
+      <div className="hidden md:block bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -100,6 +101,94 @@ export default async function AdminOrdersPage() {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Mobile Card View */}
+      <div className="md:hidden space-y-4">
+        {orders && orders.length > 0 ? (
+          orders.map((order: any) => (
+            <div key={order.id} className="bg-white p-5 rounded-2xl border border-stone-100 shadow-xs space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-stone-50">
+                <div>
+                  <p className="text-xs text-stone-400 font-mono">#{order.id.slice(0, 8)}</p>
+                  <p className="font-semibold text-charcoal text-sm mt-0.5">{order.profiles?.full_name ?? "Guest"}</p>
+                  {order.profiles?.company_name && (
+                    <p className="text-[11px] text-stone-500 mt-0.5">{order.profiles.company_name}</p>
+                  )}
+                </div>
+                <div className="text-right shrink-0">
+                  <p className="text-stone-400 text-[10px] uppercase tracking-wider">Date</p>
+                  <p className="text-xs text-stone-700 font-medium mt-0.5">
+                    {new Date(order.created_at).toLocaleDateString("en-IN")}
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-3 text-xs">
+                <div>
+                  <p className="text-stone-400 font-medium uppercase tracking-wider text-[10px]">Items</p>
+                  <div className="mt-1 space-y-1 bg-stone-50 p-2.5 rounded-xl border border-stone-100">
+                    {order.order_items?.map((item: any, i: number) => (
+                      <p key={i} className="text-stone-700">
+                        {item.products?.name ?? "—"} <span className="text-stone-400">×</span> {item.quantity_kg}kg
+                      </p>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  <div>
+                    <p className="text-stone-400 font-medium uppercase tracking-wider text-[10px]">Amount</p>
+                    <p className="font-bold text-forest mt-0.5">
+                      {order.currency} {Number(order.total_amount).toLocaleString("en-IN")}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-stone-400 font-medium uppercase tracking-wider text-[10px]">Ship To</p>
+                    <p className="text-stone-700 mt-0.5 truncate" title={order.shipping_address}>
+                      {order.shipping_address}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-stone-50 items-center">
+                  <div>
+                    <p className="text-stone-400 font-medium uppercase tracking-wider text-[10px] mb-1">Status</p>
+                    <StatusBadge status={order.status} />
+                  </div>
+                  <div>
+                    <p className="text-stone-400 font-medium uppercase tracking-wider text-[10px] mb-1">Update Status</p>
+                    <form className="flex items-center gap-1.5">
+                      <select
+                        name="status"
+                        defaultValue={order.status}
+                        className="border border-stone-200 rounded-lg text-xs px-2 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 flex-1 min-w-0"
+                      >
+                        {ORDER_STATUSES.map((s) => (
+                          <option key={s} value={s}>{s}</option>
+                        ))}
+                      </select>
+                      <button
+                        type="submit"
+                        formAction={async (fd: FormData) => {
+                          "use server";
+                          await updateOrderStatus(order.id, fd.get("status") as string);
+                        }}
+                        className="text-xs bg-forest text-cream px-2.5 py-1.5 rounded-lg hover:bg-forest/90 transition-colors font-semibold shrink-0"
+                      >
+                        Save
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="bg-white rounded-2xl shadow-xs border border-stone-100 py-12 text-center text-stone-400 text-sm">
+            No orders placed yet.
+          </div>
+        )}
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ export async function submitContactInquiry(data: {
   quantity: number;
   unit: string;
   mobile: string;
+  email: string;
   message?: string;
 }) {
   const supabase = await createClient();
@@ -37,6 +38,7 @@ export async function submitContactInquiry(data: {
   const formattedMessage = `
 [Product/Service: ${data.productName}]
 [Mobile: ${data.mobile}]
+[Email: ${data.email}]
 [Unit Selected: ${data.unit}]
 [Quantity: ${data.quantity}]
 ${data.message ? `[Message: ${data.message}]` : ""}
@@ -49,6 +51,7 @@ ${data.message ? `[Message: ${data.message}]` : ""}
     requested_kg: qtyInKg,
     destination_country: "India", // Default or parsed from message
     message: formattedMessage,
+    email: data.email,
     status: "pending"
   });
 
