@@ -1,8 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { Button } from "@/components/ui/button";
-import { logout } from "@/app/auth/actions";
 import ProfileForm from "./ProfileForm";
+import LogoutButton from "@/components/auth/LogoutButton";
 
 export default async function ProfilePage() {
   const supabase = await createClient();
@@ -23,9 +22,7 @@ export default async function ProfilePage() {
     <div className="container mx-auto max-w-2xl px-4 py-6 md:py-10">
       <div className="flex items-center justify-between mb-5">
         <h1 className="text-2xl md:text-3xl font-serif font-bold text-forest">My Profile</h1>
-        <form action={logout}>
-          <Button variant="outline" size="sm" type="submit" className="h-8.5 text-xs">Log Out</Button>
-        </form>
+        <LogoutButton />
       </div>
 
       <ProfileForm profile={profile} userEmail={user.email || ""} />

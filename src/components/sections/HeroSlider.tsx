@@ -97,6 +97,23 @@ export default function HeroSlider({ products }: { products: HeroProduct[] }) {
           </Link>
         ))}
       </div>
+
+      {/* View All — fixed button on the right edge */}
+      <Link
+        href="/products"
+        className="absolute right-0 top-0 h-full flex flex-col items-center justify-center gap-2 w-16 md:w-20 bg-gradient-to-l from-black/70 via-black/40 to-transparent z-10 group"
+      >
+        <div className="flex flex-col items-center gap-2 text-white group-hover:scale-110 transition-transform duration-300">
+          <div className="w-9 h-9 rounded-full border-2 border-white/60 group-hover:border-gold group-hover:bg-gold/20 flex items-center justify-center transition-all duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 group-hover:text-gold transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+          <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-white/80 group-hover:text-gold transition-colors text-center leading-tight">
+            View<br />All
+          </span>
+        </div>
+      </Link>
     </div>
   );
 }

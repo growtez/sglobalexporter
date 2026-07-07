@@ -8,10 +8,9 @@ import {
   ShoppingCart,
   MessageSquare,
   Users,
-  LogOut,
   Leaf,
 } from "lucide-react";
-import { logout } from "@/app/auth/actions";
+import LogoutButton from "@/components/auth/LogoutButton";
 
 const navItems = [
   { href: "/admin",            label: "Dashboard",  icon: LayoutDashboard },
@@ -63,15 +62,12 @@ export default function AdminSidebar({ adminName }: { adminName: string }) {
       <div className="px-4 py-5 border-t border-white/10">
         <p className="text-white/50 text-xs px-1 mb-1 truncate">Signed in as</p>
         <p className="text-white text-sm font-medium px-1 mb-4 truncate">{adminName}</p>
-        <form action={logout}>
-          <button
-            type="submit"
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white transition-all"
-          >
-            <LogOut size={16} />
-            Sign Out
-          </button>
-        </form>
+        <LogoutButton
+          variant="ghost"
+          label="Sign Out"
+          showIcon={true}
+          className="w-full justify-start px-3 py-2.5 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white rounded-xl transition-all h-auto"
+        />
       </div>
     </aside>
   );
