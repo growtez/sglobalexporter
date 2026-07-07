@@ -19,6 +19,7 @@ import {
   X,
   ArrowRight
 } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -78,8 +79,8 @@ export default function Navbar() {
     <header 
       className={`sticky top-0 z-50 w-full font-sans transition-colors duration-300 ${
         scrolled 
-          ? "bg-white/80 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.05),0_8px_24px_rgba(0,0,0,0.04)] border-b border-stone-200/50" 
-          : "bg-white border-b border-stone-100/40"
+          ? "bg-white/90 dark:bg-stone-950/90 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.05),0_8px_24px_rgba(0,0,0,0.04)] border-b border-stone-200/50 dark:border-stone-800/50" 
+          : "bg-white dark:bg-stone-950 border-b border-stone-100/40 dark:border-stone-800/40"
       }`}
     >
       {/* Top micro-bar */}
@@ -195,6 +196,11 @@ export default function Navbar() {
               )}
             </div>
 
+            {/* Theme Toggle (Desktop) */}
+            <div className="hidden lg:block">
+              <ThemeToggle />
+            </div>
+
             {/* Cart */}
             <Link 
               href="/cart" 
@@ -231,9 +237,14 @@ export default function Navbar() {
               )}
             </Link>
 
+            {/* Theme Toggle (Mobile) */}
+            <div className="lg:hidden">
+              <ThemeToggle />
+            </div>
+
             {/* Mobile: Cart + Hamburger */}
             <Link 
-              href="/cart" 
+              href="/cart"  
               className={`lg:hidden w-10 h-10 flex items-center justify-center rounded-xl transition-all relative ${
                 pathname === "/cart"
                   ? "text-gold bg-stone-100 ring-1 ring-gold/15"
@@ -278,12 +289,12 @@ export default function Navbar() {
 
         {/* Panel */}
         <div 
-          className={`absolute top-0 right-0 w-[85%] max-w-sm h-full bg-white shadow-2xl flex flex-col transition-transform duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+          className={`absolute top-0 right-0 w-[85%] max-w-sm h-full bg-white dark:bg-stone-950 shadow-2xl flex flex-col transition-transform duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] ${
             isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
           {/* Mobile Search */}
-          <div className="p-4 border-b border-gray-100">
+          <div className="p-4 border-b border-gray-100 dark:border-stone-800">
             <div className="relative">
               <input 
                 type="text" 

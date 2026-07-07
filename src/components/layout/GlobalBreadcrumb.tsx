@@ -13,9 +13,9 @@ export default function GlobalBreadcrumb() {
   }
 
   return (
-    <div className="bg-stone-50/80 border-b border-stone-200/50">
+    <div className="bg-stone-50/80 dark:bg-stone-900/80 border-b border-stone-200/50 dark:border-stone-800/50">
       <div className="container mx-auto px-4 md:px-8 py-2.5">
-        <nav className="flex items-center gap-2 text-xs text-stone-500 overflow-x-auto whitespace-nowrap scrollbar-hide">
+        <nav className="flex items-center gap-2 text-xs text-stone-500 dark:text-stone-400 overflow-x-auto whitespace-nowrap scrollbar-hide">
           <Link href="/" className="hover:text-gold transition-colors">Home</Link>
           {pathname.split('/').filter(Boolean).map((path, index, array) => {
             const currentPath = `/${array.slice(0, index + 1).join('/')}`;
