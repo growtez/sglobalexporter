@@ -25,13 +25,9 @@ export default function AboutPage() {
     <div className="flex flex-col min-h-screen bg-cream overflow-hidden">
 
 
-      <section className="pt-8 pb-12 md:pt-12 md:pb-16 bg-cream text-charcoal">
+      <section className="py-8 md:py-10 bg-cream text-charcoal">
         <div className="container mx-auto px-4 md:px-8 max-w-6xl">
-          <div className="mb-10 flex md:hidden items-center text-[13px] font-medium text-stone-500">
-            <Link href="/" className="hover:text-gold transition-colors">Home</Link>
-            <span className="mx-2 text-stone-300">/</span>
-            <span className="text-stone-900 font-semibold">About Us</span>
-          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
               variants={fadeInUp}
@@ -72,14 +68,14 @@ export default function AboutPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-white/80 backdrop-blur-xl border border-gray-100 rounded-2xl p-3 md:p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center group relative overflow-hidden"
+              className="bg-white/80 dark:bg-stone-800/80 backdrop-blur-xl border border-gray-100 dark:border-stone-700 rounded-2xl p-3 md:p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center group relative overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-amber-50 flex items-center justify-center mb-2 md:mb-4 text-amber-700 group-hover:scale-110 group-hover:bg-amber-700 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 dark:from-amber-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center mb-2 md:mb-4 text-amber-700 dark:text-amber-400 group-hover:scale-110 group-hover:bg-amber-700 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
                 <User className="w-5 h-5 md:w-7 md:h-7" />
               </div>
-              <p className="text-gray-400 text-[10px] md:text-xs font-medium uppercase tracking-wider mb-1 relative z-10">Founder</p>
-              <p className="font-bold text-gray-800 text-[11px] sm:text-sm relative z-10 leading-tight">Mr. Shahinur Islam</p>
+              <p className="text-gray-400 dark:text-stone-500 text-[10px] md:text-xs font-medium uppercase tracking-wider mb-1 relative z-10">Founder</p>
+              <p className="font-bold text-gray-800 dark:text-stone-100 text-[11px] sm:text-sm relative z-10 leading-tight">Mr. Shahinur Islam</p>
             </motion.div>
 
             <motion.div
@@ -87,14 +83,14 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="bg-white/80 backdrop-blur-xl border border-gray-100 rounded-2xl p-3 md:p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center group relative overflow-hidden"
+              className="bg-white/80 dark:bg-stone-800/80 backdrop-blur-xl border border-gray-100 dark:border-stone-700 rounded-2xl p-3 md:p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center group relative overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-amber-50 flex items-center justify-center mb-2 md:mb-4 text-amber-700 group-hover:scale-110 group-hover:bg-amber-700 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 dark:from-amber-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center mb-2 md:mb-4 text-amber-700 dark:text-amber-400 group-hover:scale-110 group-hover:bg-amber-700 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
                 <Building2 className="w-5 h-5 md:w-7 md:h-7" />
               </div>
-              <p className="text-gray-400 text-[10px] md:text-xs font-medium uppercase tracking-wider mb-1 relative z-10">Established</p>
-              <p className="font-bold text-gray-800 text-[11px] sm:text-sm relative z-10 leading-tight">2023</p>
+              <p className="text-gray-400 dark:text-stone-500 text-[10px] md:text-xs font-medium uppercase tracking-wider mb-1 relative z-10">Established</p>
+              <p className="font-bold text-gray-800 dark:text-stone-100 text-[11px] sm:text-sm relative z-10 leading-tight">2023</p>
             </motion.div>
 
             <motion.div
@@ -102,14 +98,14 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="bg-white/80 backdrop-blur-xl border border-gray-100 rounded-2xl p-3 md:p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center group relative overflow-hidden"
+              className="bg-white/80 dark:bg-stone-800/80 backdrop-blur-xl border border-gray-100 dark:border-stone-700 rounded-2xl p-3 md:p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center group relative overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-orange-50 flex items-center justify-center mb-2 md:mb-4 text-orange-700 group-hover:scale-110 group-hover:bg-orange-700 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-50/50 dark:from-orange-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-orange-50 dark:bg-orange-900/30 flex items-center justify-center mb-2 md:mb-4 text-orange-700 dark:text-orange-400 group-hover:scale-110 group-hover:bg-orange-700 group-hover:text-white transition-all duration-300 shadow-sm relative z-10">
                 <Briefcase className="w-5 h-5 md:w-7 md:h-7" />
               </div>
-              <p className="text-gray-400 text-[10px] md:text-xs font-medium uppercase tracking-wider mb-1 relative z-10">Type</p>
-              <p className="font-bold text-gray-800 text-[11px] sm:text-sm relative z-10 leading-tight">Manufacturer</p>
+              <p className="text-gray-400 dark:text-stone-500 text-[10px] md:text-xs font-medium uppercase tracking-wider mb-1 relative z-10">Type</p>
+              <p className="font-bold text-gray-800 dark:text-stone-100 text-[11px] sm:text-sm relative z-10 leading-tight">Manufacturer</p>
             </motion.div>
           </div>
         </div>
@@ -159,18 +155,18 @@ export default function AboutPage() {
       </section>
 
       {/* Factsheet Section */}
-      <section className="py-12 md:py-16 bg-white border-b border-stone-200">
+      <section className="py-12 md:py-16 bg-white dark:bg-stone-950 border-b border-stone-200 dark:border-stone-800">
         <div className="container mx-auto px-4 md:px-8 max-w-5xl">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <span className="uppercase tracking-widest text-sm font-semibold text-gold">Factsheet</span>
             <h2 className="text-3xl font-serif font-bold text-forest mt-2">Company Information & Offices</h2>
           </div>
 
-          <div className="bg-cream/40 p-8 md:p-12 rounded-2xl border border-stone-200/80 shadow-sm space-y-12">
+          <div className="bg-cream/40 dark:bg-stone-800/60 p-8 md:p-12 rounded-2xl border border-stone-200/80 dark:border-stone-700 shadow-sm space-y-12">
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
               <div className="space-y-4">
-                <h4 className="font-serif text-xl text-forest font-bold border-b border-stone-200/60 pb-2">Basic Information</h4>
+                <h4 className="font-serif text-xl text-forest dark:text-stone-200 font-bold border-b border-stone-200/60 dark:border-stone-600 pb-2">Basic Information</h4>
                 <div className="grid grid-cols-2 text-sm py-2 border-b border-stone-100/50 last:border-0 gap-4">
                   <span className="font-semibold text-stone-700">Nature of Business:</span>
                   <span className="text-stone-600 font-medium">Manufacturer / Exporter / Supplier</span>
@@ -194,7 +190,7 @@ export default function AboutPage() {
               </div>
 
               <div className="space-y-4">
-                <h4 className="font-serif text-xl text-forest font-bold border-b border-stone-200/60 pb-2">Addresses & Contacts</h4>
+                <h4 className="font-serif text-xl text-forest dark:text-stone-200 font-bold border-b border-stone-200/60 dark:border-stone-600 pb-2">Addresses & Contacts</h4>
                 <div className="grid grid-cols-2 text-sm py-2 border-b border-stone-100/50 last:border-0 gap-4">
                   <span className="font-semibold text-stone-700">Unified Address:</span>
                   <span className="text-stone-600 font-medium leading-relaxed">HN 27, Hatigarh Chariali, Guwahati, Kamrup Metropolitan, Assam - 781038</span>

@@ -13,11 +13,13 @@ import {
   User, 
   Phone, 
   ChevronDown, 
+  ChevronRight,
   Mail,
   Menu,
   X,
   ArrowRight
 } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -35,15 +37,26 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const fetchUser = async () => {
+    let subscription: any;
+
+    const setupAuthListener = async () => {
       const { createClient } = await import("@/lib/supabase/client");
       const supabase = createClient();
+      
       const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        setUser(user);
-      }
+      setUser(user || null);
+
+      const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+        setUser(session?.user || null);
+      });
+      subscription = data.subscription;
     };
-    fetchUser();
+
+    setupAuthListener();
+
+    return () => {
+      if (subscription) subscription.unsubscribe();
+    };
   }, []);
 
   useEffect(() => {
@@ -77,8 +90,8 @@ export default function Navbar() {
     <header 
       className={`sticky top-0 z-50 w-full font-sans transition-colors duration-300 ${
         scrolled 
-          ? "bg-white/80 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.05),0_8px_24px_rgba(0,0,0,0.04)] border-b border-stone-200/50" 
-          : "bg-white border-b border-stone-100/40"
+          ? "bg-white/90 dark:bg-stone-950/90 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.05),0_8px_24px_rgba(0,0,0,0.04)] border-b border-stone-200/50 dark:border-stone-800/50" 
+          : "bg-white dark:bg-stone-950 border-b border-stone-100/40 dark:border-stone-800/40"
       }`}
     >
       {/* Top micro-bar */}
@@ -194,14 +207,23 @@ export default function Navbar() {
               )}
             </div>
 
+            {/* Theme Toggle (Desktop) */}
+            <div className="hidden lg:block">
+              <ThemeToggle />
+            </div>
+
             {/* Cart */}
             <Link 
               href="/cart" 
-              className="hidden lg:flex w-9 h-9 items-center justify-center rounded-xl text-stone-500 hover:text-gold hover:bg-stone-100 transition-all duration-200 relative"
+              className={`hidden lg:flex w-9 h-9 items-center justify-center rounded-xl transition-all duration-200 relative ${
+                pathname === "/cart"
+                  ? "text-gold bg-stone-100 ring-1 ring-gold/15"
+                  : "text-stone-500 hover:text-gold hover:bg-stone-100"
+              }`}
             >
               <ShoppingBag className="w-[18px] h-[18px]" />
               {mounted && itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-4 h-4 px-1 bg-gold text-charcoal text-[9px] font-extrabold rounded-full flex items-center justify-center ring-2 ring-white">
+                <span className="absolute -top-1.5 -right-1.5 min-w-[20px] h-[20px] px-1.5 bg-forest text-white text-[10px] font-extrabold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">
                   {itemCount}
                 </span>
               )}
@@ -209,25 +231,37 @@ export default function Navbar() {
 
             {/* Account */}
             <Link 
-              href={user ? "/profile" : "/auth/login"}
-              className="hidden lg:flex items-center gap-2 rounded-xl text-stone-500 hover:text-gold hover:bg-stone-100 h-9 px-2.5 transition-all duration-200"
+              href={user ? "/profile" : `/auth/login?redirect=${pathname}`}
+              className={`hidden lg:flex items-center gap-2 rounded-xl h-9 px-2.5 transition-all duration-200 ${
+                pathname === "/profile" || pathname.startsWith("/auth/")
+                  ? "text-gold bg-stone-100 ring-1 ring-gold/15"
+                  : "text-stone-500 hover:text-gold hover:bg-stone-100"
+              }`}
             >
               <User className="w-[18px] h-[18px]" />
               {user && (
-                <span className="text-[13px] font-semibold text-stone-600 truncate max-w-[100px]">
+                <span className={`text-[13px] font-semibold truncate max-w-[100px] ${
+                  pathname === "/profile" || pathname.startsWith("/auth/") ? "text-gold" : "text-stone-600"
+                }`}>
                   {user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]}
                 </span>
               )}
             </Link>
 
+
+
             {/* Mobile: Cart + Hamburger */}
             <Link 
-              href="/cart" 
-              className="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl text-stone-600 hover:bg-stone-100 transition-all relative"
+              href="/cart"  
+              className={`lg:hidden w-10 h-10 flex items-center justify-center rounded-xl transition-all relative ${
+                pathname === "/cart"
+                  ? "text-gold bg-stone-100 ring-1 ring-gold/15"
+                  : "text-stone-600 hover:bg-stone-100"
+              }`}
             >
               <ShoppingBag className="w-5 h-5" />
               {mounted && itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-4 h-4 px-1 bg-gold text-charcoal text-[9px] font-extrabold rounded-full flex items-center justify-center ring-2 ring-white">
+                <span className="absolute -top-1.5 -right-1.5 min-w-[20px] h-[20px] px-1.5 bg-forest text-white text-[10px] font-extrabold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">
                   {itemCount}
                 </span>
               )}
@@ -263,12 +297,12 @@ export default function Navbar() {
 
         {/* Panel */}
         <div 
-          className={`absolute top-0 right-0 w-[85%] max-w-sm h-full bg-white shadow-2xl flex flex-col transition-transform duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+          className={`absolute top-0 right-0 w-[85%] max-w-sm h-full bg-white dark:bg-stone-950 shadow-2xl flex flex-col transition-transform duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] ${
             isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
           {/* Mobile Search */}
-          <div className="p-4 border-b border-gray-100">
+          <div className="p-4 border-b border-gray-100 dark:border-stone-800">
             <div className="relative">
               <input 
                 type="text" 
@@ -316,15 +350,25 @@ export default function Navbar() {
           </nav>
 
           {/* Mobile Bottom Actions */}
-          <div className="border-t border-gray-100 p-4 space-y-3 bg-stone-50/50">
+          <div className="border-t border-gray-100 dark:border-stone-800 p-4 space-y-3 bg-stone-50/50 dark:bg-stone-900/50">
+            {/* Theme Toggle Row */}
+            <div className="flex items-center justify-between px-1 py-1">
+              <span className="text-xs font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider">Appearance</span>
+              <ThemeToggle />
+            </div>
+
             <div className="flex gap-2">
-              <Link href={user ? "/profile" : "/auth/login"} className="flex-1" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button variant="outline" className="w-full bg-white text-stone-700 h-11 rounded-xl font-semibold border-stone-200 hover:bg-stone-50 transition-all text-xs">
+              <Link href={user ? "/profile" : `/auth/login?redirect=${pathname}`} className="flex-1" onClick={() => setIsMobileMenuOpen(false)}>
+                <Button variant="outline" className={`w-full bg-white dark:bg-stone-800 h-11 rounded-xl font-semibold border-stone-200 dark:border-stone-700 hover:bg-stone-50 transition-all text-xs ${
+                  pathname === "/profile" || pathname.startsWith("/auth/")
+                    ? "text-gold border-gold/40 bg-stone-50 ring-1 ring-gold/10"
+                    : "text-stone-700 dark:text-stone-300"
+                }`}>
                   <User className="w-3.5 h-3.5 mr-1.5" /> {user ? "Profile" : "Sign In"}
                 </Button>
               </Link>
               <Link href="tel:+919181147813" className="flex-1" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button variant="outline" className="w-full bg-white border-forest text-forest h-11 rounded-xl font-semibold hover:bg-forest/5 transition-all text-xs">
+                <Button variant="outline" className="w-full bg-white dark:bg-stone-800 border-forest text-forest h-11 rounded-xl font-semibold hover:bg-forest/5 transition-all text-xs dark:border-forest/60">
                   <Phone className="w-3.5 h-3.5 mr-1.5" /> Call Now
                 </Button>
               </Link>

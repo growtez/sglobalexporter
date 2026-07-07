@@ -97,9 +97,7 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div className="container mx-auto max-w-3xl px-4 py-16 md:py-24">
-      <h1 className="text-4xl font-serif font-bold text-forest mb-8">Checkout</h1>
-      
+    <div className="container mx-auto max-w-3xl px-4 py-8 md:py-16">
       <div className="bg-white p-8 border border-stone-200 shadow-sm space-y-8">
         <div>
           <h2 className="text-xl font-serif text-charcoal mb-4">Shipping Details</h2>

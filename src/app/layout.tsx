@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
+import GlobalBreadcrumb from "@/components/layout/GlobalBreadcrumb";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import SiteFooter from "@/components/sections/SiteFooter";
+import CartSync from "@/components/cart/CartSync";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -39,11 +42,16 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${outfit.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col font-sans text-stone-900 bg-[#FDFBF7]">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
+      <body className="min-h-full flex flex-col font-sans text-stone-900 bg-[#FDFBF7] dark:bg-[#1C1C1C] dark:text-stone-100 transition-colors">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <CartSync />
+          <Navbar />
+          <GlobalBreadcrumb />
+          <main className="flex-1">{children}</main>
+          <SiteFooter />
+        </ThemeProvider>
       </body>
     </html>
   );

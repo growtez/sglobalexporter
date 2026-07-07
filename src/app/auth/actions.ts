@@ -8,6 +8,7 @@ export async function login(formData: FormData) {
   const supabase = await createClient();
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
+  const redirectPath = formData.get("redirect") as string;
 
   const { data: authData, error } = await supabase.auth.signInWithPassword({
     email,
@@ -34,7 +35,11 @@ export async function login(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/profile");
+  if (redirectPath && redirectPath.trim() !== "") {
+    redirect(redirectPath);
+  } else {
+    redirect("/profile");
+  }
 }
 
 export async function signup(formData: FormData) {
@@ -43,6 +48,7 @@ export async function signup(formData: FormData) {
   const password = formData.get("password") as string;
   const fullName = formData.get("fullName") as string;
   const companyName = formData.get("companyName") as string;
+  const redirectPath = formData.get("redirect") as string;
 
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -72,7 +78,11 @@ export async function signup(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/profile");
+  if (redirectPath && redirectPath.trim() !== "") {
+    redirect(redirectPath);
+  } else {
+    redirect("/profile");
+  }
 }
 
 export async function logout() {

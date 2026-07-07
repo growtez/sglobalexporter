@@ -1,8 +1,15 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #FDFBF7;
   --foreground: #1C1C1C;
+}
+
+.dark {
+  --background: #0f0f0f;
+  --foreground: #F5F0E8;
 }
 
 @theme inline {
@@ -20,4 +27,169 @@
 body {
   background: var(--background);
   color: var(--foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* ─── Global Dark Mode Overrides ─────────────────────────────────────────── */
+
+/* All solid white backgrounds */
+.dark .bg-white {
+  background-color: #1a1a1a !important;
+}
+
+/* Light stone backgrounds */
+.dark .bg-stone-50 {
+  background-color: #161616 !important;
+}
+.dark .bg-stone-100 {
+  background-color: #1f1f1f !important;
+}
+.dark .bg-stone-50\/50 {
+  background-color: rgba(22, 22, 22, 0.5) !important;
+}
+
+/* Cream/bg backgrounds */
+.dark .bg-cream {
+  background-color: #121212 !important;
+}
+.dark .bg-\[\#FDFBF7\] {
+  background-color: #121212 !important;
+}
+.dark .bg-\[\#F9F9F8\] {
+  background-color: #1a1a1a !important;
+}
+
+/* Borders */
+.dark .border-stone-100 {
+  border-color: #2a2a2a !important;
+}
+.dark .border-stone-200 {
+  border-color: #2e2e2e !important;
+}
+.dark .border-stone-200\/50 {
+  border-color: rgba(46,46,46,0.5) !important;
+}
+
+/* Text colors */
+.dark .text-stone-900 {
+  color: #f0ebe3 !important;
+}
+.dark .text-stone-700 {
+  color: #ccc5bb !important;
+}
+.dark .text-stone-600 {
+  color: #b8b0a5 !important;
+}
+.dark .text-stone-500 {
+  color: #9e9690 !important;
+}
+.dark .text-charcoal {
+  color: #f0ebe3 !important;
+}
+
+/* Inputs */
+.dark input,
+.dark select,
+.dark textarea {
+  background-color: #1f1f1f !important;
+  border-color: #2e2e2e !important;
+  color: #f0ebe3 !important;
+}
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #6b6560 !important;
+}
+
+/* Additional gray/misc backgrounds */
+.dark .bg-gray-100 {
+  background-color: #1f1f1f !important;
+}
+.dark .bg-\[\#FAF7F0\] {
+  background-color: #1f1f1f !important;
+}
+
+/* Card/panel borders in dark mode */
+.dark .border-gray-100 {
+  border-color: #2a2a2a !important;
+}
+.dark .shadow-sm {
+  --tw-shadow: 0 1px 2px rgba(0,0,0,0.4) !important;
+}
+
+/* ─── Dark text overrides (invisible on dark backgrounds) ──────────────── */
+
+/* text-forest (#1C0E07 = near-black) → warm off-white in dark mode */
+.dark .text-forest {
+  color: #e8ddd0 !important;
+}
+/* Keep forest/opacity variants readable */
+.dark .text-forest\/70 {
+  color: rgba(232, 221, 208, 0.7) !important;
+}
+
+/* text-black → off-white */
+.dark .text-black {
+  color: #f0ebe3 !important;
+}
+
+/* Gray text overrides */
+.dark .text-gray-900 {
+  color: #f0ebe3 !important;
+}
+.dark .text-gray-800 {
+  color: #dbd4cb !important;
+}
+.dark .text-gray-700 {
+  color: #ccc5bb !important;
+}
+.dark .text-gray-600 {
+  color: #b8b0a5 !important;
+}
+.dark .text-gray-500 {
+  color: #9e9690 !important;
+}
+.dark .text-gray-400 {
+  color: #7a7470 !important;
+}
+.dark .text-gray-300 {
+  color: #5a5550 !important;
+}
+
+/* text-stone-850 → light warm */
+.dark .text-stone-850 {
+  color: #e8ddd0 !important;
+}
+
+/* border-forest stays as is — it's dark green, visible against dark bg */
+
+/* bg-forest/5 cards on dark bg — lighten them */
+.dark .bg-forest\/5 {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+}
+.dark .bg-forest\/10 {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Hardcoded dark background cards that need inversion */
+.dark .bg-stone-900 {
+  background-color: #0a0a0a !important;
+}
+
+/* Testimonial cards and similar white cards in reviews section */
+.dark .bg-\[\#FDFCF9\] {
+  background-color: #1a1a1a !important;
+}
+
+/* cream/40 tinted backgrounds */
+.dark .bg-cream\/40 {
+  background-color: rgba(30, 30, 30, 0.6) !important;
+}
+
+/* Subtle row borders */
+.dark .border-stone-100\/50 {
+  border-color: rgba(60, 60, 60, 0.5) !important;
+}
+
+
+
+
