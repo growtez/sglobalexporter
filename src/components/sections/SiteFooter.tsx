@@ -56,9 +56,9 @@ export default function SiteFooter() {
   return (
     <footer className="w-full bg-charcoal text-cream">
       {/* Main footer */}
-      <div className="container mx-auto px-4 md:px-8 py-20">
-        <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-6 gap-x-6 gap-y-12">
-          {/* Brand column — wider */}
+      <div className="container mx-auto px-4 md:px-8 py-10 md:py-20">
+        <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-6 gap-x-6 gap-y-10">
+          {/* Brand column — full width on mobile, wider on desktop */}
           <div className="col-span-2 xl:col-span-2 flex flex-col gap-6">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">

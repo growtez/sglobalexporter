@@ -97,13 +97,33 @@ export default function ProductListingClient({ initialProducts }: { initialProdu
                 <div className="flex-1 flex flex-col gap-4">
                     
                     {/* Mobile-only Toolbar (Category Dropdown, hidden on desktop) */}
-                    <div className="flex md:hidden w-full items-center justify-end">
+                    <div className="flex md:hidden w-full items-center gap-2">
+                        {/* Mobile Search Input */}
+                        <div className="relative flex-1">
+                            <input
+                                type="text"
+                                placeholder="Search products..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full h-11 pl-9 pr-3 bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-forest text-xs text-stone-700 dark:text-stone-200 placeholder:text-stone-400 dark:placeholder:text-stone-500 shadow-sm"
+                            />
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+                            {searchQuery && (
+                                <button
+                                    onClick={() => setSearchQuery("")}
+                                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
+                                >
+                                    ✕
+                                </button>
+                            )}
+                        </div>
+
                         {/* Category Dropdown */}
-                        <div className="relative w-full max-w-[130px]">
+                        <div className="relative w-full max-w-[120px] flex-shrink-0">
                             <select 
                                 value={activeCategory}
                                 onChange={(e) => setActiveCategory(e.target.value)}
-                                className="w-full h-11 pl-3 pr-7 bg-white border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-forest appearance-none cursor-pointer font-bold text-[10px] uppercase tracking-widest text-stone-700 shadow-sm"
+                                className="w-full h-11 pl-3 pr-7 bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-forest appearance-none cursor-pointer font-bold text-[10px] uppercase tracking-widest text-stone-700 dark:text-stone-200 shadow-sm"
                                 style={{ backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 0.5rem center', backgroundSize: '0.9em' }}
                             >
                                 {categories.map(cat => (

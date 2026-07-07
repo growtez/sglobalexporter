@@ -237,10 +237,7 @@ export default function Navbar() {
               )}
             </Link>
 
-            {/* Theme Toggle (Mobile) */}
-            <div className="lg:hidden">
-              <ThemeToggle />
-            </div>
+
 
             {/* Mobile: Cart + Hamburger */}
             <Link 
@@ -342,19 +339,25 @@ export default function Navbar() {
           </nav>
 
           {/* Mobile Bottom Actions */}
-          <div className="border-t border-gray-100 p-4 space-y-3 bg-stone-50/50">
+          <div className="border-t border-gray-100 dark:border-stone-800 p-4 space-y-3 bg-stone-50/50 dark:bg-stone-900/50">
+            {/* Theme Toggle Row */}
+            <div className="flex items-center justify-between px-1 py-1">
+              <span className="text-xs font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider">Appearance</span>
+              <ThemeToggle />
+            </div>
+
             <div className="flex gap-2">
               <Link href={user ? "/profile" : "/auth/login"} className="flex-1" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button variant="outline" className={`w-full bg-white h-11 rounded-xl font-semibold border-stone-200 hover:bg-stone-50 transition-all text-xs ${
+                <Button variant="outline" className={`w-full bg-white dark:bg-stone-800 h-11 rounded-xl font-semibold border-stone-200 dark:border-stone-700 hover:bg-stone-50 transition-all text-xs ${
                   pathname === "/profile" || pathname.startsWith("/auth/")
                     ? "text-gold border-gold/40 bg-stone-50 ring-1 ring-gold/10"
-                    : "text-stone-700"
+                    : "text-stone-700 dark:text-stone-300"
                 }`}>
                   <User className="w-3.5 h-3.5 mr-1.5" /> {user ? "Profile" : "Sign In"}
                 </Button>
               </Link>
               <Link href="tel:+919181147813" className="flex-1" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button variant="outline" className="w-full bg-white border-forest text-forest h-11 rounded-xl font-semibold hover:bg-forest/5 transition-all text-xs">
+                <Button variant="outline" className="w-full bg-white dark:bg-stone-800 border-forest text-forest h-11 rounded-xl font-semibold hover:bg-forest/5 transition-all text-xs dark:border-forest/60">
                   <Phone className="w-3.5 h-3.5 mr-1.5" /> Call Now
                 </Button>
               </Link>
