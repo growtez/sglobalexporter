@@ -30,7 +30,14 @@ export async function GET(request: Request) {
         }
       }
       
-      return NextResponse.redirect(new URL('/profile', requestUrl.origin))
+      const next = requestUrl.searchParams.get('next')
+      console.log("[OAUTH_CALLBACK] Exchanged code for session.");
+      console.log("[OAUTH_CALLBACK] Original next param:", next);
+      
+      const finalUrl = new URL(next || '/profile', requestUrl.origin);
+      console.log("[OAUTH_CALLBACK] Redirecting to:", finalUrl.toString());
+      
+      return NextResponse.redirect(finalUrl)
     }
   }
 

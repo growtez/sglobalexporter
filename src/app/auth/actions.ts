@@ -9,6 +9,7 @@ export async function login(formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const redirectPath = formData.get("redirect") as string;
+  console.log("[SERVER_ACTION_LOGIN] Received redirectPath from form:", redirectPath);
 
   const { data: authData, error } = await supabase.auth.signInWithPassword({
     email,
@@ -49,6 +50,7 @@ export async function signup(formData: FormData) {
   const fullName = formData.get("fullName") as string;
   const companyName = formData.get("companyName") as string;
   const redirectPath = formData.get("redirect") as string;
+  console.log("[SERVER_ACTION_SIGNUP] Received redirectPath from form:", redirectPath);
 
   const { data, error } = await supabase.auth.signUp({
     email,

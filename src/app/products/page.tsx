@@ -20,9 +20,9 @@ const fallbackProducts = [
 export default async function ProductsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{ category?: string; type?: string }>;
 }) {
-  const { category } = await searchParams;
+  const { category, type } = await searchParams;
   let products = null;
 
   try {
@@ -38,6 +38,10 @@ export default async function ProductsPage({
 
       if (category) {
         query = query.ilike("category", category);
+      }
+
+      if (type) {
+        query = query.ilike("name", `%${type}%`);
       }
 
       const { data, error } = await query;
@@ -60,6 +64,9 @@ export default async function ProductsPage({
     products = fallbackProducts;
     if (category) {
         products = products.filter(p => p.category?.toLowerCase() === category.toLowerCase());
+    }
+    if (type) {
+        products = products.filter(p => p.name?.toLowerCase().includes(type.toLowerCase()));
     }
   }
 
