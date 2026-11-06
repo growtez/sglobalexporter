@@ -8,6 +8,11 @@ import CartSync from "@/components/cart/CartSync";
 import "./globals.css";
 import MaintenancePage from "./maintenance/page";
 
+// FAKE 500 MODE: When true, the whole site shows a fake
+// "500 Internal Server Error" page. No site code is removed or changed
+// below -- set this back to false to restore the original site exactly.
+const SHOW_FAKE_500_ERROR = true;
+
 const outfit = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
@@ -39,6 +44,27 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  if (SHOW_FAKE_500_ERROR) {
+    return (
+      <html
+        lang="en"
+        className={`${outfit.variable} h-full antialiased`}
+        suppressHydrationWarning
+      >
+        <body className="min-h-screen flex items-center justify-center bg-white font-sans text-stone-900">
+          <main className="px-6 text-center">
+            <h1 className="mb-4 text-6xl font-bold">500</h1>
+            <p className="mb-2 text-xl font-medium">Internal Server Error</p>
+            <p className="text-sm text-stone-500">
+              The server encountered an internal error and was unable to
+              complete your request.
+            </p>
+          </main>
+        </body>
+      </html>
+    );
+  }
+
   const isMaintenanceMode = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === 'true';
 
   if (isMaintenanceMode) {
